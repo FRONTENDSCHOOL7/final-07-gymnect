@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Navbar = () => {
     return (
-        <Footer>
+        // <Footer>
             <Nav>
                 <Link to={'/home'}>홈</Link>
                 <Link to={'/chatlist'}>채팅</Link>
@@ -12,18 +12,19 @@ const Navbar = () => {
                 <Link to={'/calender'}>캘린더</Link>
                 <Link to={'/profile'}>프로필</Link>
             </Nav>
-        </Footer>
+        // </Footer>
     );
 };
 
-const Footer = styled.header`
-  width: 100%;
-  height: 72px;
-  border-bottom: 1px solid var(--line-gray);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const Footer = styled.footer`
+//   width: 100%;
+//   height: 72px;
+//   border-bottom: 1px solid var(--line-gray);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
+
 const Nav = styled.nav`
   width: 100%;
   max-width: 1024px;
