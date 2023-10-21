@@ -9,7 +9,7 @@ import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
 import Signup from "../pages/Signup/Signup";
 import SetProfile from "../pages/Signup/SetProfile";
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Footer/Navbar';
 
 
 export default function AppRouter() {
