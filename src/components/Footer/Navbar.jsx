@@ -8,6 +8,7 @@ import { ReactComponent as CalenderIcon } from "../../assets/images/icon-calende
 import { ReactComponent as ProfileIcon } from "../../assets/images/icon-profile.svg";
 
 const Navbar = () => {
+  
   return (
     <NavContainer>
       <StyledNavLink to={"/home"}>
