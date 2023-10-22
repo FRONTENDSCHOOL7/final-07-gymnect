@@ -47,9 +47,11 @@ const NavContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  font-size: 10px;
 `;
 
 const StyledNavLink = styled(NavLink)`
+  width: 78.05px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,4 +62,5 @@ const StyledNavLink = styled(NavLink)`
       fill: #006CD8;
     }
   }
+  gap: 5px;
 `;
