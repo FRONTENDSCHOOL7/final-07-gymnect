@@ -30,7 +30,5 @@ export const SuccessMessage = styled.p`
 export const SignupLink = styled.div`
   display: block;
   padding-top: 1.9rem;
-  //color: ${({ theme }) => theme.colors.textColor};
-  //font-size: ${({ theme }) => theme.fontSize.small};
   text-align: center;
 `;

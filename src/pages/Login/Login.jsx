@@ -47,7 +47,7 @@ export default function Login() {
     const loginData = await postUserLogin(email, pw);
     console.log(loginData);
     if (loginData.status === 422) {
-      setErrorMsg('*이메일 또는 비밀번호가 일치하지 않습니다 🥲');
+      setErrorMsg('*이메일 또는 비밀번호가 일치하지 않습니다');
       setHasError(true);
       setIsComplete(false);
     } else {
@@ -104,13 +104,10 @@ export default function Login() {
           />
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
-        <ButtonContainer
-          type={'L'}
-          text={'로그인'}
-          isDisabled={!handleActivateButton()}
-        />
+        <ButtonContainer width="322px" type="submit" disabled={!handleActivateButton()}>
+          로그인</ButtonContainer>
       </Form>
-      <SignupLink to="/signup">이메일로 회원가입</SignupLink>
+      <SignupLink to="/signup">이메일로 회원가입 | 비밀번호 찾기</SignupLink>
     </Container>
   );
 }
