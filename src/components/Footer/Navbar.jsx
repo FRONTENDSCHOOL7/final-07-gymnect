@@ -8,7 +8,6 @@ import { ReactComponent as CalenderIcon } from "../../assets/images/icon-calende
 import { ReactComponent as ProfileIcon } from "../../assets/images/icon-profile.svg";
 
 const Navbar = () => {
-  
   return (
     <NavContainer>
       <StyledNavLink to={"/home"}>
@@ -57,10 +56,10 @@ const StyledNavLink = styled(NavLink)`
   flex-direction: column;
   align-items: center;
   &.active {
-    color: #006CD8;
+    color: #006cd8;
 
     svg {
-      fill: #006CD8;
+      fill: #006cd8;
     }
   }
   gap: 5px;
