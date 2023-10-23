@@ -8,6 +8,7 @@ import { ReactComponent as CalenderIcon } from "../../assets/images/icon-calende
 import { ReactComponent as ProfileIcon } from "../../assets/images/icon-profile.svg";
 
 const Navbar = () => {
+  
   return (
     <NavContainer>
       <StyledNavLink to={"/home"}>
@@ -47,9 +48,11 @@ const NavContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  font-size: 10px;
 `;
 
 const StyledNavLink = styled(NavLink)`
+  width: 78.05px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,4 +63,5 @@ const StyledNavLink = styled(NavLink)`
       fill: #006CD8;
     }
   }
+  gap: 5px;
 `;
