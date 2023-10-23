@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "api",
-=======
   "name": "file",
->>>>>>> 1936cc6ff5e1f78a273e63bf2bd899b4204e5025
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,11 +10,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-<<<<<<< HEAD
     "styled-components": "^6.1.0",
-=======
     "styled-reset": "^4.5.1",
->>>>>>> 1936cc6ff5e1f78a273e63bf2bd899b4204e5025
     "web-vitals": "^2.1.4"
   },
   "scripts": {
