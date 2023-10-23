@@ -18,7 +18,6 @@ export const PostProfileImg = styled.img`
 export const PostNameWrap = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: blue;
 `;
 
 export const UserSpan = styled.span`
@@ -27,8 +26,10 @@ export const UserSpan = styled.span`
 `;
 
 export const AccountSpan = styled.span`
+  margin-top: 2px;
   font-size: 12px;
   font-weight: 400;
+  color: rgba(118, 118, 118, 1);
 `;
 
 export const PostFlexWrap = styled.div`
