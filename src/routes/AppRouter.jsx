@@ -10,6 +10,7 @@ import Splash from "../pages/Splash/Splash";
 import Signup from "../pages/Signup/Signup";
 import SetProfile from "../pages/Signup/SetProfile";
 import Navbar from '../components/Footer/Navbar';
+import Search from '../pages/Home/Search/Search';
 
 
 export default function AppRouter() {
@@ -19,6 +20,7 @@ export default function AppRouter() {
       <Routes>
           <Route path='/' element={<Splash />}/>
           <Route path='/home' element={<Home />}/>
+          <Route path='/search' element={<Search />}/>
           <Route path='/chatlist' element={<ChatList />}/>
           <Route path='/posting' element={<Posting />}/>
           <Route path='/calender' element={<Calender />}/>
