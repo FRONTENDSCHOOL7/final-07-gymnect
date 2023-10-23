@@ -1,5 +1,6 @@
 import { useState } from "react";
-import LineContainer from "./ProfileStyle";
+import { Container, LineContainer, ImageSection, ImageInput, Image, Label } from "./ProfileStyle";
+
 
 
 const Profile = ({ handlePage }) => {
@@ -8,9 +9,7 @@ const Profile = ({ handlePage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountname, setAccountname] = useState("");
-  const [imgSrc, setImgSrc] = useState(
-    "https://api.mandarin.weniv.co.kr/Ellipse.png"
-  );
+  const [imgSrc, setImgSrc] = useState("");
   const [info, setInfo] = useState("");
 
   const submitJoin = () => {
@@ -62,61 +61,66 @@ const Profile = ({ handlePage }) => {
 
   return (
     <>
-      <section>
-        <h2>프로필 설정</h2>
-        <p>나중에 언제든지 변경할 수 있습니다.</p>
+      {/* <Container> */}
+        <section>
+          <h2>프로필 설정</h2>
+          <p>나중에 언제든지 변경할 수 있습니다.</p>
 
-        <LineContainer>
-        <label src={imgSrc} htmlFor="profileImg">
-          <img src={imgSrc} alt="" id="imagePre" />
-        </label>
-        <input
-          type="file"
-          onChange={handleChangeImage}
-          id="profileImg"
-          name="image"
-          accept="image/*"
-        />
-        </LineContainer>
+          
+          <ImageSection>
+            <LineContainer>
+            <Label src={imgSrc} htmlFor="profileImg">
+              <Image src={imgSrc} alt=""/>
+            </Label>
+          <ImageInput
+              type="file"
+              onChange={handleChangeImage}
+              id="profileImg"
+              name="image"
+              accept="image/*"
+            />
+            </LineContainer>
+          </ImageSection>
 
-        <LineContainer>
-          <label htmlFor="userNameInput">사용자 이름</label>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            type="text"
-            id="userNameInput"
-            name="username"
-            placeholder="2~10자 이내여야 합니다."
-          />
-        </LineContainer>
+          <LineContainer>
+            <label htmlFor="userNameInput">사용자 이름</label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              type="text"
+              id="userNameInput"
+              name="username"
+              placeholder="2~10자 이내여야 합니다."
+            />
+          </LineContainer>
 
-        <LineContainer>
-          <label htmlFor="userIdInput">계정 ID</label>
-          <input
-            value={accountname}
-            onChange={(e) => setAccountname(e.target.value)}
-            type="text"
-            id="userIdInput"
-            name="accountname"
-            placeholder="영문, 숫자, 특수문자(,), (_)만 사용 가능합니다."
-          />
-        </LineContainer>
+          <LineContainer>
+            <label htmlFor="userIdInput">계정 ID</label>
+            <input
+              value={accountname}
+              onChange={(e) => setAccountname(e.target.value)}
+              type="text"
+              id="userIdInput"
+              name="accountname"
+              placeholder="영문, 숫자, 특수문자(,), (_)만 사용 가능합니다."
+            />
+          </LineContainer>
 
-        <LineContainer>
-          <label htmlFor="userIntroInput">소개</label>
-          <input
-            type="text"
-            onChange={(e) => setInfo(e.target.value)}
-            id="userIntroInput"
-            name="intro"
-            placeholder="자신의 운동루틴에 대해 소개해 주세요!"
-          />
-        </LineContainer>
-        <button type="button" onClick={submitJoin}>
-        짐넥 시작하기
-        </button>
-      </section>
+          <LineContainer>
+            <label htmlFor="userIntroInput">소개</label>
+            <ImageInput
+              type="text"
+              onChange={(e) => setInfo(e.target.value)}
+              id="userIntroInput"
+              name="intro"
+              placeholder="자신의 운동루틴에 대해 소개해 주세요!"
+            />
+          </LineContainer>
+          <button type="button" onClick={submitJoin}>
+          짐넥 시작하기
+          </button>
+        </section>
+      {/* </Container>   */}
     </>
   );
 };
