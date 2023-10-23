@@ -3,7 +3,15 @@ import { Container, LineContainer, ImageSection, ImageInput, Image, Label } from
 
 
 
+
 const Profile = ({ handlePage }) => {
+  // merge conflicts so i moved it from App
+  const [page, setPage] = useState(true);
+  const [info, setInfo] = useState("");
+
+  const handlePage = () => {
+    setPage((prev) => !prev);
+  }; // till here
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

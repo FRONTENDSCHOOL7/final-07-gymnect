@@ -1,17 +1,25 @@
+import GlobalStyles from "./styles/GlobalStyle";
 import { useState } from "react";
 import Profile from "./Components/Profile";
 
+// function App() {
+  // merge conflicts part
+  // const [page, setPage] = useState(true);
+  // const [info, setInfo] = useState("");
+
+  // const handlePage = () => {
+  //   setPage((prev) => !prev);
+  // };
+
+  // return (
+  //   <div>
+  //     {<Profile handlePage={handlePage} /> }
+
 function App() {
-  const [page, setPage] = useState(true);
-  const [info, setInfo] = useState("");
-
-  const handlePage = () => {
-    setPage((prev) => !prev);
-  };
-
   return (
     <div>
-      {<Profile handlePage={handlePage} /> }
+      <GlobalStyles />
+      hello world
     </div>
   );
 }
