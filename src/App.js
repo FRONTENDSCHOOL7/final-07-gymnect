@@ -1,8 +1,8 @@
 import BasicLayout from "./components/Layout/BasicLayout";
 import AppRouter from "./routes/AppRouter";
 import GlobalStyles from "./styles/GlobalStyle";
-import { useState } from "react";
-import Profile from "./Components/Profile";
+// import { useState } from "react";
+// import Profile from "./Components/Profile";
 
 // function App() {
   // merge conflicts part

@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
 import Posting from "../pages/Posting/Posting";
 import Calender from "../pages/Calender/Calender";
-import Profile from "../pages/Profile/MyProfile";
+import Profile from "../pages/Profile/Profile";
 import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
 import Signup from "../pages/Signup/Signup";
