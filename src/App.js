@@ -9,7 +9,6 @@ function App() {
       <BasicLayout>
         <AppRouter />
       </BasicLayout>
-     
     </div>
   );
 }
