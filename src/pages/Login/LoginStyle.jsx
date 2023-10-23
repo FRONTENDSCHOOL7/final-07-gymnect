@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 export const Container = styled.main`
   margin: 0 auto;
@@ -27,10 +27,10 @@ export const SuccessMessage = styled.p`
   margin-top: 6px;
   color: blue;
 `;
-export const SignupLink = styled(Link)`
+export const SignupLink = styled.div`
   display: block;
   padding-top: 1.9rem;
-  color: ${({ theme }) => theme.colors.textColor};
-  font-size: ${({ theme }) => theme.fontSize.small};
+  //color: ${({ theme }) => theme.colors.textColor};
+  //font-size: ${({ theme }) => theme.fontSize.small};
   text-align: center;
 `;
