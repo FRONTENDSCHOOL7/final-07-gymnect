@@ -1,0 +1,28 @@
+when you wanna change your remote reop
+
+i wanna remote new repo address
+
+ChatGPT
+If you want to change the remote repository URL for your Git repository, you can do so using the following Git commands. You need to remove the existing remote named "origin" and then add a new remote with the updated URL:
+
+To remove the existing remote named "origin":
+bash
+Copy code
+git remote remove origin
+To add a new remote with the updated URL (replace new_repo_url with the URL of your new repository):
+bash
+Copy code
+git remote add origin new_repo_url
+Verify that the new remote has been added correctly:
+bash
+Copy code
+git remote -v
+This will show you the remotes configured for your Git repository, and you should see the new URL associated with the "origin" remote.
+
+Finally, push your code to the new repository:
+bash
+Copy code
+git push -u origin 231023
+This will push your local branch to the new remote repository.
+
+After performing these steps, your Git repository will be configured to use the new remote repository URL.
