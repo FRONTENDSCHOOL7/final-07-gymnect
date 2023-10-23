@@ -72,4 +72,4 @@ img {
 }
 `;
 
-export default GlobalStyles;
+export default GlobalStyle;
