@@ -20,6 +20,10 @@ const Signup = () => {
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+  const [passwordCheckValid, setPasswordCheckValid] = useState(false);
+  const [userPasswordCheck, setUserPasswordCheck] = useState("");
+  const [passwordCheckErrorMsg, setPasswordCheckErrorMsg] = useState("");
+  const [passwordCheckSuccessMsg, setPasswordCheckSuccessMsg] = useState("");
   const [isComplete, setIsComplete] = useState(false);
 
   /* 이메일 유효성 검사 */
@@ -28,8 +32,10 @@ const Signup = () => {
     const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     if (userEmail === "") {
       setEmailErrorMsg("*입력해주세요");
+      setEmailSuccessMsg("");
     } else if (!emailRegex.test(userEmail)) {
       setEmailErrorMsg("*이메일의 형식이 올바르지 않습니다 😥");
+      setEmailSuccessMsg("");
     } else {
       setEmailValid(true);
       setEmailErrorMsg("");
@@ -45,7 +51,7 @@ const Signup = () => {
     } else if (checkEmail.message === "사용 가능한 이메일 입니다.") {
       setEmailValid(true);
       setEmailErrorMsg("");
-      setEmailSuccessMsg("사용 가능한 이메일 입니다 🤗");
+      setEmailSuccessMsg("사용 가능한 이메일 입니다.");
     }
   };
   /* 비밀번호 유효성 검사 */
@@ -56,12 +62,23 @@ const Signup = () => {
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
     if (!passwordRegex.test(userPassword)) {
       setPasswordErrorMsg(
-        "*영문+숫자+특수기호 조합으로 6자리 이상 입력해주세요"
+        "*영문+숫자+특수기호 조합으로 6자리 이상 입력해주세요."
       );
     } else {
       setPasswordValid(true);
       setPasswordErrorMsg("");
       setUserPassword(userPassword);
+    }
+  };
+  const handleInputPasswordCheck = (e) => {
+    const userPasswordCheck = e.target.value;
+    if (userPassword !== userPasswordCheck) {
+      setPasswordCheckErrorMsg("*비밀번호가 일치하지 않습니다.");
+      setPasswordCheckSuccessMsg("");
+    } else {
+      setPasswordCheckValid(true);
+      setPasswordCheckErrorMsg("");
+      setPasswordCheckSuccessMsg("비밀번호가 일치합니다.");
     }
   };
 
@@ -75,11 +92,17 @@ const Signup = () => {
     setPasswordErrorMsg("");
   }, [userPassword]);
 
+  useEffect(() => {
+    setEmailErrorMsg("");
+    setPasswordErrorMsg("");
+    setPasswordCheckErrorMsg("");
+  }, [userPasswordCheck]);
+
   /* 아이디와 비밀번호 모두 유효 시, 프로필 설정 페이지로 이동 */
   const handleSignup = async (e) => {
     e.preventDefault();
     console.log(userEmail, userPassword);
-    if (emailValid && passwordValid) {
+    if (emailValid && passwordValid && passwordCheckValid) {
       setIsComplete(true);
       navigate("/account/setProfile", {
         state: {
@@ -92,24 +115,31 @@ const Signup = () => {
     }
   };
 
+  /* 버튼 활성화 */
+  const handleActivateButton = () => {
+    return emailValid && passwordValid && passwordCheckValid;
+  };
+
   return (
     <Container>
       <Title>회원가입</Title>
       <form onSubmit={handleSignup}>
-        <Input
-          label="이메일"
-          placeholder="이메일 주소를 입력해주세요"
-          id="email"
-          type="email"
-          name="email"
-          onChange={handleInputEmail}
-          onBlur={handleEmailDuplicate}
-          // hasError={emailErrorMsg != ""}
-          required
-        />
-        {emailErrorMsg && <ErrorMessage>{emailErrorMsg}</ErrorMessage>}
-        {emailSuccessMsg && <SuccessMessage>{emailSuccessMsg}</SuccessMessage>}
         <Section>
+          <Input
+            label="이메일"
+            placeholder="이메일 주소를 입력해주세요"
+            id="email"
+            type="email"
+            name="email"
+            onChange={handleInputEmail}
+            onBlur={handleEmailDuplicate}
+            // hasError={emailErrorMsg != ""}
+            required
+          />
+          {emailErrorMsg && <ErrorMessage>{emailErrorMsg}</ErrorMessage>}
+          {emailSuccessMsg && (
+            <SuccessMessage>{emailSuccessMsg}</SuccessMessage>
+          )}
           <Input
             label="비밀번호"
             placeholder="비밀번호를 입력해주세요"
@@ -120,20 +150,23 @@ const Signup = () => {
             required
           />
           {passwordErrorMsg && <ErrorMessage>{passwordErrorMsg}</ErrorMessage>}
-          {/* <Input
+          <Input
             label="비밀번호 확인"
-            placeholder="비밀번호를 입력해주세요"
-            id="password"
+            placeholder="비밀번호를 다시 한번 입력해주세요"
+            id="passwordCheck"
             type="password"
-            name="password"
-            onChange={handleInputPassword}
+            name="passwordCheck"
+            onChange={handleInputPasswordCheck}
             required
-          /> */}
+          />
+          {passwordCheckErrorMsg && (
+            <ErrorMessage>{passwordCheckErrorMsg}</ErrorMessage>
+          )}
+          {passwordCheckSuccessMsg && (
+            <SuccessMessage>{passwordCheckSuccessMsg}</SuccessMessage>
+          )}
         </Section>
-        <Button
-          width="322px"
-          type="submit"
-          disabled={!(emailValid && passwordValid)}>
+        <Button width="322px" type="submit" disabled={!handleActivateButton()}>
           다음
         </Button>
       </form>
