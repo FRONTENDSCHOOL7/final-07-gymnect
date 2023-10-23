@@ -1,16 +1,8 @@
 import { useState } from "react";
+import LineContainer from "./ProfileStyle";
+
 
 const Profile = ({ handlePage }) => {
-  //     {
-  // 		"user": {
-  // 				"username": String*,
-  // 				"email": String*,
-  // 				"password": String*,
-  // 				"accountname": String*,
-  // 				"intro": String,
-  // 				"image": String // 예시) https://api.mandarin.weniv.co.kr/1641906557953.png
-  // 		}
-  // }
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -73,6 +65,8 @@ const Profile = ({ handlePage }) => {
       <section>
         <h2>프로필 설정</h2>
         <p>나중에 언제든지 변경할 수 있습니다.</p>
+
+        <LineContainer>
         <label src={imgSrc} htmlFor="profileImg">
           <img src={imgSrc} alt="" id="imagePre" />
         </label>
@@ -83,7 +77,9 @@ const Profile = ({ handlePage }) => {
           name="image"
           accept="image/*"
         />
-        <div>
+        </LineContainer>
+
+        <LineContainer>
           <label htmlFor="userNameInput">사용자 이름</label>
           <input
             value={username}
@@ -93,8 +89,9 @@ const Profile = ({ handlePage }) => {
             name="username"
             placeholder="2~10자 이내여야 합니다."
           />
-        </div>
-        <div>
+        </LineContainer>
+
+        <LineContainer>
           <label htmlFor="userIdInput">계정 ID</label>
           <input
             value={accountname}
@@ -104,8 +101,9 @@ const Profile = ({ handlePage }) => {
             name="accountname"
             placeholder="영문, 숫자, 특수문자(,), (_)만 사용 가능합니다."
           />
-        </div>
-        <div>
+        </LineContainer>
+
+        <LineContainer>
           <label htmlFor="userIntroInput">소개</label>
           <input
             type="text"
@@ -114,7 +112,7 @@ const Profile = ({ handlePage }) => {
             name="intro"
             placeholder="자신의 운동루틴에 대해 소개해 주세요!"
           />
-        </div>
+        </LineContainer>
         <button type="button" onClick={submitJoin}>
         짐넥 시작하기
         </button>
