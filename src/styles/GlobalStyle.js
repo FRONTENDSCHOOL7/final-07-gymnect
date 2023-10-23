@@ -1,51 +1,81 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
-const GlobalStyles = createGlobalStyle`
-    // 적용시킬 css 입력
-    a{
-        text-decoration: none;
-        color: inherit;
-    }
-    *{
-        box-sizing: border-box;
-        @font-face {
+const GlobalStyle = createGlobalStyle`
+  ${reset};
+
+* {
+  box-sizing: border-box;
+  @font-face {
     font-family: 'SpoqaHanSansNeo-Regular';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+  }
 }
-    }
-    html, body, div, span, h1, h2, h3, h4, h5, h6, p, 
-    a, dl, dt, dd, ol, ul, li, form, label, table{
-        margin: 0;
-        padding: 0;
-        border: 0;
-        vertical-align: baseline;
-    }
-    body{
-        line-height: 1;
-        font-family: 'SpoqaHanSansNeo-Regular'
-        /* background-color: #F6F9F0; */
-        /* margin-bottom: 100px; */
-    }
-    ol, ul{
-        list-style: none;
-    }
-    button {
-        border: 0;
-        background: transparent;
-        cursor: pointer;
-    }
-    .a11y-hidden {
-        clip: rect(1px, 1px, 1px, 1px);
-        clip-path: inset(50%);
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-    }
+
+:root {
+  font-size: 10px;
+}
+
+body {
+  color: inherit;
+  font-family: 'SpoqaHanSansNeo-Regular';
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+ol, ul, li {
+  list-style: none;
+}
+
+button {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+textarea {
+  border: none;
+  overflow: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}
+
+button, input, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  border: none;
+}
+
+img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.a11y-hidden { 
+  position: absolute; 
+  width: 1px; 
+  height: 1px; 
+  padding: 0; 
+  margin: -1px; 
+  overflow: hidden; 
+  clip: rect(0, 0, 0, 0); 
+  border: 0;
+}
 `;
 
-export default GlobalStyles;
+export default GlobalStyle;
