@@ -107,13 +107,14 @@ export default function Login() {
           />
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
-        <ButtonContainer
-          width="322px"
-          type="submit"
-          disabled={!handleActivateButton()}>
-          로그인
-        </ButtonContainer>
+        
         <LoginSection>
+          <ButtonContainer
+            width="322px"
+            type="submit"
+            disabled={!handleActivateButton()}>
+            로그인
+          </ButtonContainer>
           <Button className="kakao-login">
             <GlobalSprite id="message-circle" />
             카카오톡 계정으로 로그인
@@ -126,7 +127,10 @@ export default function Login() {
             <GlobalSprite id="facebook" />
             페이스북 계정으로 로그인
           </Button>
-          <SignupLink to="/signup">이메일로 회원가입 | 비밀번호 찾기</SignupLink>
+          <SignupLink>
+            <button to="/home">이메일로 회원가입 </button> | <button>비밀번호 찾기</button>
+          </SignupLink>
+          
           {/* <LoginLink>
             <Link to="/login" className="login-link">
               이메일로 로그인

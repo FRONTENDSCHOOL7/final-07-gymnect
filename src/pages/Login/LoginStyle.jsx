@@ -32,34 +32,35 @@ export const SignupLink = styled.button`
   padding-top: 1.9rem;
   margin:auto;
   color: #767676;
+  
 `;
 
 /*SNS로그인 버튼*/
 export const Button = styled.button`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  width: 32rem;
-  height: 4.4rem;
+  justify-content: flex-start;
+  width:32rem;
+  height:4.4rem;
   padding: 1rem;
-  margin-bottom: 1rem;
-  color: #767676;
   border-radius: 4.4rem;
   font-size: 14px;
+  margin-top: 1rem;
+  color: #767676;
   svg {
     margin-left: 1rem;
     margin-right: 5rem;
   }
 
-  &:nth-child(2) {
+  /* &:nth-child(2) {
     svg {
     margin-right: 6.3rem;
     }
-  }
+  } */
 `
 /*SNS로그인 섹션*/
 export const LoginSection = styled.section`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -69,8 +70,10 @@ export const LoginSection = styled.section`
   height: 30rem;
   padding: 5rem 3.4rem;
   background-color: #ffffff;
-  border-top-left-radius: 5rem;
-  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem; */
+
+  //margin-top:1rem;
 
   .kakao-login {
       border: 0.1rem solid #F2C94C;
