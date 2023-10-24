@@ -39,10 +39,10 @@ const Text = styled.p`
   font-weight: 500;
   font-size: 14px;
   color: #767676;
-`
+`;
 export const Image = styled.img`
   width: 97.61px;
   height: 95.112px;
 `;
 
-export default NoFollowerHome
+export default NoFollowerHome;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
@@ -16,11 +16,9 @@ import Search from '../pages/Home/Search/Search';
 export default function AppRouter() {
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
           <Route path='/' element={<Splash />}/>
           <Route path='/home' element={<Home />}/>
-          <Route path='/search' element={<Search />}/>
           <Route path='/chatlist' element={<ChatList />}/>
           <Route path='/posting' element={<Posting />}/>
           <Route path='/calender' element={<Calender />}/>
@@ -33,4 +31,4 @@ export default function AppRouter() {
       </Routes>
     </BrowserRouter>
   );
-};
+}
