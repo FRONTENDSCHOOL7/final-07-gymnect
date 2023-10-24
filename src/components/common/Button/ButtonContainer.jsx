@@ -5,11 +5,12 @@ export default function ButtonContainer({
   children,
   type,
   color,
-  bgColor,
+  bgColor = "#006CD8",
   width,
   height,
   disabled = false,
-  onClick
+  onClick,
+  border
 }) {
   return (
     <Button
@@ -19,7 +20,8 @@ export default function ButtonContainer({
       width={width}
       height={height}
       disabled={disabled}
-      onClick={onClick}>
+      onClick={onClick}
+      border={border}>
       {children}
     </Button>
   );
