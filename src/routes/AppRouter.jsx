@@ -11,6 +11,9 @@ import Signup from "../pages/Signup/Signup";
 import SetProfile from "../pages/Signup/SetProfile";
 import Navbar from "../components/Footer/Navbar";
 import Search from "../pages/Home/Search/Search";
+import Follower from "../pages/FollowList/FollowerPage";
+import Following from "../pages/FollowList/FollowingPage";
+import ProfileEdit from "../pages/Profile/ProfileEdit";
 
 export default function AppRouter() {
   return (
@@ -68,6 +71,33 @@ export default function AppRouter() {
             <>
               <Navbar />
               <Profile />
+            </>
+          }
+        />
+        <Route
+          path="/follower"
+          element={
+            <>
+              <Navbar />
+              <Follower />
+            </>
+          }
+        />
+        <Route
+          path="/following"
+          element={
+            <>
+              <Navbar />
+              <Following />
+            </>
+          }
+        />
+                <Route
+          path="/edit"
+          element={
+            <>
+              <Navbar />
+              <ProfileEdit />
             </>
           }
         />
