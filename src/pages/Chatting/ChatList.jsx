@@ -1,7 +1,10 @@
 import React from 'react'
+import ModalNav from '../../components/Header/ModalHeader'
 
 export default function ChatList() {
   return (
-    <div>ChatList</div>
+    <div>
+      <ModalNav />
+      ChatList</div>
   )
 }
