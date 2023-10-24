@@ -44,3 +44,23 @@ export const postUserSignup = async (
   const response = await instance.post("/user/", userData);
   return response.data;
 };
+
+/* 사용자 이름 중복 검사 */
+export const postAccountnameDuplicate = async (userId) => {
+  const userAccountname = {
+    user: {
+      accountname: userId,
+    },
+  };
+  const response = await instance.post(
+    '/user/accountnamevalid',
+    userAccountname
+  );
+  return response.data;
+};
+
+/* 이미지 업로드 */
+export const postUploadProfile = async (FormData) => {
+  const response = await imgInstance.post('/image/uploadfile', FormData);
+  return response.data;
+};
