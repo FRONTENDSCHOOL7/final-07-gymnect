@@ -3,9 +3,11 @@ import styled from "styled-components";
 
 const BasicLayout = ({ children }) => {
   return (
-    <LayoutContainer>
-      <Screen>{children}</Screen>
-    </LayoutContainer>
+    <>
+      <LayoutContainer>
+        <Screen>{children}</Screen>
+      </LayoutContainer>
+    </>
   );
 };
 
