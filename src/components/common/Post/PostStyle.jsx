@@ -44,6 +44,7 @@ export const DotImg = styled.img`
 
 export const PostContent = styled.div`
   margin: 16px 0;
+  font-size: 14px;
 `;
 
 export const PostUploadImg = styled.img`
