@@ -9,25 +9,73 @@ import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
 import Signup from "../pages/Signup/Signup";
 import SetProfile from "../pages/Signup/SetProfile";
-import Navbar from '../components/Footer/Navbar';
-import Search from '../pages/Home/Search/Search';
-
+import Navbar from "../components/Footer/Navbar";
+import Search from "../pages/Home/Search/Search";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path='/' element={<Splash />}/>
-          <Route path='/home' element={<Home />}/>
-          <Route path='/chatlist' element={<ChatList />}/>
-          <Route path='/posting' element={<Posting />}/>
-          <Route path='/calender' element={<Calender />}/>
-          <Route path='/profile' element={<Profile />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path='/account/*' element={<Outlet />}>
-              <Route path='signup/' element={<Signup />}/>
-              <Route path='setprofile/' element={<SetProfile />}/>
-          </Route>
+        <Route path="/" element={<Splash />} />
+        <Route
+          path="/home"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
+        <Route
+          path="/chatlist"
+          element={
+            <>
+              <Navbar />
+              <ChatList />
+            </>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <>
+              <Navbar />
+              <Search />
+            </>
+          }
+        />
+        <Route
+          path="/posting"
+          element={
+            <>
+              <Navbar />
+              <Posting />
+            </>
+          }
+        />
+        <Route
+          path="/calender"
+          element={
+            <>
+              <Navbar />
+              <Calender />
+            </>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <>
+              <Navbar />
+              <Profile />
+            </>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/account/*" element={<Outlet />}>
+          <Route path="signup/" element={<Signup />} />
+          <Route path="setprofile/" element={<SetProfile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

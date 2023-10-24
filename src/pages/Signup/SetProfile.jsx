@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Container, LineContainer, ImageSection, ImageInput, Image, Label, Title, P } from "./SetProfileStyle";
+import {
+  Container,
+  LineContainer,
+  ImageSection,
+  ImageInput,
+  Image,
+  Label,
+  Title,
+  P
+} from "./SetProfileStyle";
 import Button from "../../components/common/Button/ButtonContainer";
 import Input from "../../components/common/Input/Input";
 
@@ -15,12 +24,10 @@ const SetProfile = () => {
   const [password, setPassword] = useState("");
   const [accountname, setAccountname] = useState("");
   const [imgSrc, setImgSrc] = useState("");
-    useEffect(() => {
-      
-      setImgSrc("");
-    }, []);
+  useEffect(() => {
+    setImgSrc("");
+  }, []);
   const [info, setInfo] = useState("");
-
 
   const submitJoin = () => {
     const joinData = {
@@ -30,8 +37,8 @@ const SetProfile = () => {
         password: password,
         accountname: accountname,
         intro: info,
-        image: imgSrc,
-      },
+        image: imgSrc
+      }
     };
     join(joinData);
   };
@@ -44,7 +51,7 @@ const SetProfile = () => {
 
     const res = await fetch(reqUrl, {
       method: "POST",
-      body: form,
+      body: form
     });
 
     const json = await res.json();
@@ -62,13 +69,12 @@ const SetProfile = () => {
     const data = await fetch(reqUrl, {
       method: "POST",
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json"
       },
-      body: JSON.stringify(joinData),
+      body: JSON.stringify(joinData)
     }).then((res) => res.json());
     console.log(data);
   };
-
 
   /* 버튼 활성화 */
   // const handleActivateButton = () => {
@@ -82,9 +88,9 @@ const SetProfile = () => {
         <P>나중에 언제든지 변경할 수 있습니다.</P>
 
         <ImageSection>
-            <LineContainer>
+          <LineContainer>
             <Label src={imgSrc} htmlFor="profileImg">
-              <Image src={imgSrc} alt=""/>
+              <Image src={imgSrc} alt="" />
             </Label>
             <ImageInput
               type="file"
@@ -93,13 +99,13 @@ const SetProfile = () => {
               name="image"
               accept="image/*"
             />
-            </LineContainer>
+          </LineContainer>
         </ImageSection>
 
         <LineContainer>
           <label htmlFor="userNameInput">사용자 이름</label>
           <Input
-            lable="사용자 이름"
+            label="사용자 이름"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             type="text"
@@ -135,7 +141,6 @@ const SetProfile = () => {
         <Button width="322px" type="submit" onClick={submitJoin}>
           짐넥 시작하기
         </Button>
-
       </section>
     </Container>
   );
