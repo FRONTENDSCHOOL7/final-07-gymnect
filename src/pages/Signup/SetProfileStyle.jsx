@@ -2,29 +2,21 @@ import styled from "styled-components";
 import AddImg from "../../assets/images/icon-img-btn.svg";
 import imgSrc from "../../assets/images/signup-profile.svg";
 
-export const Container = styled.div`
+export const Container = styled.main`
   margin: 0 auto;
-
-  .spriteImg-wrapper {
-    position: absolute;
-    bottom: 0;
-  }
-
-  .upload-button {
-    position: absolute;
-    left: 0;
-  }
 `;
 
 export const Title = styled.h1`
   padding-top: 30px;
-  padding-bottom: 24px;
+  padding-bottom: 12px;
   text-align: center;
   font-size: 24px;
   font-weight: 500;
 `;
 
-export const P = styled.p`
+export const SubTitle = styled.p`
+  margin-bottom: 30px;
+  font-size: 14px;
   color: #767676;
   text-align: center;
   font-size: 14px;
@@ -49,7 +41,7 @@ export const ImageSection = styled.section``;
 export const Label = styled.label`
   display: block;
   position: relative;
-  width: 122px;
+  width: 110px;
   height: 110px;
   flex-shrink: 0;
   margin: 3.5rem auto 5.5rem;

@@ -10,24 +10,40 @@ import {
   P
 } from "./SetProfileStyle";
 import Button from "../../components/common/Button/ButtonContainer";
-import Input from "../../components/common/Input/Input";
+import {
+  postAccountnameDuplicate,
+  postUserSignup,
+  postUploadProfile
+} from "../../api/auth";
+import BasicProfileImg from "../../assets/images/signup-profile.svg";
+import {
+  Container,
+  Title,
+  SubTitle,
+  ImageSection,
+  Label,
+  ProfileImg,
+  ImgInput,
+  Section,
+  ErrorMessage
+} from "./SetProfileStyle";
 
-const SetProfile = () => {
-  const [page, setPage] = useState(true);
-
-  const handlePage = () => {
-    setPage((prev) => !prev);
-  };
-
+const ProfileSettingPage = () => {
+  const URL = "https://api.mandarin.weniv.co.kr/";
+  const navigate = useNavigate();
+  const fileInputRef = useRef();
+  const location = useLocation();
+  const userEmail = location.state.email;
+  const userPassword = location.state.password;
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [accountname, setAccountname] = useState("");
   const [imgSrc, setImgSrc] = useState("");
-  useEffect(() => {
-    setImgSrc("");
-  }, []);
+    useEffect(() => {
+      
+      setImgSrc("");
+    }, []);
   const [info, setInfo] = useState("");
+
 
   const submitJoin = () => {
     const joinData = {
@@ -37,8 +53,8 @@ const SetProfile = () => {
         password: password,
         accountname: accountname,
         intro: info,
-        image: imgSrc
-      }
+        image: imgSrc,
+      },
     };
     join(joinData);
   };
@@ -51,7 +67,7 @@ const SetProfile = () => {
 
     const res = await fetch(reqUrl, {
       method: "POST",
-      body: form
+      body: form,
     });
 
     const json = await res.json();
@@ -69,28 +85,28 @@ const SetProfile = () => {
     const data = await fetch(reqUrl, {
       method: "POST",
       headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
-      body: JSON.stringify(joinData)
+      body: JSON.stringify(joinData),
     }).then((res) => res.json());
     console.log(data);
   };
 
+
   /* 버튼 활성화 */
-  // const handleActivateButton = () => {
-  //   return emailValid && passwordValid && passwordCheckValid;
-  // };
+  const handleActivateButton = () => {
+    return usernameValid && accountnameValid;
+  };
 
   return (
     <Container>
-      <section>
-        <Title>프로필 설정</Title>
-        <P>나중에 언제든지 변경할 수 있습니다.</P>
-
+      <Title>프로필 설정</Title>
+      <SubTitle>나중에 언제든지 변경할 수 있습니다.</SubTitle>
+      <form onSubmit={handleProfileSignup}>
         <ImageSection>
-          <LineContainer>
+            <LineContainer>
             <Label src={imgSrc} htmlFor="profileImg">
-              <Image src={imgSrc} alt="" />
+              <Image src={imgSrc} alt=""/>
             </Label>
             <ImageInput
               type="file"
@@ -99,51 +115,54 @@ const SetProfile = () => {
               name="image"
               accept="image/*"
             />
-          </LineContainer>
+            </LineContainer>
         </ImageSection>
-
-        <LineContainer>
-          <label htmlFor="userNameInput">사용자 이름</label>
+        <Section>
           <Input
-            label="사용자 이름"
+            lable="사용자 이름"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             type="text"
-            id="userNameInput"
             name="username"
-            placeholder="2~10자 이내여야 합니다."
+            onChange={handleInputUsername}
+            required
           />
-        </LineContainer>
-
-        <LineContainer>
-          <label htmlFor="userIdInput">계정 ID</label>
+          {usernameErrorMsg && <ErrorMessage>{usernameErrorMsg}</ErrorMessage>}
           <Input
-            value={accountname}
-            onChange={(e) => setAccountname(e.target.value)}
+            label="계정 ID"
+            placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
+            id="accountname"
             type="text"
-            id="userIdInput"
             name="accountname"
-            placeholder="영문, 숫자, 특수문자(,), (_)만 사용 가능합니다."
+            onChange={handleInputAccountname}
+            required
           />
-        </LineContainer>
+          {accountnameErrorMsg && (
+            <ErrorMessage>{accountnameErrorMsg}</ErrorMessage>
+          )}
 
-        <LineContainer>
-          <label htmlFor="userIntroInput">소개</label>
           <Input
+            label="소개"
+            placeholder="자신에 대해 소개해 주세요!"
+            id="intro"
             type="text"
-            onChange={(e) => setInfo(e.target.value)}
-            id="userIntroInput"
             name="intro"
-            placeholder="자신의 운동루틴에 대해 소개해 주세요!"
+            onChange={handleInputChange}
+            required
           />
-        </LineContainer>
-
-        <Button width="322px" type="submit" onClick={submitJoin}>
+        </Section>
+        <Button
+          width="322px"
+          type="submit"
+          disabled={!handleActivateButton()}
+          // handleClick={handleProfileSignup}
+        >
           짐넥 시작하기
         </Button>
+
       </section>
     </Container>
   );
 };
 
-export default SetProfile;
+export default ProfileSettingPage;
