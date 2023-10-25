@@ -41,6 +41,6 @@ export const postUserSignup = async (
       image: image
     }
   };
-  const response = await instance.post("/user/", userData);
+  const response = await instance.post("/user/signup", userData);
   return response.data;
 };

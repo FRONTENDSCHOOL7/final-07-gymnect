@@ -1,5 +1,5 @@
 import styled from "styled-components";
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.main`
   margin: 0 auto;
@@ -27,16 +27,22 @@ export const SuccessMessage = styled.p`
   margin-top: 6px;
   color: blue;
 `;
-export const SignupLink = styled.button`
+/*회원가입,비번찾기 링크버튼 컨테이너*/
+export const LinkContainer = styled.div`
+  text-align: center;
+  padding-top: 1.9rem;
+  color: #767676;
+`
+/*회원가입 이동 버튼*/
+export const SignupLink = styled(Link)`
   display: block;
   padding-top: 1.9rem;
   margin:auto;
   color: #767676;
   
 `;
-
 /*SNS로그인 버튼*/
-export const Button = styled.button`
+export const Button = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -51,29 +57,9 @@ export const Button = styled.button`
     margin-left: 1rem;
     margin-right: 5rem;
   }
-
-  /* &:nth-child(2) {
-    svg {
-    margin-right: 6.3rem;
-    }
-  } */
 `
 /*SNS로그인 섹션*/
 export const LoginSection = styled.section`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  width: 39rem;
-  height: 30rem;
-  padding: 5rem 3.4rem;
-  background-color: #ffffff;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem; */
-
-  //margin-top:1rem;
 
   .kakao-login {
       border: 0.1rem solid #F2C94C;

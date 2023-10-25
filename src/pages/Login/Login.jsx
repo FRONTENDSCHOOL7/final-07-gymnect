@@ -8,13 +8,14 @@ import { postUserLogin } from "../../api/auth";
 import Input from "../../components/common/Input/Input";
 import ButtonContainer from "../../components/common/Button/ButtonContainer";
 import GlobalSprite from '../../assets/sprite/GlobalSprite';
-import SnsLogo from '../../assets/images/login-logo.svg';
+//import SnsLogo from '../../assets/images/login-logo.svg';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Title,
   Form,
   Section,
-  SignupLink,
+  LinkContainer,
   ErrorMessage,
   LoginSection,
   Button
@@ -115,21 +116,21 @@ export default function Login() {
             disabled={!handleActivateButton()}>
             로그인
           </ButtonContainer>
-          <Button className="kakao-login">
-            <GlobalSprite id="message-circle" />
+          <Button to="kakao" className="kakao-login">
+            <GlobalSprite id="message-circle" />{/*카카오톡 로고*/}
             카카오톡 계정으로 로그인
           </Button>
-          <Button className="google-login">
+          <Button to="google" className="google-login">
             <GlobalSprite id="google-g-logo-1" />
             구글 계정으로 로그인
           </Button>
-          <Button className="facebook-login">
+          <Button to="facebook" className="facebook-login">
             <GlobalSprite id="facebook" />
             페이스북 계정으로 로그인
           </Button>
-          <SignupLink>
-            <button to="/home">이메일로 회원가입 </button> | <button>비밀번호 찾기</button>
-          </SignupLink>
+          <LinkContainer>
+            <Link to="/account/signup">이메일로 회원가입 </Link> | <Link to="/account/findPw">비밀번호 찾기</Link>
+          </LinkContainer>
           
           {/* <LoginLink>
             <Link to="/login" className="login-link">
