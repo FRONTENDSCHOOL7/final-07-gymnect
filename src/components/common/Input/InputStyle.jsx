@@ -8,8 +8,8 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 12px;
+  margin-bottom: 6px;
   color: #767676;
 `;
 
