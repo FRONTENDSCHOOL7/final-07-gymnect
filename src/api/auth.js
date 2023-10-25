@@ -5,12 +5,13 @@ export const postUserLogin = async (email, password) => {
   const loginData = {
     user: {
       email: email,
-      password: password,
-    },
+      password: password
+    }
   };
-  const response = await instance.post('/user/login', loginData);
+  const response = await instance.post("/user/login", loginData);
   return response.data;
 };
+
 /* 이메일 중복 검사 */
 export const postEmailDuplicate = async (email) => {
   const emailData = {
@@ -41,7 +42,7 @@ export const postUserSignup = async (
       image: image
     }
   };
-  const response = await instance.post("/user/signup", userData);
+  const response = await instance.post("/user/", userData);
   return response.data;
 };
 
@@ -49,11 +50,11 @@ export const postUserSignup = async (
 export const postAccountnameDuplicate = async (userId) => {
   const userAccountname = {
     user: {
-      accountname: userId,
-    },
+      accountname: userId
+    }
   };
   const response = await instance.post(
-    '/user/accountnamevalid',
+    "/user/accountnamevalid",
     userAccountname
   );
   return response.data;
@@ -61,6 +62,6 @@ export const postAccountnameDuplicate = async (userId) => {
 
 /* 이미지 업로드 */
 export const postUploadProfile = async (FormData) => {
-  const response = await imgInstance.post('/image/uploadfile', FormData);
+  const response = await imgInstance.post("/image/uploadfile", FormData);
   return response.data;
 };
