@@ -8,9 +8,10 @@ import UploadNav from '../../components/Header/UploadHeader'
 //   )
 // }
 
-// 여기서부터는 모달확인을 위한 임시창 //
-import Modal from '../../components/common/Modal/PostModal';
 
+// 여기서부터는 모달확인을 위한 임시창 //
+// import Modal from '../../components/common/Modal/PostModal';
+import Modal from '../../components/common/Modal/DeleteEditModal';
 
 export default function Posting() {
   return (
