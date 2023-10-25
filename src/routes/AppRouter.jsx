@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
+import ChatRoom from "../pages/Chatting/ChatRoom";
 import Posting from "../pages/Posting/Posting";
 import Calendar from "../pages/Calendar/Calendar";
 import Profile from "../pages/Profile/MyProfile";
@@ -35,6 +36,14 @@ export default function AppRouter() {
             <>
               <Navbar />
               <ChatList />
+            </>
+          }
+        />
+        <Route
+          path="/chatlist/:name"
+          element={
+            <>
+              <ChatRoom />
             </>
           }
         />
@@ -92,7 +101,7 @@ export default function AppRouter() {
             </>
           }
         />
-                <Route
+        <Route
           path="/edit"
           element={
             <>
