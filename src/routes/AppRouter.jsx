@@ -3,7 +3,7 @@ import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
 import Posting from "../pages/Posting/Posting";
-import Calender from "../pages/Calender/Calender";
+import Calendar from "../pages/Calendar/Calendar";
 import Profile from "../pages/Profile/MyProfile";
 import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
@@ -57,11 +57,11 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/calender"
+          path="/calendar"
           element={
             <>
               <Navbar />
-              <Calender />
+              <Calendar />
             </>
           }
         />

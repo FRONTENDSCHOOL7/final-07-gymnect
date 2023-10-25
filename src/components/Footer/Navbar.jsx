@@ -21,7 +21,7 @@ const Navbar = () => {
         <PostIcon />
         게시물 작성
       </StyledNavLink>
-      <StyledNavLink to={"/calender"}>
+      <StyledNavLink to={"/calendar"}>
         <CalenderIcon />
         캘린더
       </StyledNavLink>
