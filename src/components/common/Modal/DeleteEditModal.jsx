@@ -3,8 +3,6 @@ import { Background, Section, Container, Button } from './PostModalStyle';
 
 export default function Modal() {
 
-
-
   return (
     <>
         <Background />
