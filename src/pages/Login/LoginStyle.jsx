@@ -1,5 +1,5 @@
 import styled from "styled-components";
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.main`
   margin: 0 auto;
@@ -27,8 +27,50 @@ export const SuccessMessage = styled.p`
   margin-top: 6px;
   color: blue;
 `;
-export const SignupLink = styled.div`
+/*회원가입,비번찾기 링크버튼 컨테이너*/
+export const LinkContainer = styled.div`
+  text-align: center;
+  padding-top: 1.9rem;
+  color: #767676;
+`
+/*회원가입 이동 버튼*/
+export const SignupLink = styled(Link)`
   display: block;
   padding-top: 1.9rem;
-  text-align: center;
+  margin:auto;
+  color: #767676;
+  
 `;
+/*SNS로그인 버튼*/
+export const Button = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width:32rem;
+  height:4.4rem;
+  padding: 1rem;
+  border-radius: 4.4rem;
+  font-size: 14px;
+  margin-top: 1rem;
+  color: #767676;
+  svg {
+    margin-left: 1rem;
+    margin-right: 5rem;
+  }
+`
+/*SNS로그인 섹션*/
+export const LoginSection = styled.section`
+
+  .kakao-login {
+      border: 0.1rem solid #F2C94C;
+    }
+
+  .google-login {
+      border: 0.1rem solid ;
+    }
+
+  .facebook-login {
+      margin-bottom: 2rem;
+      border: 0.1rem solid #2D9CDB;
+    }
+`
