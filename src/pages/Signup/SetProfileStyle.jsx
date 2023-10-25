@@ -21,17 +21,16 @@ export const SubTitle = styled.p`
   font-weight: 400;
 `;
 
-export const Header = styled.header``;
+export const ImageSection = styled.section``;
 
 export const Label = styled.label`
   display: block;
   position: relative;
-  width: 11rem;
-  height: 11rem;
+  width: 110px;
+  height: 110px;
   margin: 0 auto;
   border: 1px solid #d9d9d9;
   border-radius: 50%;
-  overflow: hidden;
   cursor: pointer;
 
   &::after {
@@ -48,12 +47,9 @@ export const Label = styled.label`
 `;
 
 export const ProfileImg = styled.img`
-  position: absolute;
-  top: 18px;
-  right: 12px;
-
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: cover;
 `;
 

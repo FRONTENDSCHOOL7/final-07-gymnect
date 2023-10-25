@@ -13,7 +13,7 @@ import {
   Container,
   Title,
   SubTitle,
-  Header,
+  ImageSection,
   Label,
   ProfileImg,
   ImgInput,
@@ -144,18 +144,21 @@ const ProfileSettingPage = () => {
       <Title>프로필 설정</Title>
       <SubTitle>나중에 언제든지 변경할 수 있습니다.</SubTitle>
       <form onSubmit={handleProfileSignup}>
-        <Header>
+        <ImageSection>
           <Label htmlFor="upload-image">
-            <ProfileImg src={BasicProfileImg} alt="사용자 프로필 이미지" />
+            <ProfileImg
+              src={image || BasicProfileImg}
+              alt="사용자 프로필 이미지"
+            />
           </Label>
           <ImgInput
             type="file"
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/*"
             id="upload-image"
             ref={fileInputRef}
             onChange={handleInputImage}
           />
-        </Header>
+        </ImageSection>
         <Section>
           <Input
             label="사용자 이름"
