@@ -32,9 +32,8 @@ const Container = styled.header`
 const ChatUserName = styled.span`
   position: absolute;
   left: 48px;
-  font-family: Spoqa Han Sans Neo;
-  //font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
   color: #fff;
   line-height: 80%;
+  margin-bottom: 3px;
 `;

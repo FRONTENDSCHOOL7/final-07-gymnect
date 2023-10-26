@@ -7,9 +7,9 @@ import { userInfoAtom } from "../../atoms/UserAtom";
 import { postUserLogin } from "../../api/auth";
 import Input from "../../components/common/Input/Input";
 import ButtonContainer from "../../components/common/Button/ButtonContainer";
-import GlobalSprite from '../../assets/sprite/GlobalSprite';
+import GlobalSprite from "../../assets/sprite/GlobalSprite";
 //import SnsLogo from '../../assets/images/login-logo.svg';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   Container,
   Title,
@@ -108,7 +108,7 @@ export default function Login() {
           />
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
-        
+
         <LoginSection>
           <ButtonContainer
             width="322px"
@@ -117,7 +117,8 @@ export default function Login() {
             로그인
           </ButtonContainer>
           <Button to="kakao" className="kakao-login">
-            <GlobalSprite id="message-circle" />{/*카카오톡 로고*/}
+            <GlobalSprite id="message-circle" />
+            {/*카카오톡 로고*/}
             카카오톡 계정으로 로그인
           </Button>
           <Button to="google" className="google-login">
@@ -129,20 +130,11 @@ export default function Login() {
             페이스북 계정으로 로그인
           </Button>
           <LinkContainer>
-            <Link to="/account/signup">이메일로 회원가입 </Link> | <Link to="/account/findPw">비밀번호 찾기</Link>
+            <Link to="/account/signup">이메일로 회원가입 </Link> |{" "}
+            <Link to="/account/findPw">비밀번호 찾기</Link>
           </LinkContainer>
-          
-          {/* <LoginLink>
-            <Link to="/login" className="login-link">
-              이메일로 로그인
-            </Link>
-            <Link to="/signup">회원가입</Link>
-          </LoginLink> */}
         </LoginSection>
       </Form>
-      
     </Container>
   );
 }
-
-
