@@ -16,7 +16,8 @@ export default function MyProfile() {
           <FlexIconImg src={flexIcon} alt="나열방식"></FlexIconImg>
           <GridIconImg src={gridIcon} alt="그리드방식"></GridIconImg>
         </Wrap>
-        <Post />
+        <Post /> 
+        {/* post를 생략하고 사진 9개 그냥 그리드로  */}
       </MainWrap>
     </>
   );
