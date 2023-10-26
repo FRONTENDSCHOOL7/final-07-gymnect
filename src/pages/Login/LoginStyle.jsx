@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const Container = styled.main`
   margin: 0 auto;
@@ -12,8 +12,7 @@ export const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
 `;
-export const Form = styled.form`
-`;
+export const Form = styled.form``;
 export const Section = styled.div`
   padding-bottom: 30px;
 `;
@@ -32,22 +31,21 @@ export const LinkContainer = styled.div`
   text-align: center;
   padding-top: 1.9rem;
   color: #767676;
-`
+`;
 /*회원가입 이동 버튼*/
 export const SignupLink = styled(Link)`
   display: block;
   padding-top: 1.9rem;
-  margin:auto;
+  margin: auto;
   color: #767676;
-  
 `;
 /*SNS로그인 버튼*/
-export const Button = styled(Link)`
+export const SnsButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width:32rem;
-  height:4.4rem;
+  width: 32rem;
+  height: 4.4rem;
   padding: 1rem;
   border-radius: 4.4rem;
   font-size: 14px;
@@ -57,20 +55,19 @@ export const Button = styled(Link)`
     margin-left: 1rem;
     margin-right: 5rem;
   }
-`
+`;
 /*SNS로그인 섹션*/
 export const LoginSection = styled.section`
-
   .kakao-login {
-      border: 0.1rem solid #F2C94C;
-    }
+    border: 0.1rem solid #f2c94c;
+  }
 
   .google-login {
-      border: 0.1rem solid ;
-    }
+    border: 0.1rem solid;
+  }
 
   .facebook-login {
-      margin-bottom: 2rem;
-      border: 0.1rem solid #2D9CDB;
-    }
-`
+    margin-bottom: 2rem;
+    border: 0.1rem solid #2d9cdb;
+  }
+`;
