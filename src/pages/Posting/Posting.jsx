@@ -1,6 +1,5 @@
 import React from 'react'
 import UploadNav from '../../components/Header/UploadHeader'
-
 export default function Posting() {
   return (
     <div>
@@ -8,3 +7,4 @@ export default function Posting() {
       Posting</div>
   )
 }
+
