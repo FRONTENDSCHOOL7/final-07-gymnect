@@ -5,14 +5,14 @@ import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <div>
+    <>
       <GlobalStyles />
       <BasicLayout>
         <RecoilRoot>
           <AppRouter />
         </RecoilRoot>
       </BasicLayout>
-    </div>
+    </>
   );
 }
 export default App;
