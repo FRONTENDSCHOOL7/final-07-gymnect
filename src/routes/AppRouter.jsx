@@ -14,6 +14,8 @@ import Search from "../pages/Home/Search/Search";
 import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
+import MyProfile from "../pages/Profile/MyProfile";
+import PostComment from "../pages/PostComment";
 
 export default function AppRouter() {
   return (
@@ -92,7 +94,7 @@ export default function AppRouter() {
             </>
           }
         />
-                <Route
+        <Route
           path="/edit"
           element={
             <>
@@ -106,6 +108,8 @@ export default function AppRouter() {
           <Route path="signup/" element={<Signup />} />
           <Route path="setprofile/" element={<SetProfile />} />
         </Route>
+        <Route path="/post/weniv_Mandarin" element={<PostComment />} />
+        <Route path="/profile/weniv_Mandarin" element={<MyProfile />} />
       </Routes>
     </BrowserRouter>
   );

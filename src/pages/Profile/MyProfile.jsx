@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "../../components/common/Post/Post";
+import Post1 from "../../components/common/Post/Post1";
 import MyProfileUp from "../../components/common/Profile/MyProfileUp";
 import ModalNav from "../../components/Header/ModalHeader";
 import { FlexIconImg, GridIconImg, MainWrap, Wrap } from "./MyProfileStyle";
@@ -16,7 +16,7 @@ export default function MyProfile() {
           <FlexIconImg src={flexIcon} alt="나열방식"></FlexIconImg>
           <GridIconImg src={gridIcon} alt="그리드방식"></GridIconImg>
         </Wrap>
-        <Post />
+        <Post1 />
       </MainWrap>
     </>
   );
