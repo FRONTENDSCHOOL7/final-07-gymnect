@@ -5,22 +5,17 @@ import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
 
 export default function Splash() {
-  const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
-
-  const handleStartClick = () => {
-    navigate("/login");
-  };
 
   useEffect(() => {
     // 3초 후에 버튼 보여주기
     const timer = setTimeout(() => {
-      setShowButton(true);
+      navigate("/login");
     }, 3000);
 
     // 컴포넌트 언마운트 시 타이머 해제
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   const ThunderIcon = () => (
     <svg
@@ -43,15 +38,12 @@ export default function Splash() {
         <Title>
           <MainLogo src={mainLogo} alt="짐넥 로고" />
           <BackLogo src={backLogo} alt="아령 로고" />
-          <ThunderDiv showButton={showButton}>
+          <ThunderDiv>
             <ThunderIcon />
           </ThunderDiv>
         </Title>
         <SubTitle>운동과 일상을 연결 하다</SubTitle>
       </TitleDiv>
-      {showButton && (
-        <StartButton onClick={handleStartClick}>시작하기</StartButton>
-      )}
       <FooterDiv>GYM-NECT</FooterDiv>
     </Container>
   );
@@ -60,7 +52,7 @@ export default function Splash() {
 export const Container = styled.div`
   background-color: #006cd8;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; // 높이를 최소한으로 설정
 `;
 
 export const TitleDiv = styled.div`
@@ -68,7 +60,6 @@ export const TitleDiv = styled.div`
 `;
 
 export const Title = styled.h1`
-  height: 100%;
   position: relative;
   display: flex;
   justify-content: center;
@@ -137,33 +128,11 @@ const ThunderDiv = styled.div.withConfig({
   }
 `;
 
-export const StartButton = styled.button`
+export const FooterDiv = styled.p`
   position: absolute;
-  top: 50%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 12px 24px; // 좀 더 큰 패딩으로 버튼 크기 조정
-  border: none;
-  background-color: #ffffff; // 흰색 배경
-  color: #006cd8; // 텍스트 색상을 메인 컬러로 설정
-  border-radius: 30px; // 둥근 모서리
-  cursor: pointer;
-  z-index: 11;
-  font-weight: 600; // 두꺼운 텍스트
-  letter-spacing: 1px; // 텍스트 간격
-  transition: all 0.3s; // 부드러운 효과를 위한 전환
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); // 그림자 효과 추가
-
-  &:hover {
-    background-color: #006cd8; // 호버시 배경색을 메인 컬러로 변경
-    color: #ffffff; // 호버시 텍스트 색상을 흰색으로 변경
-    transform: translate(-50%, -52%); // 약간 위로 이동하는 효과 추가
-  }
-`;
-
-export const FooterDiv = styled.p`
-  margin-top: 530px;
   color: white;
   font-size: 9.5px;
-  text-align: center;
 `;
