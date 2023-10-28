@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import UploadNav from "../../components/Header/UploadHeader";
 import styled from "styled-components";
+import Button from "../../components/common/Button/ButtonContainer";
 
+// 셀렉트창 운동종류 데이터
 const ExerciseData = [
   { id: null, value: "운동 종류" },
   { id: 1, value: "근력 운동" },
   { id: 2, value: "걷기" },
   { id: 3, value: "달리기" },
   { id: 4, value: "자전거 타기" },
-  { id: 5, value: "수영" },
-  { id: 6, value: "등산" },
+  { id: 5, value: "등산" },
+  { id: 6, value: "수영" },
   { id: 7, value: "스트레칭" },
   { id: 8, value: "필라테스" },
   { id: 9, value: "발레" },
-  { id: 10, value: "기타 운동" }
+  { id: 10, value: "풋살" },
+  { id: 11, value: "기타 운동" }
 ];
 
 function Upload() {
@@ -28,8 +31,53 @@ function Upload() {
     setIsOpen(false);
   };
 
+  // 시간 입력
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
+
+  // 운동 추가
+  const [exerciseEntries, setExerciseEntries] = useState([
+    { name: "", sets: [{ weight: "", reps: "" }] }
+  ]);
+
+  const handleAddExerciseInput = () => {
+    setExerciseEntries([
+      ...exerciseEntries,
+      { name: "", sets: [{ weight: "", reps: "" }] }
+    ]);
+  };
+
+  const handleRemoveExerciseInput = (index) => {
+    const newEntries = [...exerciseEntries];
+    newEntries.splice(index, 1);
+    setExerciseEntries(newEntries);
+  };
+
+  const handleExerciseNameChange = (index, value) => {
+    const newEntries = [...exerciseEntries];
+    newEntries[index].name = value;
+    setExerciseEntries(newEntries);
+  };
+
+  const handleAddSet = (exerciseIndex) => {
+    const newEntries = [...exerciseEntries];
+    newEntries[exerciseIndex].sets.push({ weight: "", reps: "", sets: "" });
+    setExerciseEntries(newEntries);
+  };
+
+  const handleRemoveSet = (exerciseIndex, setIndex) => {
+    const newEntries = [...exerciseEntries];
+    if (newEntries[exerciseIndex].sets.length > 1) {
+      newEntries[exerciseIndex].sets.splice(setIndex, 1);
+      setExerciseEntries(newEntries);
+    }
+  };
+
+  const handleSetChange = (exerciseIndex, setIndex, field, value) => {
+    const newEntries = [...exerciseEntries];
+    newEntries[exerciseIndex].sets[setIndex][field] = value;
+    setExerciseEntries(newEntries);
+  };
 
   return (
     <>
@@ -46,23 +94,127 @@ function Upload() {
             </Option>
           ))}
         </OptionsContainer>
+        {selectedValue === "근력 운동" && (
+          <>
+            <PlusExerciseBtn>
+              <Button
+                width="310px"
+                height="29px"
+                onClick={handleAddExerciseInput}>
+                + 운동 추가
+              </Button>
+            </PlusExerciseBtn>
+            {exerciseEntries.map((exercise, exerciseIndex) => (
+              <div key={exerciseIndex}>
+                <ExerciseNameInput>
+                  <LabelExerciseName htmlFor="exerciseName">
+                    운동 이름
+                  </LabelExerciseName>
+                  <Input
+                    id="exerciseName"
+                    value={exercise.name}
+                    onChange={(e) =>
+                      handleExerciseNameChange(exerciseIndex, e.target.value)
+                    }
+                  />
+                  <Button
+                    width="68px"
+                    height="29px"
+                    onClick={() => handleRemoveExerciseInput(exerciseIndex)}>
+                    삭제
+                  </Button>
+                </ExerciseNameInput>
+                {exercise.sets.map((set, setIndex) => (
+                  <SetContainer key={setIndex}>
+                    <Count>{setIndex + 1} </Count>
+                      <div>
+                        <SetInput
+                          id="kgInput"
+                          value={set.weight}
+                          onChange={(e) =>
+                            handleSetChange(
+                              exerciseIndex,
+                              setIndex,
+                              "weight",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Labelset htmlFor="kgInput">kg</Labelset>
+                      </div>
+                    <div>
+                      <SetInput
+                        id="NumInput"
+                        value={set.reps}
+                        onChange={(e) =>
+                          handleSetChange(
+                            exerciseIndex,
+                            setIndex,
+                            "reps",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Labelset htmlFor="NumInput">회</Labelset>
+                    </div>
+                    <Button
+                      className="setSubBtn"
+                      width="10px"
+                      height="10px"
+                      bgColor="#FFFFF"
+                      border="none"
+                      color="#000000"
+                      onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
+                      ㅡ
+                    </Button>
+                  </SetContainer>
+                ))}
+                <SetBtn>
+                  <Button
+                    width="310px"
+                    height="29px"
+                    bgColor="#FFFFF"
+                    border="1px solid #006CD8"
+                    color="#000000"
+                    onClick={() => handleAddSet(exerciseIndex)}>
+                    + 세트 추가
+                  </Button>
+                </SetBtn>
+              </div>
+            ))}
+          </>
+        )}
+        {(selectedValue === "걷기" ||
+        selectedValue === "달리기" ||
+        selectedValue === "등산" ||
+        selectedValue === "자전거 타기") && (
+          <KmContainer>
+            <KmInput
+              id="distanceInput"
+              type="number"
+            />
+            <Kmlabel htmlFor="distanceInput">km</Kmlabel>
+          </KmContainer>
+        )}
         <InputContainer isOpen={isOpen}>
           <TimeField
+            id="timeInput"
             type="number"
             value={hour}
             onChange={(e) => setHour(e.target.value)}
             min="0"
             max="23"
           />
-          시간
+          <TimeLabel htmlFor="timeInput">시간</TimeLabel>
           <TimeField
+            id="MinuteInput"
             type="number"
             value={minute}
             onChange={(e) => setMinute(e.target.value)}
             min="0"
             max="59"
           />
-          분
+          <MinuteLabel htmlFor="MinuteInput">분</MinuteLabel>
         </InputContainer>
       </Container>
     </>
@@ -116,7 +268,7 @@ const DropDown = styled.div`
   padding: 12px;
   font-size: 14px;
   cursor: pointer;
-  border-bottom: 1px solid #d9d9d9;
+  /* border-bottom: 1px solid #d9d9d9; */
 `;
 
 const InputContainer = styled.div`
@@ -125,11 +277,12 @@ const InputContainer = styled.div`
   justify-content: center;
   gap: 8px;
   font-size: 14px;
+  border-bottom: 1px solid #D9D9D9;
+  padding: 11px;
 `;
 
 const TimeField = styled.input`
   width: 75px;
-  padding: 8px 12px;
   border: none;
   border-bottom: 1px solid #d9d9d9;
   font-size: 14px;
@@ -143,4 +296,104 @@ const TimeField = styled.input`
     -webkit-appearance: none;
     margin: 0;
   }
+`;
+
+const ExerciseNameInput = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 23px;
+`;
+
+const SetContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 51px 15px;
+  :last-child {
+    margin-bottom: 5px;
+  }
+`;
+
+const SetInput = styled.input`
+  width: 42px;
+  height: 24px;
+  font-size: 14px;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Input = styled.input`
+  width: 178px;
+  height: 24px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid #d9d9d9;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Count = styled.span`
+  font-size: 14px;
+  font-weight: border;
+`;
+
+const PlusExerciseBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+`;
+
+const LabelExerciseName = styled.label`
+  font-size: 14px;
+  margin-right: 12px;
+`;
+
+const SetBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+const Labelset = styled.label`
+  font-size: 14px;
+`;
+
+const MinuteLabel = styled.label`
+  
+`;
+
+const TimeLabel = styled.label`
+  
+`;
+
+const KmInput = styled.input`
+  width: 71px;
+  height: 24px;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #D9D9D9;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+const Kmlabel = styled.label`
+  font-size: 14px;
+`;
+
+const KmContainer = styled.div`
+  margin-left: 90px;
+  margin-top: 
 `;
