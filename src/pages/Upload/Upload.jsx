@@ -35,7 +35,7 @@ function Upload() {
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
 
-  // 운동 추가
+  // 운동이름과 세트 추가
   const [exerciseEntries, setExerciseEntries] = useState([
     { name: "", sets: [{ weight: "", reps: "" }] }
   ]);
@@ -47,24 +47,28 @@ function Upload() {
     ]);
   };
 
+  // 운동 항목 삭제
   const handleRemoveExerciseInput = (index) => {
     const newEntries = [...exerciseEntries];
     newEntries.splice(index, 1);
     setExerciseEntries(newEntries);
   };
 
+  // 운동 항목 이름 변경
   const handleExerciseNameChange = (index, value) => {
     const newEntries = [...exerciseEntries];
     newEntries[index].name = value;
     setExerciseEntries(newEntries);
   };
 
+  // 운동 항목에 새로운 세트 추가
   const handleAddSet = (exerciseIndex) => {
     const newEntries = [...exerciseEntries];
     newEntries[exerciseIndex].sets.push({ weight: "", reps: "", sets: "" });
     setExerciseEntries(newEntries);
   };
 
+  // 세트 삭제
   const handleRemoveSet = (exerciseIndex, setIndex) => {
     const newEntries = [...exerciseEntries];
     if (newEntries[exerciseIndex].sets.length > 1) {
@@ -73,6 +77,7 @@ function Upload() {
     }
   };
 
+  // weight, reps 값 변경
   const handleSetChange = (exerciseIndex, setIndex, field, value) => {
     const newEntries = [...exerciseEntries];
     newEntries[exerciseIndex].sets[setIndex][field] = value;
@@ -127,21 +132,21 @@ function Upload() {
                 {exercise.sets.map((set, setIndex) => (
                   <SetContainer key={setIndex}>
                     <Count>{setIndex + 1} </Count>
-                      <div>
-                        <SetInput
-                          id="kgInput"
-                          value={set.weight}
-                          onChange={(e) =>
-                            handleSetChange(
-                              exerciseIndex,
-                              setIndex,
-                              "weight",
-                              e.target.value
-                            )
-                          }
-                        />
-                        <Labelset htmlFor="kgInput">kg</Labelset>
-                      </div>
+                    <div>
+                      <SetInput
+                        id="kgInput"
+                        value={set.weight}
+                        onChange={(e) =>
+                          handleSetChange(
+                            exerciseIndex,
+                            setIndex,
+                            "weight",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Labelset htmlFor="kgInput">kg</Labelset>
+                    </div>
                     <div>
                       <SetInput
                         id="NumInput"
@@ -185,14 +190,11 @@ function Upload() {
           </>
         )}
         {(selectedValue === "걷기" ||
-        selectedValue === "달리기" ||
-        selectedValue === "등산" ||
-        selectedValue === "자전거 타기") && (
+          selectedValue === "달리기" ||
+          selectedValue === "등산" ||
+          selectedValue === "자전거 타기") && (
           <KmContainer>
-            <KmInput
-              id="distanceInput"
-              type="number"
-            />
+            <KmInput id="distanceInput" type="number" />
             <Kmlabel htmlFor="distanceInput">km</Kmlabel>
           </KmContainer>
         )}
@@ -277,7 +279,7 @@ const InputContainer = styled.div`
   justify-content: center;
   gap: 8px;
   font-size: 14px;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid #d9d9d9;
   padding: 11px;
 `;
 
@@ -365,20 +367,16 @@ const Labelset = styled.label`
   font-size: 14px;
 `;
 
-const MinuteLabel = styled.label`
-  
-`;
+const MinuteLabel = styled.label``;
 
-const TimeLabel = styled.label`
-  
-`;
+const TimeLabel = styled.label``;
 
 const KmInput = styled.input`
   width: 71px;
   height: 24px;
   font-size: 14px;
   text-align: center;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid #d9d9d9;
   &:focus {
     outline: none;
   }
@@ -395,5 +393,4 @@ const Kmlabel = styled.label`
 
 const KmContainer = styled.div`
   margin-left: 90px;
-  margin-top: 
 `;
