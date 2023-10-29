@@ -16,6 +16,8 @@ body {
   color: inherit;
   font-family: 'Spoqa Han Sans Neo';
   font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -71,5 +73,7 @@ img {
   border: 0;
 }
 `;
+
+
 
 export default GlobalStyle;
