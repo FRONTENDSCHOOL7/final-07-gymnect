@@ -1,12 +1,20 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  width: 390px;
+  height: calc(100vh - 108px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 export const TopContainer = styled.div`
-  margin: 15px auto 11px auto;
+  margin: 15px 16px 11px 16px;
 `;
 
 export const BottomContainer = styled.div`
   border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
 `;
 
 export const Form = styled.form`
@@ -48,4 +56,8 @@ export const Input = styled.input`
 export const Button = styled.button`
   font-size: 14px;
   color: #c4c4c4;
+
+  &:hover {
+    color: #006cd8;
+  }
 `;

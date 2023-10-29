@@ -1,9 +1,9 @@
-import React from 'react'
-import LoadingLogo from '../../assets/images/home-loading-logo.svg'
-import HomeNav from '../../components/Header/HomeHeader'
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../components/common/Button/ButtonContainer';
+import React from "react";
+import LoadingLogo from "../../assets/images/home-loading-logo.svg";
+import HomeNav from "../../components/Header/HomeHeader";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/Button/ButtonContainer";
 
 const NoFollowerHome = () => {
   const Navigate = useNavigate();
@@ -18,13 +18,17 @@ const NoFollowerHome = () => {
       <Container>
         <Image src={LoadingLogo} />
         <Text>유저를 검색해 팔로우 해보세요!</Text>
-        <Button width="120px" height="44px" type="button" onClick={navigateToSearch}>
+        <Button
+          width="120px"
+          height="44px"
+          type="button"
+          onClick={navigateToSearch}>
           검색하기
         </Button>
       </Container>
     </>
-  )
-  }
+  );
+};
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +37,10 @@ const Container = styled.div`
   align-items: center;
   gap: 24px;
   height: calc(100vh - 108px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Text = styled.p`

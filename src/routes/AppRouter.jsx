@@ -15,7 +15,7 @@ import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
 import MyProfile from "../pages/Profile/MyProfile";
-import PostComment from "../pages/PostComment";
+import PostComment from "../pages/Posting/PostComment";
 
 export default function AppRouter() {
   return (

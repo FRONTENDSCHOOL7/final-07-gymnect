@@ -33,36 +33,45 @@ const ChatList = () => {
   ];
 
   return (
-    <Container>
+    <>
       <ModalHeader />
-      <Main>
-        <Title>채팅리스트</Title>
-        <UserList>
-          {UserData.map((user) => (
-            <List key={user.id}>
-              <ImageSection>
-                <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-              </ImageSection>
-              <ChatSection>
-                <Link to={`/chat/${user.id}`}>
-                  <UserName>{user.username}</UserName>
-                  <Message>{user.message}</Message>
-                </Link>
-              </ChatSection>
-              <Date>{user.date}</Date>
-            </List>
-          ))}
-        </UserList>
-      </Main>
-    </Container>
+      <Container>
+        <Main>
+          <Title>채팅리스트</Title>
+          <UserList>
+            {UserData.map((user) => (
+              <List key={user.id}>
+                <ImageSection>
+                  <Image
+                    src={profileImage}
+                    alt="유저의 프로필 사진"
+                    width="50"
+                  />
+                </ImageSection>
+                <ChatSection>
+                  <Link to={`/chat/${user.id}`}>
+                    <UserName>{user.username}</UserName>
+                    <Message>{user.message}</Message>
+                  </Link>
+                </ChatSection>
+                <Date>{user.date}</Date>
+              </List>
+            ))}
+          </UserList>
+        </Main>
+      </Container>
+    </>
   );
 };
 
 export default ChatList;
 
 export const Container = styled.div`
-  height: 100vh;
-  overflow-y: hidden;
+  height: calc(100vh - 108px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Main = styled.main`

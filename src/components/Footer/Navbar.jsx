@@ -48,6 +48,7 @@ const NavContainer = styled.nav`
   align-items: center;
   cursor: pointer;
   font-size: 10px;
+  /* background-color: white; */
 `;
 
 const StyledNavLink = styled(NavLink)`
