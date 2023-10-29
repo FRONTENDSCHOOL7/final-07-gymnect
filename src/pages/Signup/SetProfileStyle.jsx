@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import AddImg from "../../assets/images/icon-img-btn.svg";
 
 export const Container = styled.main`

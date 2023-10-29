@@ -15,8 +15,8 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   color: inherit;
-  font-family: 'SpoqaHanSansNeo-Regular';
-  font-weight: 500;
+  font-family: 'SpoqaHanSansNeo-Regular',sans-serif;
+  font-weight: 400;
 }
 
 a {
@@ -72,5 +72,7 @@ img {
   border: 0;
 }
 `;
+
+
 
 export default GlobalStyle;

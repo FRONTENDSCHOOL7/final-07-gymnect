@@ -6,7 +6,7 @@ import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { postUserLogin } from "../../api/auth";
 import Input from "../../components/common/Input/Input";
-import ButtonContainer from "../../components/common/Button/ButtonContainer";
+import Button from "../../components/common/Button/ButtonContainer";
 import GlobalSprite from "../../assets/sprite/GlobalSprite";
 //import SnsLogo from '../../assets/images/login-logo.svg';
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ import {
   LinkContainer,
   ErrorMessage,
   LoginSection,
-  Button
+  SnsButton
 } from "./LoginStyle";
 
 export default function Login() {
@@ -93,7 +93,6 @@ export default function Login() {
             value={email}
             onChange={handleEmail}
             required
-            hasError={hasError}
           />
           <Input
             label="비밀번호"
@@ -104,31 +103,30 @@ export default function Login() {
             value={pw}
             onChange={handlePw}
             required
-            hasError={hasError}
           />
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
 
         <LoginSection>
-          <ButtonContainer
+          <Button
             width="322px"
             type="submit"
             disabled={!handleActivateButton()}>
             로그인
-          </ButtonContainer>
-          <Button to="kakao" className="kakao-login">
+          </Button>
+          <SnsButton to="kakao" className="kakao-login">
             <GlobalSprite id="message-circle" />
             {/*카카오톡 로고*/}
             카카오톡 계정으로 로그인
-          </Button>
-          <Button to="google" className="google-login">
+          </SnsButton>
+          <SnsButton to="google" className="google-login">
             <GlobalSprite id="google-g-logo-1" />
             구글 계정으로 로그인
-          </Button>
-          <Button to="facebook" className="facebook-login">
+          </SnsButton>
+          <SnsButton to="facebook" className="facebook-login">
             <GlobalSprite id="facebook" />
             페이스북 계정으로 로그인
-          </Button>
+          </SnsButton>
           <LinkContainer>
             <Link to="/account/signup">이메일로 회원가입 </Link> |{" "}
             <Link to="/account/findPw">비밀번호 찾기</Link>
