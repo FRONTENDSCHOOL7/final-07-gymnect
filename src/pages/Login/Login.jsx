@@ -131,13 +131,6 @@ export default function Login() {
             <Link to="/account/signup">이메일로 회원가입 </Link> |{" "}
             <Link to="/account/findPw">비밀번호 찾기</Link>
           </LinkContainer>
-
-          {/* <LoginLink>
-            <Link to="/login" className="login-link">
-              이메일로 로그인
-            </Link>
-            <Link to="/signup">회원가입</Link>
-          </LoginLink> */}
         </LoginSection>
       </Form>
     </Container>
