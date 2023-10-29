@@ -16,7 +16,7 @@ export default function ButtonContainer({
   return (
     <Button
       type={type || "button"}
-      color={color}
+      $color={color}
       $bgColor={bgColor}
       $width={width}
       $height={height}

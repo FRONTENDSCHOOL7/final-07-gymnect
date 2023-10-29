@@ -13,43 +13,41 @@ export const MainWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative; 
+  position: relative;
   padding-top: 60px;
 `;
 
 export const Wrap = styled.div`
   margin: 20px;
   display: flex;
-  justify-content: flex-end; 
-  position: absolute; 
+  justify-content: flex-end;
+  position: absolute;
   right: 16px;
   top: 0;
   z-index: 10;
 `;
 
-export const PostContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`;
-
 export const FlexIconImg = styled.img`
   width: 26px;
   cursor: pointer;
-  margin-left: 16px; 
-  ${({ active }) => active && css`
-    filter: none;  
-  `}
+  margin-left: 16px;
+  ${({ active }) =>
+    active &&
+    css`
+      filter: none;
+    `}
 `;
 
 export const GridIconImg = styled(FlexIconImg)`
-    margin-left: 16px;
-    margin-right: -16px;
+  margin-left: 16px;
+  margin-right: -16px;
 `;
 
 export const PostContainer = styled.div`
-  display: ${props => (props.isGrid ? "grid" : "flex")};
-  grid-template-columns: ${props => (props.isGrid ? "repeat(3, 1fr)" : "none")};
+  display: ${(props) => (props.isGrid ? "grid" : "flex")};
+  grid-template-columns: ${(props) =>
+    props.isGrid ? "repeat(3, 1fr)" : "none"};
+  flex-direction: column;
   gap: 20px;
   width: 100%;
 `;
@@ -58,7 +56,7 @@ export const Post = styled.div`
   height: 200px;
   width: 100%;
   background: lightgray;
-  margin-bottom: ${props => (props.isGrid ? "0px" : "20px")};
+  margin-bottom: ${(props) => (props.isGrid ? "0px" : "20px")};
 `;
 
 export const GridItem = styled.div`
@@ -69,17 +67,16 @@ export const GridItem = styled.div`
 `;
 
 export const SVGIcon = styled.img`
-  position: absolute; 
-  top: 6px; 
-  right: 6px; 
+  position: absolute;
+  top: 6px;
+  right: 6px;
   width: 20px;
   height: 20px;
 `;
 
 export const GridContainer = styled.div`
   display: grid;
-  gap: 10px; 
-  grid-template-columns: repeat(3, 114px); 
-  position: relative; 
+  gap: 10px;
+  grid-template-columns: repeat(3, 114px);
+  position: relative;
 `;
-

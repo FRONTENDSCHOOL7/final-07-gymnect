@@ -89,10 +89,10 @@ function Upload() {
       <UploadNav />
       <Container>
         <DropDown onClick={handleDropdownToggle}>
-          <ArrowIcon isOpen={isOpen}></ArrowIcon>
+          <ArrowIcon $isOpen={isOpen}></ArrowIcon>
           <SelectedValue>{selectedValue}</SelectedValue>
         </DropDown>
-        <OptionsContainer isOpen={isOpen}>
+        <OptionsContainer $isOpen={isOpen}>
           {ExerciseData.map((item) => (
             <Option key={item.id} onClick={() => handleOptionClick(item.value)}>
               {item.value}
@@ -198,7 +198,7 @@ function Upload() {
             <Kmlabel htmlFor="distanceInput">km</Kmlabel>
           </KmContainer>
         )}
-        <InputContainer isOpen={isOpen}>
+        <InputContainer $isOpen={isOpen}>
           <TimeField
             id="timeInput"
             type="number"
@@ -234,7 +234,7 @@ const Container = styled.div`
 
 const ArrowIcon = styled.span`
   display: inline-block;
-  transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ $isOpen }) => ($isOpen ? "rotate(180deg)" : "rotate(0deg)")};
   transition: transform 0.1s;
   margin-right: 8px;
   &:before {
@@ -247,7 +247,7 @@ const OptionsContainer = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow-y: auto;
-  max-height: ${({ isOpen }) => (isOpen ? "150px" : "0")};
+  max-height: ${({ $isOpen }) => ($isOpen ? "150px" : "0")};
   transition: max-height 0.2s ease-in-out;
 
   &::-webkit-scrollbar {
