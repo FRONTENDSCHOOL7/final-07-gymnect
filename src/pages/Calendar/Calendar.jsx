@@ -27,7 +27,7 @@ function ScrollableCalendar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  });
 
   return (
     <>
@@ -59,7 +59,7 @@ function MonthCalendar({ month }) {
     const dayDate = moment(`${month}-${i}`).format("YYYY-MM-DD");
     const isToday = dayDate === currentDate;
     days.push(
-      <DayCell key={i} isToday={isToday}>
+      <DayCell key={i} $isToday={isToday}>
         {i}
       </DayCell>
     );
@@ -103,7 +103,7 @@ const DayCell = styled.div`
   font-size: 16px;
   font-weight: 500;
 
-  background-color: ${(props) => (props.isToday ? "#D9D9D9" : "transparent")};
+  background-color: ${(props) => (props.$isToday ? "#D9D9D9" : "transparent")};
   border-radius: 50%;
 `;
 

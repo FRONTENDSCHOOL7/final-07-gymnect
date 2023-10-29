@@ -14,8 +14,8 @@ import {
   PostContainer
 } from "./MyProfileStyle";
 import flexIconOn from "../../assets/images/icon-flex-on.svg";
-import flexIconOff from '../../assets/images/icon-flex-off.svg';
-import gridIconOn from '../../assets/images/icon-grid-on.svg';
+import flexIconOff from "../../assets/images/icon-flex-off.svg";
+import gridIconOn from "../../assets/images/icon-grid-on.svg";
 import gridIconOff from "../../assets/images/icon-grid-off.svg";
 import layer from "../../assets/images/icon-img-layers.svg";
 
@@ -24,28 +24,28 @@ export default function MyProfile() {
 
   const handleIconClick = (viewType) => {
     if (viewType === "grid") {
-        setIsExpandedView(true);
+      setIsExpandedView(true);
     } else if (viewType === "flex") {
-        setIsExpandedView(false);
+      setIsExpandedView(false);
     }
   };
 
   return (
     <>
-  <ModalNav />
-    <Container>
-      <MyProfileUp />
+      <ModalNav />
+      <Container>
+        <MyProfileUp />
         <MainWrap>
           <Wrap>
-            <FlexIconImg 
-                src={!isExpandedView ? flexIconOn : flexIconOff}
-                alt="나열방식" 
-                onClick={() => handleIconClick('flex')}
+            <FlexIconImg
+              src={!isExpandedView ? flexIconOn : flexIconOff}
+              alt="나열방식"
+              onClick={() => handleIconClick("flex")}
             />
-            <GridIconImg 
-                src={isExpandedView ? gridIconOn : gridIconOff} 
-                alt="그리드방식" 
-                onClick={() => handleIconClick('grid')} 
+            <GridIconImg
+              src={isExpandedView ? gridIconOn : gridIconOff}
+              alt="그리드방식"
+              onClick={() => handleIconClick("grid")}
             />
           </Wrap>
           {isExpandedView ? (
@@ -68,9 +68,9 @@ export default function MyProfile() {
             </GridContainer>
           ) : (
             <PostContainer>
-            <Post />
-            <Post />
-          </PostContainer>
+              <Post />
+              <Post />
+            </PostContainer>
           )}
         </MainWrap>
       </Container>
