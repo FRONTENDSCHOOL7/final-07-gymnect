@@ -1,5 +1,14 @@
 import styled, { css } from "styled-components";
 
+export const Container = styled.div`
+  width: 390px;
+  height: calc(100vh - 108px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 export const MainWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,6 +25,12 @@ export const Wrap = styled.div`
   right: 16px;
   top: 0;
   z-index: 10;
+`;
+
+export const PostContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 `;
 
 export const FlexIconImg = styled.img`

@@ -5,9 +5,9 @@ import BackNav from "../../components/Header/BackspaceHeader";
 
 function ScrollableCalendar() {
   const [months, setMonths] = useState([
-    moment().subtract(1, 'months').format('YYYY-MM'),
-    moment().format('YYYY-MM'),
-    moment().add(1, 'months').format('YYYY-MM')
+    moment().subtract(1, "months").format("YYYY-MM"),
+    moment().format("YYYY-MM"),
+    moment().add(1, "months").format("YYYY-MM")
   ]);
 
   const handleScroll = (e) => {
@@ -29,30 +29,28 @@ function ScrollableCalendar() {
     };
   }, []);
 
-  
   return (
-    <Container>
+    <>
       <BackNav />
       <CalendarScrollContainer onScroll={handleScroll}>
-        {months.map(month => (
+        {months.map((month) => (
           <MonthCalendar key={month} month={month} />
-          ))}
+        ))}
       </CalendarScrollContainer>
-    </Container>
+    </>
   );
 }
-
 
 function MonthCalendar({ month }) {
   const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const startDay = moment(month).startOf("month").day();
   const daysInMonth = moment(month).daysInMonth();
-  
+
   let days = [];
   for (let i = 0; i < startDay; i++) {
     days.push(<DayCell key={`empty-start-${i}`} empty />);
   }
-  
+
   // 현재 날짜 확인
   const currentDate = moment().format("YYYY-MM-DD");
 
@@ -60,7 +58,11 @@ function MonthCalendar({ month }) {
   for (let i = 1; i <= daysInMonth; i++) {
     const dayDate = moment(`${month}-${i}`).format("YYYY-MM-DD");
     const isToday = dayDate === currentDate;
-    days.push(<DayCell key={i} isToday={isToday}>{i}</DayCell>);
+    days.push(
+      <DayCell key={i} isToday={isToday}>
+        {i}
+      </DayCell>
+    );
   }
 
   return (
@@ -74,14 +76,12 @@ function MonthCalendar({ month }) {
   );
 }
 
-const Container = styled.div`
-  width: 390px;
-  height: 100vh;
-`;
-
 const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
-  overflow-y: auto;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const MonthContainer = styled.div`
@@ -103,7 +103,7 @@ const DayCell = styled.div`
   font-size: 16px;
   font-weight: 500;
 
-  background-color: ${props => props.isToday ? "#D9D9D9" : "transparent"};
+  background-color: ${(props) => (props.isToday ? "#D9D9D9" : "transparent")};
   border-radius: 50%;
 `;
 
