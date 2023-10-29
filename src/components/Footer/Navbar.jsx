@@ -17,7 +17,7 @@ const Navbar = () => {
         <ChatIcon />
         채팅
       </StyledNavLink>
-      <StyledNavLink to={"/posting"}>
+      <StyledNavLink to={"/upload"}>
         <PostIcon />
         게시물 작성
       </StyledNavLink>

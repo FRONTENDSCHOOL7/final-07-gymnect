@@ -2,7 +2,8 @@ import React from "react";
 import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
-import Posting from "../pages/Posting/Posting";
+import ChatRoom from "../pages/Chatting/ChatRoom";
+import Upload from "../pages//Upload/Upload";
 import Calendar from "../pages/Calendar/Calendar";
 import Profile from "../pages/Profile/MyProfile";
 import Login from "../pages/Login/Login";
@@ -41,6 +42,14 @@ export default function AppRouter() {
           }
         />
         <Route
+          path="/chatlist/:name"
+          element={
+            <>
+              <ChatRoom />
+            </>
+          }
+        />
+        <Route
           path="/search"
           element={
             <>
@@ -50,11 +59,10 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/posting"
+          path="/upload"
           element={
             <>
-              <Navbar />
-              <Posting />
+              <Upload />
             </>
           }
         />
