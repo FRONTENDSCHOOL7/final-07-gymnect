@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import PhotoIcon from "../../../assets/images/icon-img-btn.svg";
+import PhotoIcon from "../../assets/images/icon-img-btn.svg";
 
-const ChatFooter = () => {
-  const [message, setMessage] = useState("");
-  const handleSend = () => {
-    // 여기에서 메시지를 전송하는 로직을 추가할 수 있습니다.
-    console.log(message);
-    setMessage(""); // 메시지 전송 후 입력 필드를 초기화합니다.
-  };
+const ChatFooter = ({ message, setMessage, handleSend }) => {
+  // const handleSend = async () => {
+  //   console.log(message);
+  //   setMessage(""); // 메시지 전송 후 입력 필드를 초기화합니다.
+  // };
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       //엔터키 누르면 메시지 전송
@@ -26,8 +25,8 @@ const ChatFooter = () => {
       <MessageInput
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress} //엔터키누르면 전송
-        placeholder="메시지 입력..."
+        onKeyDown={handleKeyPress} //엔터키누르면 전송
+        placeholder="메시지 입력.."
       />
       <SendButton onClick={handleSend}>전송</SendButton>
     </Container>
