@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2;
+  background-attachment: fixed; // 배경화면 고정
   flex-direction: column;
   height: 100vh;
+  overflow-y: auto; */
 `;
 
 export const Title = styled.h2`
@@ -29,13 +31,33 @@ export const Title = styled.h2`
 //   color: ${(props) => (props.type === "received" ? "black" : "white")};
 // `;
 export const Main = styled.main`
-  display: flex;
+  //display: flex;
   flex-direction: column-reverse; // 메시지가 위에서부터 쌓이도록 설정
   justify-content: flex-end;
   position: relative;
   /* /height: 10vh; */
-  overflow-y: auto;
-  padding: 1rem 1.6rem;
+  //overflow-y: auto;
+  padding: 1rem 0.8rem;
+
+  background-color: #f2f2f2;
+  //background-attachment: fixed; // 배경화면 고정
+  //flex-direction: column;
+  height: 89.1vh;
+  overflow: auto;
+
+  // 크롬, 엣지 브라우저용 스크롤바 스타일
+  &::-webkit-scrollbar {
+    width: 8px; // 스크롤바 너비
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d2d2d2; // 스크롤바 색상
+    border-radius: 4px; // 스크롤바 모서리 둥글게
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; // 스크롤바 배경색
+  }
 `;
 
 export const Message = styled.div`
@@ -51,6 +73,8 @@ export const Chat = styled.li`
   color: #fff;
   &.chat-mine {
     align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-end;
   }
   &.chat-yours {
     justify-content: flex-start;
@@ -71,24 +95,24 @@ export const ChatBox = styled.p`
 `;
 
 export const From = styled(ChatBox)`
-  width: 24rem;
-  margin: 0 0.6rem 1rem 1.2rem;
+  max-width: 21rem;
+  margin: 0 0.6rem 1rem;
   background-color: #fff;
   color: #000000;
-  border-radius: 0 1rem 0 1rem;
+  border-radius: 0 1rem 1rem 1rem;
 `;
 
 export const To = styled.p`
   padding: 1.2rem;
   margin-bottom: 1rem;
-  //width: 12rem;
+  max-width: 21rem;
   background-color: #006cd8;
   color: #fff;
   border-radius: 1rem 0 1rem 1rem;
   font-size: 1.4rem;
 `;
 
-export const Time = styled.p`
+export const Time = styled.span`
   margin: 0 0.6rem 1rem 0;
   margin-top: auto;
   color: #969696;
