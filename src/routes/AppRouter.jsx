@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
 import ChatRoom from "../pages/Chatting/ChatRoom";
@@ -15,7 +15,6 @@ import Search from "../pages/Home/Search/Search";
 import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
-import MyProfile from "../pages/Profile/MyProfile";
 import PostComment from "../pages/Posting/PostComment";
 
 export default function AppRouter() {
@@ -23,29 +22,15 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Splash />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup/setProfile" element={<SetProfile />} />
         <Route
           path="/home"
           element={
             <>
               <Navbar />
               <Home />
-            </>
-          }
-        />
-        <Route
-          path="/chatlist"
-          element={
-            <>
-              <Navbar />
-              <ChatList />
-            </>
-          }
-        />
-        <Route
-          path="/chatlist/:name"
-          element={
-            <>
-              <ChatRoom />
             </>
           }
         />
@@ -59,13 +44,24 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/upload"
+          path="/chat"
           element={
             <>
-              <Upload />
+              <Navbar />
+              <ChatList />
             </>
           }
         />
+        <Route
+          path="/chat/:id"
+          element={
+            <>
+              <ChatRoom />
+            </>
+          }
+        />
+        <Route path="/post/:id" element={<PostComment />} />
+        <Route path="/post/upload" element={<Upload />} />
         <Route
           path="/calendar"
           element={
@@ -76,7 +72,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={
             <>
               <Navbar />
@@ -85,7 +81,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/follower"
+          path="/profile/:id/follower"
           element={
             <>
               <Navbar />
@@ -94,7 +90,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/following"
+          path="/profile/:id/following"
           element={
             <>
               <Navbar />
@@ -103,7 +99,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/edit"
+          path="/profile/:id/edit"
           element={
             <>
               <Navbar />
@@ -111,13 +107,6 @@ export default function AppRouter() {
             </>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/account/*" element={<Outlet />}>
-          <Route path="signup/" element={<Signup />} />
-          <Route path="setprofile/" element={<SetProfile />} />
-        </Route>
-        <Route path="/post/weniv_Mandarin" element={<PostComment />} />
-        <Route path="/profile/weniv_Mandarin" element={<MyProfile />} />
       </Routes>
     </BrowserRouter>
   );

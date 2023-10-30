@@ -1,14 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { postUserLogin } from "../../api/auth";
 import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/ButtonContainer";
 import GlobalSprite from "../../assets/sprite/GlobalSprite";
-//import SnsLogo from '../../assets/images/login-logo.svg';
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -27,36 +26,40 @@ export default function Login() {
   const [pw, setPw] = useState("");
   const [emailValid, setEmailValid] = useState(false); //email 유효한지 확인하는 state
   const [pwValid, setPwValid] = useState(false); //pw 유효한지 확인하는 state
-  const [isComplete, setIsComplete] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [hasError, setHasError] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const setLogin = useSetRecoilState(loginAtom);
 
   /*이메일 유효성 검사*/
   const handleEmail = (e) => {
     setEmail(e.target.value); //target은 event가 발생한 DOM요소
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    setEmailValid(emailPattern.test(e.target.value));
     setErrorMsg("");
-    setHasError(false);
   };
   /* 비밀번호 유효성 검사 */
   const handlePw = (e) => {
     setPw(e.target.value);
+    const pwPattern =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/; // 예: 비밀번호 길이가 6 이상
+    setPwValid(pwPattern.test(e.target.value));
     setErrorMsg("");
-    setHasError(false);
   };
 
   /* 로그인 요청을 보내고 결과 반환 */
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!emailValid || !pwValid) {
+      setErrorMsg("*이메일 또는 비밀번호 형식이 올바르지 않습니다");
+      return;
+    }
+
     const loginData = await postUserLogin(email, pw);
     console.log(loginData);
     if (loginData.status === 422) {
       setErrorMsg("*이메일 또는 비밀번호가 일치하지 않습니다");
-      setHasError(true);
-      setIsComplete(false);
     } else {
-      localStorage.setItem("token", loginData.user.token);
       setUserInfo({
         ...userInfo,
         account: loginData.user.accountname,
@@ -64,8 +67,8 @@ export default function Login() {
         username: loginData.user.username,
         intro: loginData.user.intro
       });
-      setIsComplete(!isComplete);
       setLogin(true);
+      localStorage.setItem("token", loginData.user.token);
       navigate("/home", {
         state: {
           token: loginData.user.token
@@ -76,7 +79,7 @@ export default function Login() {
 
   /* 버튼 활성화 */
   const handleActivateButton = () => {
-    return email !== "" && pw !== "";
+    return emailValid && pwValid;
   };
 
   return (
@@ -128,8 +131,8 @@ export default function Login() {
             페이스북 계정으로 로그인
           </SnsButton>
           <LinkContainer>
-            <Link to="/account/signup">이메일로 회원가입 </Link> |{" "}
-            <Link to="/account/findPw">비밀번호 찾기</Link>
+            <Link to="/signup">이메일로 회원가입 </Link> |{" "}
+            <Link to="/findPw">비밀번호 찾기</Link>
           </LinkContainer>
         </LoginSection>
       </Form>

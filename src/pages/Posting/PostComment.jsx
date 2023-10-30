@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Post1 from "../../components/common/Post/Post";
+import Post from "../../components/common/Post/Post";
 import commentImg from "../../assets/images/signup-profile.svg";
 import ModalHeader from "../../components/Header/ModalHeader";
+import Modal from "../../components/common/Modal/DeleteCommentModal";
 import {
   Container,
   TopContainer,
@@ -17,18 +18,35 @@ import FeedComment from "../FeedComment";
 export default function PostComment() {
   const [comments, setComments] = useState([]); // 댓글들을 관리하는 상태
   const [inputComment, setInputComment] = useState(""); // 입력 필드의 값을 관리하는 상태
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 모달의 상태
+  const [commentToDelete, setCommentToDelete] = useState(null); // 삭제할 댓글의 ID or Index
   const handleInput = (e) => {
     setInputComment(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 폼의 기본 제출 행동을 막습니다.
+    e.preventDefault();
     if (inputComment.trim() !== "") {
-      // 입력이 비어있지 않을 경우
-      setComments([...comments, inputComment]);
-      setInputComment(""); // 입력 필드를 초기화합니다.
+      const newComment = {
+        userName: "만두", // 여기에는 현재 사용자의 이름을 넣어주세요.
+        text: inputComment
+      };
+      setComments([...comments, newComment]);
+      setInputComment("");
     }
+  };
+
+  const handleCommentDelete = (id) => {
+    setCommentToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setComments((prev) =>
+      prev.filter((comment, idx) => idx !== commentToDelete)
+    );
+    setIsDeleteModalOpen(false);
+    setCommentToDelete(null);
   };
 
   return (
@@ -36,13 +54,22 @@ export default function PostComment() {
       <ModalHeader />
       <Container>
         <TopContainer>
-          <Post1 />
+          <Post />
         </TopContainer>
         <BottomContainer>
           {comments.map((comment, idx) => (
-            <FeedComment key={idx} text={comment} /> // 각 댓글을 FeedComment 컴포넌트로 렌더링합니다.
+            <FeedComment
+              key={idx}
+              comment={comment}
+              onDelete={() => handleCommentDelete(idx)}
+            />
           ))}
-          <Form>
+          <Modal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onDelete={confirmDelete}
+          />
+          <Form onSubmit={handleSubmit}>
             <CommentInput>
               <Image src={commentImg} alt="프로필 비활성화" />
               <Input

@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../atoms/UserAtom";
 import { ReactComponent as HomeIcon } from "../../assets/images/icon-home.svg";
 import { ReactComponent as ChatIcon } from "../../assets/images/icon-message.svg";
 import { ReactComponent as PostIcon } from "../../assets/images/icon-post.svg";
@@ -8,16 +10,19 @@ import { ReactComponent as CalenderIcon } from "../../assets/images/icon-calende
 import { ReactComponent as ProfileIcon } from "../../assets/images/icon-profile.svg";
 
 const Navbar = () => {
+  const userInfo = useRecoilValue(userInfoAtom);
+  const myaccount = userInfo.account;
+
   return (
     <NavContainer>
       <StyledNavLink to={"/home"}>
         <HomeIcon />홈
       </StyledNavLink>
-      <StyledNavLink to={"/chatlist"}>
+      <StyledNavLink to={"/chat"}>
         <ChatIcon />
         채팅
       </StyledNavLink>
-      <StyledNavLink to={"/upload"}>
+      <StyledNavLink to={"/post/upload"}>
         <PostIcon />
         게시물 작성
       </StyledNavLink>
@@ -25,7 +30,7 @@ const Navbar = () => {
         <CalenderIcon />
         캘린더
       </StyledNavLink>
-      <StyledNavLink to={"/profile"}>
+      <StyledNavLink to={`/profile/${myaccount}`}>
         <ProfileIcon />
         프로필
       </StyledNavLink>
@@ -48,7 +53,6 @@ const NavContainer = styled.nav`
   align-items: center;
   cursor: pointer;
   font-size: 10px;
-  /* background-color: white; */
 `;
 
 const StyledNavLink = styled(NavLink)`
