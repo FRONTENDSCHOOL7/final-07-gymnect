@@ -1,3 +1,4 @@
+import { postContentUpload } from "../../api/post";
 import React, { useRef, useState } from "react";
 import UploadNav from "../../components/Header/UploadHeader";
 import Button from "../../components/common/Button/ButtonContainer";
@@ -45,6 +46,57 @@ const ExerciseData = [
 ];
 
 function Upload() {
+
+    //데이터 저장
+const createApiData = () => {
+  let contentData = postContent;
+  let imageString = uploadedImages.join(', ');
+
+  let exerciseData = '';
+  if (selectedValue === "근력 운동") {
+      exerciseData = exerciseEntries.map(entry => {
+          return `${entry.name} - ${entry.sets.map(set => `${set.weight}kg x ${set.reps}회`).join(', ')}`;
+      }).join('; ');
+  } else if (["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)) {
+      exerciseData = `${selectedValue}: ${distanceInput}km`;
+  }
+
+  let timeData = `${hour}시간 ${minute}분`;
+
+  contentData = `${contentData}\n\n${exerciseData}\n${timeData}`;
+
+  return {
+      post: {
+          content: contentData,
+          image: imageString
+      }
+  };
+};
+
+const saveDataToAPI = async () => {
+  try {
+    const apiData = createApiData();
+    const token = localStorage.getItem("token");
+    const content = apiData.post.content;
+    const imageString = apiData.post.image;
+
+    const response = await postContentUpload(content, imageString, token);
+
+    if (response) {
+      console.log('성공적으로 API를 저장했습니다!');
+    } else {
+      console.error('Error while saving data to the API:', response.data);
+    }
+  } catch (error) {
+    console.error('API call error:', error.response ? error.response.data : error);
+  }
+};
+
+const saveData = async () => {
+  console.log('Data saved:', {selectedValue, hour, minute, exerciseEntries, postContent, uploadedImages});
+  await saveDataToAPI();
+};
+
   // 운동 선택 toggle
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("운동 종류");
@@ -109,6 +161,9 @@ function Upload() {
     setExerciseEntries(newEntries);
   };
 
+  // km 저장
+  const [distanceInput, setDistanceInput] = useState("");
+
   // 게시물 작성
   const [postContent, setPostContent] = useState("");
 
@@ -148,7 +203,7 @@ function Upload() {
 
   return (
     <>
-      <UploadNav />
+      <UploadNav saveData={saveData}/>
       <Container>
         <DropDown onClick={handleDropdownToggle}>
           <ArrowIcon $isOpen={isOpen}></ArrowIcon>
@@ -258,7 +313,8 @@ function Upload() {
           selectedValue === "등산" ||
           selectedValue === "자전거 타기") && (
           <KmContainer>
-            <KmInput id="distanceInput" type="number" />
+            <KmInput id="distanceInput" type="number" value={distanceInput}
+    onChange={(e) => setDistanceInput(e.target.value)}/>
             <label htmlFor="distanceInput">km</label>
           </KmContainer>
         )}
