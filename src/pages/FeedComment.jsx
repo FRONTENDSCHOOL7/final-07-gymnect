@@ -12,7 +12,7 @@ import {
   Button
 } from "./FeedCommentStyle";
 
-export default function FeedComment() {
+export default function FeedComment({ comment, onDelete }) {
   return (
     <>
       <Container>
@@ -20,13 +20,13 @@ export default function FeedComment() {
           <Image src={BasicProfile} alt="유저 프로필 이미지" />
           <Contents>
             <UserInfo>
-              <UserName>만듀</UserName>
+              <UserName>{comment.userName}</UserName>
             </UserInfo>
-            <Comment>우와 멋져요!!</Comment>
+            <Comment>{comment.text}</Comment>
           </Contents>
         </CommentSection>
-        <Button>
-          <img src={iconDot} alt="" />
+        <Button onClick={onDelete}>
+          <img src={iconDot} alt="삭제" />
         </Button>
       </Container>
     </>

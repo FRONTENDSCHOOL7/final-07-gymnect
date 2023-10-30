@@ -3,11 +3,11 @@ import styled from "styled-components";
 import BackButton from "../common/Button/BackButton";
 import { ReactComponent as MoreIcon } from "../../assets/images/icon-more.svg";
 
-const ModalNav = () => {
+const ModalNav = ({ toggleModal }) => {
   return (
     <Container>
       <BackButton />
-      <button>
+      <button onClick={toggleModal}>
         <MoreIcon />
       </button>
     </Container>
