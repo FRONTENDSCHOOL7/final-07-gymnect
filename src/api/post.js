@@ -1,10 +1,34 @@
 import { authInstance } from "./axiosInstance";
 
 /* content 업로드 */
-export const postContentUpload = async (token, post) => {
-  const response = await authInstance.post(`/post/`, post);
-  console.log(response);
-  return response.data;
+export const postContentUpload = async (content, imageString, token) => {
+  const apiUrl = 'https://api.mandarin.weniv.co.kr/post';
+
+  const postData = {
+    'post': {
+      'content': content,
+      'image': imageString
+    }
+  };
+
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Content-type': 'application/json'
+  };
+
+  try {
+    const response = await authInstance.post(apiUrl, postData, { headers: headers });
+    if (response.status === 200 || response.status === 201) {
+      console.log("게시물이 성공적으로 업로드 되었습니다.");
+      return response.data;
+    } else {
+      console.error("게시물 업로드에 실패하였습니다.");
+      return null;
+    }
+  } catch (error) {
+    console.error("API 요청 중 에러가 발생하였습니다:", error);
+    return null;
+  }
 };
 
 /* 팔로우 게시물 */
