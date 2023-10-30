@@ -131,8 +131,8 @@ export default function Login() {
             페이스북 계정으로 로그인
           </SnsButton>
           <LinkContainer>
-            <Link to="/account/signup">이메일로 회원가입 </Link> |{" "}
-            <Link to="/account/findPw">비밀번호 찾기</Link>
+            <Link to="/signup">이메일로 회원가입 </Link> |{" "}
+            <Link to="/findPw">비밀번호 찾기</Link>
           </LinkContainer>
         </LoginSection>
       </Form>

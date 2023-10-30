@@ -38,7 +38,7 @@ export default function MyProfile() {
   };
 
   const toggleModal = () => {
-    setIsModalVisible((prev) => !prev);
+    setIsModalVisible(!isModalVisible);
   };
 
   const handleLogout = () => {
@@ -91,7 +91,9 @@ export default function MyProfile() {
           )}
         </MainWrap>
       </Container>
-      {isModalVisible && <Modal handleLogout={handleLogout} />}
+      {isModalVisible && (
+        <Modal handleLogout={handleLogout} toggleModal={toggleModal} />
+      )}
     </>
   );
 }

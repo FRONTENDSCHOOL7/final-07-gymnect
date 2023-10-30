@@ -104,7 +104,7 @@ const Signup = () => {
     console.log(userEmail, userPassword);
     if (emailValid && passwordValid && passwordCheckValid) {
       setIsComplete(true);
-      navigate("/account/setProfile", {
+      navigate("/signup/setProfile", {
         state: {
           email: userEmail,
           password: userPassword
