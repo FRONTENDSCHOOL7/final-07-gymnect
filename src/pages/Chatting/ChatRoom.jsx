@@ -23,7 +23,8 @@ const ChatRoom = () => {
   const handleSend = () => {
     if (message.trim()) {
       //공백만 있는 문자열은 무시
-      setMessageList([...messageList, message]);
+      const timestamp = Date.now();
+      setMessageList([...messageList, { content: message, timestamp }]);
       setMessage(""); // 메시지 전송 후 입력 필드를 초기화
     }
   };
@@ -34,6 +35,8 @@ const ChatRoom = () => {
       mainElement.scrollTop = mainElement.scrollHeight;
     }
   }, [messageList]);
+
+  const timeOptions = { hour: "2-digit", minute: "2-digit" };
   return (
     <Container>
       <ChatHeader />
@@ -41,15 +44,15 @@ const ChatRoom = () => {
         <Chat className="chat-yours">
           <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
           <From>안녕하세요~ 게시글 올리신거 봤어요!!</From>
-          <Time>12:39</Time>
+          <Time>오후12:39</Time>
         </Chat>
         <Chat className="chat-yours">
           <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
           <From>무게를 상당히 많이 치시던데 대단하세요!😊</From>
-          <Time>12:41</Time>
+          <Time>오후12:41</Time>
         </Chat>
         <Chat className="chat-mine">
-          <Time>12:48</Time>
+          <Time>오후12:41</Time>
           <To>아 아닙니닿ㅎ...</To>
         </Chat>
         <Chat className="chat-mine">
@@ -58,19 +61,19 @@ const ChatRoom = () => {
         <Chat className="chat-yours">
           <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
           <From>오 몸 좋으시네요! 저도 꽤 치는데...</From>
-          <Time>12:51</Time>
+          <Time>오후12:51</Time>
         </Chat>
-        {messageList.map((message, index) => (
+        {messageList.map((messageItem, index) => (
           <Chat className="chat-mine" key={index}>
-            <Time>12:51</Time>
-            <To>{message}</To>
+            <Time>
+              {new Date(messageItem.timestamp).toLocaleTimeString(
+                "ko-KR",
+                timeOptions
+              )}
+            </Time>
+            <To>{messageItem.content}</To>
           </Chat>
         ))}
-        {/* <Chat className="chat-mine">
-          {messageList.map((message, index) => (
-            <To key={index}>{message}</To>
-          ))}
-        </Chat> */}
       </Main>
       <ChatFooter
         message={message}
@@ -81,33 +84,3 @@ const ChatRoom = () => {
   );
 };
 export default ChatRoom;
-
-{
-  /* <Main>
-  <List>
-    <Chat>
-      <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-      <From>안녕하세요~ 게시글 올리신거 봤어요!!</From>
-      <Time>12:39</Time>
-    </Chat>
-    <Chat>
-      <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-      <From>무게를 상당히 많이 치시던데 대단하세요!😊</From>
-      <Time>12:41</Time>
-    </Chat>
-    <Chat className="chat-mine">
-      <Time>12:50</Time>
-      <To>아 아닙니닿ㅎ...</To>
-    </Chat>
-    <Chat className="chat-mine">
-      <Time>12:48</Time>
-      <Img src={profileImage} alt="강아지 사진" />
-    </Chat>
-    <Chat>
-      <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-      <From>오 몸 좋으시네요! 저도 꽤 치는데...</From>
-      <Time>12:51</Time>
-    </Chat>
-  </List>
-</Main>; */
-}
