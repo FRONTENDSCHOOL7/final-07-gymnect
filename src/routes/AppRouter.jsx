@@ -44,7 +44,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/chat"
+          path="/chatlist"
           element={
             <>
               <Navbar />
@@ -53,7 +53,7 @@ export default function AppRouter() {
           }
         />
         <Route
-          path="/chat/:id"
+          path="/chatlist/:name"
           element={
             <>
               <ChatRoom />
