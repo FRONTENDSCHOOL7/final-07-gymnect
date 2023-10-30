@@ -84,8 +84,11 @@ const CalendarScrollContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #bfbfbf; // 스크롤바 색상
     border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888; // 여기에 원하는 hover 시의 색상을 지정하세요
   }
 `;
 

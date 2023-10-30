@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 export const Container = styled.div``;
 
 export const Main = styled.main`
-  display: flex;
   flex-direction: column-reverse; // 메시지가 위에서부터 쌓이도록 설정
   justify-content: flex-end;
   position: relative;
-  padding: 1rem 0.8rem;
+  padding: 1rem 0.8rem 0;
 
   background-color: #f2f2f2;
   height: 89.1vh;
@@ -21,6 +20,9 @@ export const Main = styled.main`
   &::-webkit-scrollbar-thumb {
     background: #bfbfbf; // 스크롤바 색상
     border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888; // 여기에 원하는 hover 시의 색상을 지정하세요
   }
 `;
 
@@ -45,6 +47,7 @@ export const Image = styled.img`
   height: 40px;
   border-radius: 50%; //원형으로 만듬
   border: 1px solid #d9d9d9;
+  background-color: #fff;
 `;
 
 export const From = styled.p`

@@ -18,7 +18,7 @@ const Navbar = () => {
       <StyledNavLink to={"/home"}>
         <HomeIcon />홈
       </StyledNavLink>
-      <StyledNavLink to={"/chat"}>
+      <StyledNavLink to={"/chatlist"}>
         <ChatIcon />
         채팅
       </StyledNavLink>
