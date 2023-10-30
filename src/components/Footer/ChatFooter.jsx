@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import PhotoIcon from "../../assets/images/icon-img-btn.svg";
 
-const ChatFooter = ({ message, setMessage, handleSend }) => {
-  // const handleSend = async () => {
-  //   console.log(message);
-  //   setMessage(""); // 메시지 전송 후 입력 필드를 초기화합니다.
-  // };
+const ChatFooter = ({
+  message,
+  setMessage,
+  handleSend,
+  handleImageMessage
+}) => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       //엔터키 누르면 메시지 전송
@@ -16,11 +15,22 @@ const ChatFooter = ({ message, setMessage, handleSend }) => {
       handleSend();
     }
   };
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        //ChatRoom 컴포넌트에서 처리하기 위한 콜백을 호출합니다.
+        handleImageMessage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <Container>
       <ImageUpload>
         <img src={PhotoIcon} />
-        <input type="file" />
+        <input type="file" onChange={handleImageUpload} />
       </ImageUpload>
       <MessageInput
         value={message}
@@ -59,18 +69,16 @@ const MessageInput = styled.input`
   border: none;
   outline: none;
   font-size: 14px;
+  &::placeholder {
+    color: #c4c4c4;
+  }
 `;
 
 const SendButton = styled.button`
-  padding: 10px 15px;
-  border: none;
-  background-color: #006cd8;
-  color: white;
-  margin-right: 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 14px;
+  color: #c4c4c4;
+  padding-right: 16px;
   &:hover {
-    background-color: #00478e;
+    color: #006cd8;
   }
 `;
