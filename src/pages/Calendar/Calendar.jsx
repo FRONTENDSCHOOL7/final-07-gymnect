@@ -80,7 +80,12 @@ const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 50px;
   }
 `;
 
