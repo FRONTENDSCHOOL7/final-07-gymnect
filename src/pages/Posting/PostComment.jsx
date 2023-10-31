@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import Post from "../../components/common/Post/Post";
-import commentImg from "../../assets/images/signup-profile.svg";
+// import commentImg from "../../assets/images/signup-profile.svg";
 import ModalHeader from "../../components/Header/ModalHeader";
-import Modal from "../../components/common/Modal/DeleteCommentModal";
 import {
   Container,
   TopContainer,
@@ -15,42 +14,33 @@ import {
   Button
 } from "./PostCommentStyle.jsx";
 import FeedComment from "../FeedComment";
+import { postComment } from "../../api/comment";
+import { userInfoAtom } from "../../atoms/UserAtom";
 
-export default function PostComment() {
+// 댓글 작성
+export default function PostComment({ postId }) {
+  const userInfo = useRecoilValue(userInfoAtom);
+  const [comment, setComment] = useState('');  // 댓글 입력값을 관리할 상태
   const [comments, setComments] = useState([]); // 댓글들을 관리하는 상태
-  const [inputComment, setInputComment] = useState(""); // 입력 필드의 값을 관리하는 상태
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 모달의 상태
-  const [commentToDelete, setCommentToDelete] = useState(null); // 삭제할 댓글의 ID or Index
-  const location = useLocation();
-  const data = location.state?.data;
-  console.log(data);
-  const handleInput = (e) => {
-    setInputComment(e.target.value);
+
+  const handleInputChange = (e) => {
+    setComment(e.target.value);
+
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputComment.trim() !== "") {
-      const newComment = {
-        userName: "만두", // 여기에는 현재 사용자의 이름을 넣어주세요.
-        text: inputComment
-      };
+  const uploadCommentHandler = async () => {
+    try {
+      const newComment = await postComment(userInfo.token, postId, comment);
       setComments([...comments, newComment]);
-      setInputComment("");
+      setComment('');
+    } catch (err) {
+      console.error('댓글 작성 중 오류가 발생했습니다:', err);
     }
   };
 
-  const handleCommentDelete = (id) => {
-    setCommentToDelete(id);
-    setIsDeleteModalOpen(true);
-  };
-
-  const confirmDelete = () => {
-    setComments((prev) =>
-      prev.filter((comment, idx) => idx !== commentToDelete)
-    );
-    setIsDeleteModalOpen(false);
-    setCommentToDelete(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();  // 기본 제출 동작 방지
+    uploadCommentHandler();
   };
 
   if (!data) {
@@ -69,21 +59,15 @@ export default function PostComment() {
             <FeedComment
               key={idx}
               comment={comment}
-              onDelete={() => handleCommentDelete(idx)}
             />
           ))}
-          <Modal
-            isOpen={isDeleteModalOpen}
-            onClose={() => setIsDeleteModalOpen(false)}
-            onDelete={confirmDelete}
-          />
           <Form onSubmit={handleSubmit}>
             <CommentInput>
-              <Image src={commentImg} alt="프로필 비활성화" />
+              <Image src={userInfo.profileImg} alt="프로필 비활성화" />
               <Input
                 placeholder="댓글을 입력하세요..."
-                onChange={handleInput}
-                value={inputComment}
+                onChange={handleInputChange}
+                value={comment}
               />
             </CommentInput>
             <Button type="submit">게시</Button>
