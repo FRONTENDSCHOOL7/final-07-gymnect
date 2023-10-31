@@ -100,11 +100,6 @@ export default function ProfileEdit() {
     }
   };
 
-  /* 버튼 활성화 */
-  const handleActivateButton = () => {
-    return usernameValid && accountnameValid;
-  };
-
   /* 에러 메시지 초기화 */
   useEffect(() => {
     setUsernameErrorMsg();

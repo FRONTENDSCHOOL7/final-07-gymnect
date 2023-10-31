@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Post from "../../components/common/Post/Post";
 import commentImg from "../../assets/images/signup-profile.svg";
 import ModalHeader from "../../components/Header/ModalHeader";
@@ -20,6 +21,9 @@ export default function PostComment() {
   const [inputComment, setInputComment] = useState(""); // 입력 필드의 값을 관리하는 상태
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // 삭제 모달의 상태
   const [commentToDelete, setCommentToDelete] = useState(null); // 삭제할 댓글의 ID or Index
+  const location = useLocation();
+  const data = location.state?.data;
+  console.log(data);
   const handleInput = (e) => {
     setInputComment(e.target.value);
   };
@@ -49,12 +53,16 @@ export default function PostComment() {
     setCommentToDelete(null);
   };
 
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
   return (
     <>
       <ModalHeader />
       <Container>
         <TopContainer>
-          <Post />
+          <Post data={data} />
         </TopContainer>
         <BottomContainer>
           {comments.map((comment, idx) => (
