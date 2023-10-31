@@ -51,6 +51,8 @@ function Upload() {
 const createApiData = () => {
   let contentData = postContent;
   let imageString = uploadedImages.join(', ');
+  const currentDate = new Date();
+  const formattedDateTime = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
 
   let exerciseData = '';
   if (selectedValue === "근력 운동") {
@@ -63,7 +65,7 @@ const createApiData = () => {
 
   let timeData = `${hour}시간 ${minute}분`;
 
-  contentData = `${contentData}\n\n${exerciseData}\n${timeData}`;
+  contentData = `${formattedDateTime}\n\n${contentData}\n\n${exerciseData}\n${timeData}`;
 
   return {
       post: {
