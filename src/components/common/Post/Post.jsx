@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import iconDot from "../../../assets/images/icon-dot.svg";
-import iconHeart from "../../../assets/images/icon-heart.svg";
+import HeartIcon from "./HeartStyle";
 import iconMessage from "../../../assets/images/icon-reply.svg";
 import Modal from "../Modal/DeleteEditModal";
+import { postLike, deleteLike } from "../../../api/post";
 import {
   PostArticle,
   PostProfileImg,
@@ -15,7 +16,6 @@ import {
   Wrap,
   PostContent,
   PostUploadImg,
-  HeartImg,
   MessageImg,
   PostDay,
   ButtonWrap,
@@ -36,6 +36,10 @@ export default function Post({ data }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const imageCheck = data.image ? true : false;
   const arr = data.content.split("\n");
+  const token = localStorage.getItem("token");
+  const [liked, setLiked] = useState(false);
+  const [postLikeState, setPostLikeState] = useState(data.hearted);
+  const [postLikeCount, setPostLikeCount] = useState(data.heartCount);
   console.log(arr[1]);
 
   const handleProfileClick = (e) => {
@@ -48,6 +52,31 @@ export default function Post({ data }) {
     navigate(`/post/${data.author.accountname}`, {
       state: { data: data }
     });
+  };
+  const postId = data.id;
+  /* 좋아요 기능 */
+  const fetchLike = async () => {
+    const response = await postLike(token, postId);
+    setPostLikeCount(response.post.heartCount);
+    setPostLikeState(true);
+  };
+
+  /* 좋아요 취소 */
+  const fetchDisLike = async () => {
+    const response = await deleteLike(token, postId);
+    setPostLikeCount(response.post.heartCount);
+    setPostLikeState(false);
+  };
+
+  /* 좋아요 토글 */
+  const handleToggleLike = async (e) => {
+    if (liked) {
+      await fetchDisLike();
+      setLiked(false);
+    } else {
+      await fetchLike();
+      setLiked(true);
+    }
   };
 
   function formatDate(dateString) {
@@ -93,9 +122,9 @@ export default function Post({ data }) {
             <PostContent>{arr[0]}</PostContent>
           </FeedButton>
           <ButtonWrap>
-            <HeartButton>
-              <HeartImg src={iconHeart} alt="좋아요 사진"></HeartImg>
-              <HeartSpan>0</HeartSpan>
+            <HeartButton onClick={handleToggleLike}>
+              <HeartIcon liked={postLikeState} />
+              <HeartSpan>{postLikeCount}</HeartSpan>
             </HeartButton>
             <MessageButton onClick={handleFeedClick}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
