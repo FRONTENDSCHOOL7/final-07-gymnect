@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import iconDot from "../../../assets/images/icon-dot.svg";
 import iconHeart from "../../../assets/images/icon-heart.svg";
 import iconMessage from "../../../assets/images/icon-reply.svg";
+import Modal from "../Modal/DeleteEditModal";
 import {
   PostArticle,
   PostProfileImg,
@@ -32,12 +33,12 @@ import {
 
 export default function Post({ data }) {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const imageCheck = data.image ? true : false;
   const arr = data.content.split("\n");
-  console.log(data);
-  console.log(`data : ${data}`);
+  console.log(arr[1]);
+
   const handleProfileClick = (e) => {
-    console.log("hi");
     navigate(`/profile/${data.author.accountname}`, {
       state: { data: data }
     });
@@ -47,6 +48,20 @@ export default function Post({ data }) {
     navigate(`/post/${data.author.accountname}`, {
       state: { data: data }
     });
+  };
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    return `${year}년 ${month}월 ${day}일`;
+  }
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
   };
 
   return (
@@ -62,35 +77,20 @@ export default function Post({ data }) {
               <AccountSpan>{data.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
-          <Time>
-            <span>2</span>시간<span>23</span>분
-          </Time>
-          <DotButton>
+          <Time>{arr[arr.length - 1]}</Time>
+          <DotButton onClick={toggleModal}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
         <Wrap>
           <FeedButton onClick={handleFeedClick}>
-            <HealthWrap>
-              <HealthList>
-                <span>랫 풀 다운</span>
-                <span>70</span>kg<span>8</span>회<span>5</span>세트
-              </HealthList>
-              <HealthList>
-                <span>데드리프트</span>
-                <span>100</span>kg<span>8</span>회<span>5</span>세트
-              </HealthList>
-              <HealthList>
-                <span>시티드롱풀</span>
-                <span>50</span>kg<span>10</span>회<span>3</span>세트
-              </HealthList>
-            </HealthWrap>
+            <HealthWrap>{arr[1]};</HealthWrap>
             {imageCheck && (
               <PostUploadImg
                 src={data.image}
                 alt="업로드한 사진"></PostUploadImg>
             )}
-            <PostContent>{data.content}</PostContent>
+            <PostContent>{arr[0]}</PostContent>
           </FeedButton>
           <ButtonWrap>
             <HeartButton>
@@ -102,9 +102,10 @@ export default function Post({ data }) {
               <MessageSpan>0</MessageSpan>
             </MessageButton>
           </ButtonWrap>
-          <PostDay>2020년 10월 21일</PostDay>
+          <PostDay>{formatDate(data.createdAt)}</PostDay>
         </Wrap>
       </PostArticle>
+      {isModalVisible && <Modal toggleModal={toggleModal} />}
     </>
   );
 }

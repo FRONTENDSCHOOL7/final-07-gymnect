@@ -24,7 +24,7 @@ export default function PostComment({ postId }) {
   const [comments, setComments] = useState([]); // 댓글들을 관리하는 상태
   const location = useLocation();
   const data = location.state?.data;
-  console.log(data);
+
   const handleInputChange = (e) => {
     setComment(e.target.value);
   };
