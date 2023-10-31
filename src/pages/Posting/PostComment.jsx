@@ -25,6 +25,7 @@ export default function PostComment({ postId }) {
 
   const handleInputChange = (e) => {
     setComment(e.target.value);
+
   };
 
   const uploadCommentHandler = async () => {
@@ -42,12 +43,16 @@ export default function PostComment({ postId }) {
     uploadCommentHandler();
   };
 
+  if (!data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
   return (
     <>
       <ModalHeader />
       <Container>
         <TopContainer>
-          <Post />
+          <Post data={data} />
         </TopContainer>
         <BottomContainer>
           {comments.map((comment, idx) => (

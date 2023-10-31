@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AddImg from '../../assets/images/icon-img-btn.svg';
+import AddImg from "../../assets/images/icon-img-btn.svg";
 
 export const Container = styled.main`
   margin: 0 auto;
@@ -13,12 +13,9 @@ export const Container = styled.main`
     position: absolute;
     left: 0;
   }
-  
 `;
 
-
-export const ImageSection = styled.section`
-`;
+export const ImageSection = styled.section``;
 
 export const Label = styled.label`
   display: block;
@@ -28,11 +25,11 @@ export const Label = styled.label`
   margin: 3.5rem auto 5.5rem;
   background-color: white;
   border-radius: 50%;
-  border: 1px solid #D9D9D9;
+  border: 1px solid #d9d9d9;
   cursor: pointer;
 
   &::after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     right: 0;
@@ -41,12 +38,12 @@ export const Label = styled.label`
     height: 3.6rem;
     background: url(${AddImg}) no-repeat center / 3.6rem 3.6rem;
     z-index: 2;
-    }
-`
+  }
+`;
 
 export const Form = styled.form`
   &:last-child {
-    margin-bottom: 3rem;
+    margin-bottom: 30px;
   }
 
   display: flex;
@@ -59,12 +56,18 @@ export const Image = styled.img`
   height: 100%;
   object-fit: contain;
   border-radius: 50%;
-  display: none;
 `;
 
 export const ImageInput = styled.input`
-  width: 0.1rem;
-  height: 0.1rem;
+  width: 1px;
+  height: 1px;
   position: absolute;
   z-index: -1000rem;
+`;
+
+export const ErrorMessage = styled.p`
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(235, 87, 87, 1);
+  align-self: flex-start;
 `;
