@@ -32,15 +32,23 @@ import {
   MessageButton
 } from "./PostStyle";
 
-export default function Post() {
+export default function Post({ data }) {
   const navigate = useNavigate();
-
+  const imageCheck = data.image ? true : false;
+  console.log(imageCheck);
+  const arr = data.content.split("\n");
+  console.log(arr);
   const handleProfileClick = (e) => {
-    navigate(`/profile/weniv_Mandarin`);
+    console.log("hi");
+    navigate(`/profile/${data.author.accountname}`, {
+      state: { data: data }
+    });
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/weniv_Mandarin`);
+    navigate(`/post/${data.author.accountname}`, {
+      state: { data: data }
+    });
   };
 
   return (
@@ -49,11 +57,11 @@ export default function Post() {
         <PostFlexWrap>
           <ProfileButton onClick={handleProfileClick}>
             <PostProfileImg
-              src={basicProfile}
+              src={data.author.image}
               alt="프로필사진"></PostProfileImg>
             <PostNameWrap>
-              <UserSpan>서귀포시 한라봉 타운</UserSpan>
-              <AccountSpan>@weniv_Mandarin</AccountSpan>
+              <UserSpan>{data.author.username}</UserSpan>
+              <AccountSpan>{data.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
           <Time>
@@ -79,14 +87,12 @@ export default function Post() {
                 <span>50</span>kg<span>10</span>회<span>3</span>세트
               </HealthList>
             </HealthWrap>
-            <PostUploadImg
-              src={postBackground}
-              alt="업로드한 사진"></PostUploadImg>
-            <PostContent>
-              옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여,
-              뿐이다. 이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할
-              넣는 풍부하게 뛰노는 인생의 힘있다.
-            </PostContent>
+            {imageCheck && (
+              <PostUploadImg
+                src={data.image}
+                alt="업로드한 사진"></PostUploadImg>
+            )}
+            <PostContent>{data.content}</PostContent>
           </FeedButton>
           <ButtonWrap>
             <HeartButton>
