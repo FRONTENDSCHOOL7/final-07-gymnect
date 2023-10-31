@@ -3,14 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.main`
   margin: 0 auto;
-  background-color: #fff;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5rem;
-  border-radius: 3rem;
+  width: 39rem;
 `;
 
 export const Title = styled.h1`
@@ -20,10 +13,16 @@ export const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
 `;
-export const Form = styled.form``;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 export const Section = styled.div`
   padding-bottom: 30px;
 `;
+
 
 export const ErrorMessage = styled.p`
   margin-top: 6px;

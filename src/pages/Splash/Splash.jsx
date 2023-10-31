@@ -1,33 +1,21 @@
+import React, { useState, useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
 import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
-import Login from "../Login/Login";
-
-
 
 export default function Splash() {
   const navigate = useNavigate();
 
-  const [showBackLogo, setShowBackLogo] = useState(true);
-  const [titleDivMarginTop, setTitleDivMarginTop] = useState('270px');
-  const [showLogin, setShowLogin] = useState(false);
-  const [showFooter, setShowFooter] = useState(true);
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowBackLogo(false);
-      setTitleDivMarginTop('70px');
-      setShowLogin(true);
-      setShowFooter(false);
-    }, 3000);
-  
-    return () => clearTimeout(timer);
-  }, []);
-  
+  // 3초 후에 버튼 보여주기
+  const timer = setTimeout(() => {
+      navigate("/login");
+  }, 3000);
 
-
+  // 컴포넌트 언마운트 시 타이머 해제
+  return () => clearTimeout(timer);
+  });
 
   const ThunderIcon = () => (
     <svg
@@ -46,18 +34,17 @@ export default function Splash() {
 
   return (
     <Container>
-      <TitleDiv marginTop={titleDivMarginTop}>
+      <TitleDiv>
         <Title>
           <MainLogo src={mainLogo} alt="짐넥 로고" />
-          <BackLogo src={backLogo} alt="아령 로고"  show={showBackLogo} />
-          <ThunderDiv showBackLogo={showBackLogo}>
+          <BackLogo src={backLogo} alt="아령 로고" />
+          <ThunderDiv>
             <ThunderIcon />
           </ThunderDiv>
         </Title>
         <SubTitle>운동과 일상을 연결 하다</SubTitle>
       </TitleDiv>
-      {showLogin && <Login />}
-      <FooterDiv show={showFooter}>GYM-NECT</FooterDiv>
+      <FooterDiv>GYM-NECT</FooterDiv>
     </Container>
   );
 }
@@ -69,8 +56,7 @@ export const Container = styled.div`
 `;
 
 export const TitleDiv = styled.div`
-  margin-top: ${props => props.marginTop || '270px'};
-  transition: margin-top 0.3s ease-in-out; 
+  margin-top: 270px;
 `;
 
 export const Title = styled.h1`
@@ -95,8 +81,6 @@ export const BackLogo = styled.img`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  display: ${props => (props.show ? 'block' : 'none')};
-
 `;
 
 export const SubTitle = styled.p`
@@ -129,7 +113,6 @@ const lightUp = keyframes`
   }
 `;
 
-
 const ThunderDiv = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "showButton"
 })`
@@ -141,10 +124,7 @@ const ThunderDiv = styled.div.withConfig({
   z-index: 10;
 
   & > svg > path {
-    fill: #FFC107; 
-    ${props => props.showBackLogo && css`
-      animation: ${lightUp} 3s forwards 1;
-    `}
+    animation: ${lightUp} 3s forwards 1;
   }
 `;
 
@@ -155,6 +135,4 @@ export const FooterDiv = styled.p`
   transform: translate(-50%, -50%);
   color: white;
   font-size: 9.5px;
-
-  display: ${props => (props.show ? 'block' : 'none')};
 `;
