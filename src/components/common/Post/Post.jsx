@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import basicProfile from "../../../assets/images/signup-profile.svg";
 import iconDot from "../../../assets/images/icon-dot.svg";
-import postBackground from "../../../assets/images/post-img.svg";
 import iconHeart from "../../../assets/images/icon-heart.svg";
 import iconMessage from "../../../assets/images/icon-reply.svg";
 import {
@@ -35,9 +33,9 @@ import {
 export default function Post({ data }) {
   const navigate = useNavigate();
   const imageCheck = data.image ? true : false;
-  console.log(imageCheck);
   const arr = data.content.split("\n");
-  console.log(arr);
+  console.log(data);
+  console.log(`data : ${data}`);
   const handleProfileClick = (e) => {
     console.log("hi");
     navigate(`/profile/${data.author.accountname}`, {

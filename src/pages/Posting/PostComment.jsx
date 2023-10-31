@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Post from "../../components/common/Post/Post";
-// import commentImg from "../../assets/images/signup-profile.svg";
 import ModalHeader from "../../components/Header/ModalHeader";
 import {
   Container,
@@ -20,27 +20,28 @@ import { userInfoAtom } from "../../atoms/UserAtom";
 // 댓글 작성
 export default function PostComment({ postId }) {
   const userInfo = useRecoilValue(userInfoAtom);
-  const [comment, setComment] = useState('');  // 댓글 입력값을 관리할 상태
+  const [comment, setComment] = useState(""); // 댓글 입력값을 관리할 상태
   const [comments, setComments] = useState([]); // 댓글들을 관리하는 상태
-
+  const location = useLocation();
+  const data = location.state?.data;
+  console.log(data);
   const handleInputChange = (e) => {
     setComment(e.target.value);
-
   };
 
   const uploadCommentHandler = async () => {
     try {
       const newComment = await postComment(userInfo.token, postId, comment);
       setComments([...comments, newComment]);
-      setComment('');
+      setComment("");
     } catch (err) {
-      console.error('댓글 작성 중 오류가 발생했습니다:', err);
+      console.error("댓글 작성 중 오류가 발생했습니다:", err);
     }
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();  // 기본 제출 동작 방지
-    uploadCommentHandler();
+    e.preventDefault(); // 기본 제출 동작 방지
+    // uploadCommentHandler();
   };
 
   if (!data) {
@@ -56,10 +57,7 @@ export default function PostComment({ postId }) {
         </TopContainer>
         <BottomContainer>
           {comments.map((comment, idx) => (
-            <FeedComment
-              key={idx}
-              comment={comment}
-            />
+            <FeedComment key={idx} comment={comment} />
           ))}
           <Form onSubmit={handleSubmit}>
             <CommentInput>

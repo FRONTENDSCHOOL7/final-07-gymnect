@@ -46,58 +46,71 @@ const ExerciseData = [
 ];
 
 function Upload() {
+  //데이터 저장
+  const createApiData = () => {
+    let contentData = postContent;
+    let imageString = uploadedImages.join(", ");
 
-    //데이터 저장
-const createApiData = () => {
-  let contentData = postContent;
-  let imageString = uploadedImages.join(', ');
-  const currentDate = new Date();
-  const formattedDateTime = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
-
-  let exerciseData = '';
-  if (selectedValue === "근력 운동") {
-      exerciseData = exerciseEntries.map(entry => {
-          return `${entry.name} - ${entry.sets.map(set => `${set.weight}kg x ${set.reps}회`).join(', ')}`;
-      }).join('; ');
-  } else if (["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)) {
+    let exerciseData = "";
+    if (selectedValue === "근력 운동") {
+      exerciseData = exerciseEntries
+        .map((entry) => {
+          return `${entry.name} - ${entry.sets
+            .map((set) => `${set.weight}kg x ${set.reps}회`)
+            .join(", ")}`;
+        })
+        .join("; ");
+    } else if (
+      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
+    ) {
       exerciseData = `${selectedValue}: ${distanceInput}km`;
-  }
-
-  let timeData = `${hour}시간 ${minute}분`;
-
-  contentData = `${formattedDateTime}\n\n${contentData}\n\n${exerciseData}\n${timeData}`;
-
-  return {
-      post: {
-          content: contentData,
-          image: imageString
-      }
-  };
-};
-
-const saveDataToAPI = async () => {
-  try {
-    const apiData = createApiData();
-    const token = localStorage.getItem("token");
-    const content = apiData.post.content;
-    const imageString = apiData.post.image;
-
-    const response = await postContentUpload(content, imageString, token);
-
-    if (response) {
-      console.log('성공적으로 API를 저장했습니다!');
-    } else {
-      console.error('Error while saving data to the API:', response.data);
     }
-  } catch (error) {
-    console.error('API call error:', error.response ? error.response.data : error);
-  }
-};
 
-const saveData = async () => {
-  console.log('Data saved:', {selectedValue, hour, minute, exerciseEntries, postContent, uploadedImages});
-  await saveDataToAPI();
-};
+    let timeData = `${hour}시간 ${minute}분`;
+
+    contentData = `${contentData}\n\n${exerciseData}\n${timeData}`;
+
+    return {
+      post: {
+        content: contentData,
+        image: imageString
+      }
+    };
+  };
+
+  const saveDataToAPI = async () => {
+    try {
+      const apiData = createApiData();
+      const token = localStorage.getItem("token");
+      const content = apiData.post.content;
+      const imageString = apiData.post.image;
+
+      const response = await postContentUpload(content, imageString, token);
+
+      if (response) {
+        console.log("성공적으로 API를 저장했습니다!");
+      } else {
+        console.error("Error while saving data to the API:", response.data);
+      }
+    } catch (error) {
+      console.error(
+        "API call error:",
+        error.response ? error.response.data : error
+      );
+    }
+  };
+
+  const saveData = async () => {
+    console.log("Data saved:", {
+      selectedValue,
+      hour,
+      minute,
+      exerciseEntries,
+      postContent,
+      uploadedImages
+    });
+    await saveDataToAPI();
+  };
 
   // 운동 선택 toggle
   const [isOpen, setIsOpen] = useState(false);
@@ -205,7 +218,7 @@ const saveData = async () => {
 
   return (
     <>
-      <UploadNav saveData={saveData}/>
+      <UploadNav saveData={saveData} />
       <Container>
         <DropDown onClick={handleDropdownToggle}>
           <ArrowIcon $isOpen={isOpen}></ArrowIcon>
@@ -315,8 +328,12 @@ const saveData = async () => {
           selectedValue === "등산" ||
           selectedValue === "자전거 타기") && (
           <KmContainer>
-            <KmInput id="distanceInput" type="number" value={distanceInput}
-    onChange={(e) => setDistanceInput(e.target.value)}/>
+            <KmInput
+              id="distanceInput"
+              type="number"
+              value={distanceInput}
+              onChange={(e) => setDistanceInput(e.target.value)}
+            />
             <label htmlFor="distanceInput">km</label>
           </KmContainer>
         )}
