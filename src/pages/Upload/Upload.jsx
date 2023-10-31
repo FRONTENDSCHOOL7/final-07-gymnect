@@ -51,6 +51,8 @@ function Upload() {
 const createApiData = () => {
   let contentData = postContent;
   let imageString = uploadedImages.join(', ');
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
 
   let exerciseData = '';
   if (selectedValue === "근력 운동") {
@@ -63,7 +65,7 @@ const createApiData = () => {
 
   let timeData = `${hour}시간 ${minute}분`;
 
-  contentData = `${contentData}\n\n${exerciseData}\n${timeData}`;
+  contentData = `${formattedDate}\n\n${contentData}\n\n${exerciseData}\n${timeData}`;
 
   return {
       post: {
