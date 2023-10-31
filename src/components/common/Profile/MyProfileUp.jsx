@@ -21,21 +21,20 @@ import Button from "../Button/ButtonContainer";
 export default function MyProfileUp() {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
-
   const goToProfileEdit = () => {
-    navigate(`/profile/${userInfo.accountname}/edit`);
+    navigate(`/profile/${userInfo.account}/edit`);
   };
 
   return (
     <>
       <MyProfileUpContainer>
         <Wrap>
-          <Link to={`/profile/${userInfo.accountname}/follower`}>
+          <Link to={`/profile/${userInfo.account}/follower`}>
             <FollowerNum>2950</FollowerNum>
             <Follower>팔로워</Follower>
           </Link>
           <UserImg src={userInfo.profileImg} alt="유저사진"></UserImg>
-          <Link to={`/profile/${userInfo.accountname}/following`}>
+          <Link to={`/profile/${userInfo.account}/following`}>
             <FollowingNum>128</FollowingNum>
             <Following>팔로잉</Following>
           </Link>
