@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileEditNav from "../../components/Header/ProfileEditHeader";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { getMyInfo, editProfile } from "../../api/profile";
 import { postAccountnameDuplicate, postUploadProfile } from "../../api/auth";
@@ -11,10 +11,10 @@ import {
   Image,
   ImageInput,
   Form,
-  Container
+  Container,
+  ErrorMessage
 } from "./ProfileEditStyle";
 import Input from "../../components/common/Input/Input";
-import Button from "../../components/common/Button/ButtonContainer";
 
 export default function ProfileEdit() {
   const URL = "https://api.mandarin.weniv.co.kr";
@@ -23,8 +23,6 @@ export default function ProfileEdit() {
   const navigate = useNavigate();
   const fileInputRef = useRef();
   const formData = new FormData();
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const [username, setUsername] = useState("");
   const [accountname, setAccountname] = useState("");
@@ -36,11 +34,9 @@ export default function ProfileEdit() {
   const [accountnameValid, setAccountnameValid] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
-  /* 기존 프로필 정보 불러오기 */
   useEffect(() => {
     const fetchMyInfo = async () => {
       const response = await getMyInfo(token);
-      setIsLoading(false);
       setUserInfo({
         ...userInfo,
         account: response.user.accountname,
@@ -63,11 +59,8 @@ export default function ProfileEdit() {
   // username 유효성 검사
   const handleInputUsername = (e) => {
     const usernameInp = e.target.value;
-    const usernameRegex = /^[a-zA-Z0-9]{2,10}$/;
     if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
-    } else if (!usernameRegex.test(usernameInp)) {
-      setUsernameErrorMsg("*영문 2~10자 이내로 입력해주세요");
     } else {
       setUsernameErrorMsg("");
       setUsernameValid(true);
@@ -123,38 +116,46 @@ export default function ProfileEdit() {
 
   /* 프로필 수정 */
   const handleProfileEdit = async (e) => {
+    console.log("Profile edit button clicked!");
     e.preventDefault();
-    if (usernameValid && accountnameValid) {
-      await editProfile({
-        username,
-        accountname,
-        intro,
-        image
-      });
-      setUserInfo({
-        ...userInfo,
-        account: accountname,
-        profileImg: image,
-        username: username,
-        intro: intro
-      });
-      alert("프로필 수정이 완료되었습니다.");
-      navigate(`/profile/${accountname}`);
+    try {
+      if (usernameValid && accountnameValid) {
+        await editProfile({
+          username,
+          accountname,
+          intro,
+          image
+        });
+        setUserInfo({
+          ...userInfo,
+          account: accountname,
+          profileImg: image,
+          username: username,
+          intro: intro
+        });
+        alert("프로필 수정이 완료되었습니다.");
+        navigate(`/profile/${accountname}`);
+      }
+    } catch (error) {
+      console.error("프로필 수정 중 오류 발생:", error);
     }
   };
 
   return (
     <>
-      <ProfileEditNav />
+      <ProfileEditNav onEditButtonClick={handleProfileEdit} />
       <Container>
         <Form onSubmit={handleProfileEdit}>
           <ImageSection>
             <Label htmlFor="upload-image">
-              <Image src={image} alt="사용자 프로필 이미지" />
+              <Image
+                src={image || userInfo.profileImg}
+                alt="사용자 프로필 이미지"
+              />
             </Label>
             <ImageInput
               type="file"
-              accept="image/png, image/jpg, image/jpeg"
+              accept="image/*"
               id="upload-image"
               ref={fileInputRef}
               onChange={handleInputImage}
@@ -170,7 +171,7 @@ export default function ProfileEdit() {
             onChange={handleInputUsername}
             required
           />
-          {/* {usernameErrorMsg && <ErrorMessage>{usernameErrorMsg}</ErrorMessage>} */}
+          {usernameErrorMsg && <ErrorMessage>{usernameErrorMsg}</ErrorMessage>}
           <Input
             label="계정 ID"
             placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
@@ -180,9 +181,9 @@ export default function ProfileEdit() {
             onChange={handleInputAccountname}
             required
           />
-          {/* {accountnameErrorMsg && (
+          {accountnameErrorMsg && (
             <ErrorMessage>{accountnameErrorMsg}</ErrorMessage>
-          )} */}
+          )}
           <Input
             label="소개"
             placeholder="자신에 대해 소개해 주세요!"
@@ -193,14 +194,6 @@ export default function ProfileEdit() {
             onChange={handleInputIntro}
             required
           />
-          <Button
-            width="85.29px"
-            height="29px"
-            color="#006CD8"
-            bgColor="#FFFFFF"
-            type="submit">
-            저장
-          </Button>
         </Form>
       </Container>
     </>
