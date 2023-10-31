@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.main`
   margin: 0 auto;
+  background-color: #fff;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  border-radius: 3rem;
 `;
 
 export const Title = styled.h1`
