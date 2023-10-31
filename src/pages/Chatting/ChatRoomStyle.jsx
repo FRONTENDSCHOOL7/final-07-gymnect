@@ -11,6 +11,7 @@ export const Main = styled.main`
 
   background-color: #f2f2f2;
   height: 89.1vh;
+
   overflow: auto; //컨텐츠 넘치면 자동으로 스크롤바 생기면서 확장
 
   &::-webkit-scrollbar {
