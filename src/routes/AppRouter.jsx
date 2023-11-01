@@ -60,7 +60,7 @@ export default function AppRouter() {
             </>
           }
         />
-        <Route path="/post/:id" element={<PostComment />} />
+        <Route path="/post/:postid" element={<PostComment />} />
         <Route path="/post/upload" element={<Upload />} />
         <Route
           path="/calendar"

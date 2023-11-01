@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import Post from "../../components/common/Post/Post";
 import ModalHeader from "../../components/Header/ModalHeader";
+import Comment from "../FeedComment";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import Post from "../../components/common/Post/Post";
 import {
   Container,
   TopContainer,
@@ -11,42 +13,50 @@ import {
   CommentInput,
   Input,
   Image,
-  Button
+  Button,
+  NoComment
 } from "./PostCommentStyle.jsx";
-import FeedComment from "../FeedComment";
-import { postComment } from "../../api/comment";
-import { userInfoAtom } from "../../atoms/UserAtom";
+import { postComment, getComment } from "../../api/comment";
 
-// 댓글 작성
-export default function PostComment({ postId }) {
+export default function PostComment() {
   const userInfo = useRecoilValue(userInfoAtom);
-  const [comment, setComment] = useState(""); // 댓글 입력값을 관리할 상태
-  const [comments, setComments] = useState([]); // 댓글들을 관리하는 상태
+  const account = userInfo.account;
+  const token = localStorage.getItem("token");
   const location = useLocation();
   const data = location.state?.data;
+  const postId = location.state?.data.id;
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    setComment(e.target.value);
-  };
+  const [commentData, setCommentData] = useState([]);
+  const [inputComment, setInputComment] = useState("");
 
-  const uploadCommentHandler = async () => {
-    try {
-      const newComment = await postComment(userInfo.token, postId, comment);
-      setComments([...comments, newComment]);
-      setComment("");
-    } catch (err) {
-      console.error("댓글 작성 중 오류가 발생했습니다:", err);
+
+  useEffect(() => {
+    if (postId) {
+      fetchCommentList();
     }
+  }, [postId]);
+
+  /* 댓글 리스트 받아오기 */
+  const fetchCommentList = async () => {
+    const response = await getComment(postId, token);
+    setCommentData(response.comments);
+    data.commentCount = response.comments.length;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // 기본 제출 동작 방지
-    // uploadCommentHandler();
+  const handleInput = (e) => {
+    setInputComment(e.target.value);
   };
 
-  if (!data) {
-    return <div>데이터가 없습니다.</div>;
-  }
+  /* 댓글 작성 */
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const response = await postComment(token, postId, inputComment);
+    console.log('Post Comment Response:', response);
+    setInputComment("");
+    fetchCommentList();
+  };
+  
 
   return (
     <>
@@ -56,19 +66,34 @@ export default function PostComment({ postId }) {
           <Post data={data} />
         </TopContainer>
         <BottomContainer>
-          {comments.map((comment, idx) => (
-            <FeedComment key={idx} comment={comment} />
-          ))}
-          <Form onSubmit={handleSubmit}>
+        {commentData && commentData.length > 0 ? (
+            commentData.map((comment, index) => (
+              <Comment
+                key={comment.id}
+                time={comment.createdAt}
+                content={comment.content}
+              />
+            ))
+          ) : (
+            <NoComment>댓글이 존재하지 않습니다.</NoComment>
+          )}
+          {/* <Modal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onDelete={confirmDelete}
+          /> */}
+          <Form onSubmit={handleCommentSubmit}>
             <CommentInput>
               <Image src={userInfo.profileImg} alt="프로필 비활성화" />
               <Input
                 placeholder="댓글을 입력하세요..."
-                onChange={handleInputChange}
-                value={comment}
+                onChange={handleInput}
+                value={inputComment}
               />
             </CommentInput>
-            <Button type="submit">게시</Button>
+            <Button active={inputComment.trim() !== ""} type="submit">
+              게시
+            </Button>
           </Form>
         </BottomContainer>
       </Container>

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React  from "react";
+import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 import iconDot from "../assets/images/icon-dot.svg";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import DeleteCommentModal from "../components/common/Modal/DeleteCommentModal";
-import ReportModal from "../components/common/Modal/ReportModal";
 import { userInfoAtom } from "../atoms/UserAtom";
 import {
   Container,
@@ -16,30 +15,15 @@ import {
   Button
 } from "./FeedCommentStyle";
 
-export default function FeedComment({ data, setCommentId }) {
+export default function FeedComment({ content, handleClickMoreButton}) {
+  const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
-  const { author, createdAt, content } = data;
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-
-  // 내 아이디면 삭제, 다른 사람 아이디면 신고
-  const handleClickMoreButton = () => {
-    setCommentId(data.id);
-    if (userInfo._id === author._id) {
-      setIsDeleteModalOpen(true);
-    } else {
-      setIsReportModalOpen(true);
-    }
-  };
-
-  const handleCloseDeleteModal = () => setIsDeleteModalOpen(false);
-  const handleCloseReportModal = () => setIsReportModalOpen(false);
 
   return (
     <>
       <Container>
         <CommentSection>
-          <Link to={`/profile/${userInfo.accountname}`}>
+          <Link to={`/profile/${userInfo.account}`}>
             <Image src={userInfo.profileImg} alt="유저 프로필 이미지" />
           </Link>
           <Contents>
@@ -53,11 +37,6 @@ export default function FeedComment({ data, setCommentId }) {
           <img src={iconDot} alt="삭제" />
         </Button>
       </Container>
-
-      {isDeleteModalOpen && (
-        <DeleteCommentModal onClose={handleCloseDeleteModal} />
-      )}
-      {isReportModalOpen && <ReportModal onClose={handleCloseReportModal} />}
     </>
   );
 }
