@@ -34,18 +34,38 @@ export default function FollowerPage() {
 
   if (loading) return <div>Loading...</div>;
 
+  // 팔로우 및 언팔로우(취소) 동작
+  const handleFollow = (followerId, isCurrentlyFollowing) => {
+    
+    if (isCurrentlyFollowing) {
+      console.log(`Unfollowing user with ID: ${followerId}`);
+      
+    } else {
+      console.log(`Following user with ID: ${followerId}`);
+      
+    }
+  };
+
 
   return (
     <Container>
       <BackNav />
       {followers.map(follower => (
-        <ListContainer to={`/profile/${follower.username}`} key={follower.id}> 
-          <FollowerProfile 
-            image={follower.image}
-            name={follower.username}
-            intro={follower.intro}
-          />
-          <StyledFollowButton onClick={(e) => e.stopPropagation()}/>
+        <ListContainer key={follower.id}> 
+          <Link to={`/profile/${follower.username}`}>
+            <FollowerProfile 
+              image={follower.image}
+              name={follower.username}
+              intro={follower.intro}
+            />
+          </Link>
+          <ButtonContainer>
+            <FollowButton
+              followAction={(followerId, isFollowing) => handleFollow(followerId, isFollowing)}
+              followerId={follower.id}
+              initialFollowingStatus={false}
+            />
+          </ButtonContainer>
         </ListContainer>
       ))}
     </Container>
@@ -59,17 +79,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const ListContainer = styled(Link)`
+const ListContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
   margin: 16px;
-  text-decoration: none;
-  color: inherit;
 `;
 
-const StyledFollowButton = styled(FollowButton)`
-  pointer-events: auto; 
-  z-index: 2; 
+const ButtonContainer = styled.div`
+  width: 55px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

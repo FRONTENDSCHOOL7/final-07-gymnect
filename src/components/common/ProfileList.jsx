@@ -22,7 +22,8 @@ const Container = styled.div`
     flex-direction: row;
     align-items: center;
 
-    width: 358px;
+    /* width: 358px; */
+    width:290px;
     height: 50px;
 `
 
