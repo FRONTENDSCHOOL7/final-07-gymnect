@@ -63,7 +63,8 @@ export const Button = styled.button`
 `;
 
 export const NoComment = styled.p`
-  margin-top: 2rem;
+  margin-top: 30px;
+  font-size: 12px;
   text-align: center;
-  color: #006cd8;
+  color: #333333;
 `;

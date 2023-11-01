@@ -23,8 +23,6 @@ export const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 25.2rem;
-  /* background-color: ${({ theme }) => theme.colors.whiteText};
-  border: 0.1rem solid ${({ theme }) => theme.colors.borderColor}; */
   background-color: #ffffff;
   border: 0.1rem solid #DBDBDB;
   border-radius: 1rem;
@@ -32,20 +30,15 @@ export const Container = styled.div`
 
 export const Message = styled.p`
   padding: 2rem 0rem;
-  /* color: ${({ theme }) => theme.colors.blackText};
-  font-size: ${({ theme }) => theme.fontSize.large}; */
-  color: #ffffff;
-  font-size: 1.6rem;
+  color: black;
+  font-size: 16px;
   text-align: center;
 `;
 
 export const ButtonContainer = styled.div`
-  /* color: ${({ theme }) => theme.colors.blackText}; */
   color: #000000;
-  /* border-top: 0.05rem solid ${({ theme }) => theme.colors.borderColor}; */
-  border-top: 0.05rem solid #DBDBDB;
-  /* font-size: ${({ theme }) => theme.fontSize.medium}; */
-  font-size: 1.4rem;
+  border-top: 0.5px solid #DBDBDB;
+  font-size: 14px;
   
   button {
     padding: 1.3rem 0;
@@ -54,9 +47,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const DeleteButton = styled.button`
-  /* color: ${({ theme }) => theme.colors.mainColor}; */
   color: #006CD8;
-  /* border-right: 0.05rem solid ${({ theme }) => theme.colors.borderColor}; */
   border-right: 0.05rem solid #DBDBDB;
   `;
 
