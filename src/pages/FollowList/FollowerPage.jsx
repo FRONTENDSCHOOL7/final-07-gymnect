@@ -34,6 +34,19 @@ export default function FollowerPage() {
 
   if (loading) return <div>Loading...</div>;
 
+  // 팔로우 및 취소 동작
+  const handleFollow = (followerId, isCurrentlyFollowing) => {
+    // This is where you'd typically make an API call to follow or unfollow
+    // For now, we'll just log the action
+    if (isCurrentlyFollowing) {
+      console.log(`Unfollowing user with ID: ${followerId}`);
+      // Call your API to unfollow here
+    } else {
+      console.log(`Following user with ID: ${followerId}`);
+      // Call your API to follow here
+    }
+  };
+
 
   return (
     <Container>
@@ -44,9 +57,16 @@ export default function FollowerPage() {
             <FollowerProfile 
               image={follower.image}
               name={follower.username}
+              intro={follower.intro}
             />
           </Link>
-          <FollowButton />
+          <ButtonContainer>
+            <FollowButton
+              followAction={(followerId, isFollowing) => handleFollow(followerId, isFollowing)}
+              followerId={follower.id}
+              initialFollowingStatus={false}
+            />
+          </ButtonContainer>
         </ListContainer>
       ))}
     </Container>
@@ -60,10 +80,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const ListContainer = styled.div`
+const ListContainer = styled.div` 
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
   margin: 16px;
+`;
+
+const ButtonContainer = styled.div`
+  width: 55px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
