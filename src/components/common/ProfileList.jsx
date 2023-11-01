@@ -2,18 +2,21 @@ import React from 'react';
 import Profile from '../../assets/images/signup-profile.svg';
 import styled from 'styled-components';
 
-export default function ProfileList({children}) {
+export default function ProfileList({ name, intro, children }) {
   return (
-    <Container>
-        <UserProfile src={Profile} alt="유저 프로필 사진" />
-        <UserBox>
-            <UserName>근육 빵빵맨</UserName>
-            <UserIntro>내가 이구역 최고 근육맨</UserIntro>
-        </UserBox>
-        {children}
-    </Container>
+      <Container>
+          <UserProfile src={Profile} alt="유저 프로필 사진" />
+          <UserBox>
+              <UserName>{name}</UserName>
+              <UserIntro>{intro} </UserIntro>
+          </UserBox>
+          {children}
+      </Container>
   );
 };
+
+
+
 
 const Container = styled.div`
     display: flex;
@@ -23,6 +26,8 @@ const Container = styled.div`
     width: 358px;
     height: 50px;
 `
+
+
 
 const UserProfile = styled.img`
   width: 50px;
