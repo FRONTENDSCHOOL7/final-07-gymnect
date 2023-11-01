@@ -8,7 +8,6 @@ import ModalHeader from "../../components/Header/ModalHeader";
 import Comment from "../FeedComment";
 import Post from "../../components/common/Post/Post";
 import { userInfoAtom } from "../../atoms/UserAtom";
-import { getPostDetail } from "../../api/post";
 import {
   Container,
   TopContainer,
@@ -33,7 +32,6 @@ export default function PostComment() {
   const location = useLocation();
   const data = location.state?.data;
   const postId = location.state?.data.id;
-  const [postDetail, setPostDetail] = useState(null);
   const navigate = useNavigate();
 
   const [commentData, setCommentData] = useState([]);
@@ -105,30 +103,6 @@ export default function PostComment() {
     wordWrap: 'break-word',
   };
 
-  // 게시글
-  const onShowModal = (postId) => {
-    if (!isModalOpen) {
-      setIsModalOpen(true);
-      if (data.author.accountname === account) {
-        setModalText(['삭제', '수정']);
-        setModalFunc([
-          () => deletePostData(token, postId.id, setIsDelete),
-          () =>
-            navigate(`edit`, {
-              state: {
-                data: postId,
-              },
-            }),
-        ]);
-      } else {
-        setModalText('신고');
-        setModalFunc([
-          () => reportUserPost(token, postId.id)
-        ]);
-      }
-    }
-  };
-
   // 댓글
   const onShowCommentModal = (index, comment) => {
     if (!isModalOpen) {
@@ -160,8 +134,7 @@ export default function PostComment() {
         <TopContainer>
           <Post data={data}
           userFeedTextStyle={hiddenText}
-          setPickedPost={setPickedPost}
-          showModal={onShowModal}/>
+          setPickedPost={setPickedPost}/>
         </TopContainer>
         <BottomContainer>
           {commentData && commentData.length > 0 ? (
