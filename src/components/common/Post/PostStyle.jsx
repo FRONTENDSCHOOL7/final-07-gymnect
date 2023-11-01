@@ -96,12 +96,6 @@ export const PostUploadImg = styled.img`
   border-radius: 10px;
 `;
 
-export const HeartImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-`;
-
 export const MessageImg = styled.img`
   width: 20px;
   height: 20px;
@@ -115,16 +109,25 @@ export const PostDay = styled.p`
 `;
 
 export const ButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 12px;
   margin-bottom: 16px;
 `;
 
-export const HeartSpan = styled.span``;
+export const HeartSpan = styled.span`
+  margin-left: 6px;
+`;
 
 export const MessageSpan = styled.span``;
 
-export const HeartButton = styled.button``;
+export const HeartButton = styled.button`
+  display: flex;
+  align-items: center; // 수직 중앙 정렬
+`;
 
 export const MessageButton = styled.button`
+  display: flex;
+  align-items: center; // 수직 중앙 정렬
   margin-left: 16px;
 `;
