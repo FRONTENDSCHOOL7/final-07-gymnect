@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../api/profile";
+import AnalysisModal from "../../common/Modal/AnalysisModal";
 // import userImg from "../../../assets/images/signup-profile.svg";
 import {
   MyProfileUpContainer,
@@ -24,6 +25,15 @@ export default function MyProfileUp({ accountId }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [profileInfo, setProfileInfo] = useState("");
   const token = localStorage.getItem("token");
+  const [showModal, setShowModal] = useState(false); // 모달창 표시 여부 상태
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const goToProfileEdit = () => {
     navigate(`/profile/${userInfo.account}/edit`);
@@ -78,11 +88,14 @@ export default function MyProfileUp({ accountId }) {
           <Button height="34px" onClick={goToProfileEdit}>
             프로필 수정
           </Button>
-          <Button width="100px" height="34px">
+          <Button width="100px" height="34px" onClick={handleOpenModal}>
             운동 분석
           </Button>
         </ButtonWrap>
       </MyProfileUpContainer>
+      {showModal && (
+        <AnalysisModal isOpen={handleOpenModal} onClose={handleCloseModal} />
+      )}
     </>
   );
 }

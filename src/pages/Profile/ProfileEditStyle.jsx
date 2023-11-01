@@ -24,8 +24,6 @@ export const Label = styled.label`
   height: 11rem;
   margin: 3.5rem auto 5.5rem;
   background-color: white;
-  border-radius: 50%;
-  border: 1px solid #d9d9d9;
   cursor: pointer;
 
   &::after {
@@ -52,10 +50,11 @@ export const Form = styled.form`
 `;
 
 export const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
   border-radius: 50%;
+  border: 1px solid #dbdbdb;
+  width: 110px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 `;
 
 export const ImageInput = styled.input`
