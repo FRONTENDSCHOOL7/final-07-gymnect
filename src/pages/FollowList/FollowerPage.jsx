@@ -2,6 +2,8 @@ import React, { useState, useEffect }  from "react";
 import { userInfoAtom } from "../../atoms/UserAtom"; 
 import { getFollowerList } from "../../api/follow"; 
 import { useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
+
 import BackNav from "../../components/Header/BackspaceHeader";
 import FollowerProfile from "../../components/common/ProfileList";
 import FollowButton from "../../components/common/Button/FollowButton";
@@ -38,10 +40,12 @@ export default function FollowerPage() {
       <BackNav />
       {followers.map(follower => (
         <ListContainer key={follower.id}> 
-          <FollowerProfile 
-            image={follower.image}
-            name={follower.username}
-          />
+          <Link to={`/profile/${follower.username}`}>
+            <FollowerProfile 
+              image={follower.image}
+              name={follower.username}
+            />
+          </Link>
           <FollowButton />
         </ListContainer>
       ))}
