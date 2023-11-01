@@ -1,5 +1,4 @@
-import styled, { keyframes, css } from 'styled-components';
-
+import styled, { keyframes, css } from "styled-components";
 
 export const Background = styled.div`
   position: fixed;
@@ -8,7 +7,7 @@ export const Background = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 9998;
 `;
 
 export const Section = styled.section`
@@ -44,14 +43,14 @@ export const Container = styled.div`
   `};
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     top: 2rem;
     transform: translate(-50%);
     width: 5rem;
     height: 0.4rem;
-    background: #DBDBDB;
+    background: #dbdbdb;
     border-radius: 0.5rem;
   }
 `;
@@ -62,5 +61,5 @@ export const Button = styled.button`
   width: 390px;
   height: 46px;
   font-size: 14px;
-  padding : 14px 0 0 26px;
+  padding: 14px 0 0 26px;
 `;

@@ -61,6 +61,14 @@ export const GridItem = styled.div`
   width: 114px;
   height: 114px;
   background-color: #e0e0e0;
+  overflow: hidden;
+  border-radius: 14px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 export const SVGIcon = styled.img`

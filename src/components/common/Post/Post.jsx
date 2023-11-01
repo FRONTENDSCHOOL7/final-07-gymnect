@@ -49,7 +49,7 @@ export default function Post({ data, commentCount }) {
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/${data.author.accountname}`, {
+    navigate(`/post/${data.author.accountname}/${data.id}`, {
       state: { data: data }
     });
   };

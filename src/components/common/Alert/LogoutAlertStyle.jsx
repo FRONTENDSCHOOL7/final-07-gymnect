@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   position: fixed;
@@ -10,12 +10,13 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 100000;
 `;
 
 export const Section = styled.div`
   width: 252px;
   height: 110px;
-  background: #FFF;
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,23 +33,21 @@ export const Button = styled.button`
   width: 126px;
   height: 46px;
   font-size: 14px;
-  background: #FFF;
-  border-top: 0.5px solid #DBDBDB;
+  background: #fff;
+  border-top: 0.5px solid #dbdbdb;
 
-  &:first-child{
+  &:first-child {
     border-bottom-left-radius: 10px;
-    border-right: 0.5px solid #DBDBDB;
+    border-right: 0.5px solid #dbdbdb;
   }
 
-  &:last-child{
+  &:last-child {
     border-bottom-right-radius: 10px;
-    color: #006CD8;
+    color: #006cd8;
   }
-  
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
-

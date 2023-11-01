@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
@@ -14,7 +15,6 @@ import {
   GridContainer,
   Wrap,
   GridItem,
-  SVGIcon,
   Container,
   PostContainer
 } from "./MyProfileStyle";
@@ -90,21 +90,16 @@ export default function MyProfile() {
           </Wrap>
           {isExpandedView ? (
             <GridContainer>
-              <GridItem />
-              <GridItem>
-                <SVGIcon src={layer} alt="SVG Icon" />
-              </GridItem>
-              <GridItem />
-              <GridItem />
-              <GridItem />
-              <GridItem>
-                <SVGIcon src={layer} alt="SVG Icon" />
-              </GridItem>
-              <GridItem />
-              <GridItem />
-              <GridItem>
-                <SVGIcon src={layer} alt="SVG Icon" />
-              </GridItem>
+              {myPosts &&
+                myPosts
+                  .filter((post) => post && post.image)
+                  .map((post, index) => (
+                    <GridItem key={index}>
+                      <Link to={`/post/${id}/${post.id}`}>
+                        <img src={post.image} alt="Post Thumbnail" />
+                      </Link>
+                    </GridItem>
+                  ))}
             </GridContainer>
           ) : (
             <PostContainer>
