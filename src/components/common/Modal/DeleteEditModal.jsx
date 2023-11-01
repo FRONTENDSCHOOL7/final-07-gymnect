@@ -20,7 +20,6 @@ export default function Modal({ toggleModal }) {
       <Section onClick={handleInsideClick}>
         <Container>
           <Button>삭제</Button>
-          <Button>수정</Button>
         </Container>
       </Section>
     </>

@@ -34,6 +34,13 @@ export const UserName = styled.span`
   margin-bottom: 15px;
 `;
 
+export const Time = styled.span`
+  padding-left: 6px;
+  font-size: 10px;
+  color: #767676;
+  margin-top: 2px;
+`;
+
 export const Comment = styled.div`
   font-weight: 400;
   font-size: 14px;
@@ -45,3 +52,4 @@ export const Button = styled.button`
   float: right;
   padding-bottom: 3rem;
 `;
+

@@ -6,7 +6,7 @@ import {
   Button
 } from "./DeleteCommentModalStyle";
 
-export default function Modal({ isOpen, onDelete }) {
+export default function DeleteCommentModal({ isOpen, actions, text }) {
   if (!isOpen) return null;
 
   return (
@@ -14,7 +14,11 @@ export default function Modal({ isOpen, onDelete }) {
       <Background />
       <Section>
         <Container>
-          <Button onClick={onDelete}>삭제</Button>
+          {actions.map((action, index) => (
+            <Button key={index} onClick={action}>
+              {text[index]}
+            </Button>
+          ))}
         </Container>
       </Section>
     </>
