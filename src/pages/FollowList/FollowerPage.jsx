@@ -17,7 +17,7 @@ export default function FollowerPage() {
   useEffect(() => {
     getFollowerList(userInfo.account)
       .then(data => {
-        if (Array.isArray(data)) { // Check if data is an array
+        if (Array.isArray(data)) {
           setFollowers(data);
           console.log("Followers Data:", data);
 
@@ -40,12 +40,11 @@ export default function FollowerPage() {
       <BackNav />
       {followers.map(follower => (
         <ListContainer key={follower.id}> 
-          <Link to={`/profile/${follower.username}`}>
-            <FollowerProfile 
-              image={follower.image}
-              name={follower.username}
-            />
-          </Link>
+          <FollowerProfile 
+            name={follower.username}
+            image={follower.image}
+            intro={follower.intro}
+          />
           <FollowButton />
         </ListContainer>
       ))}

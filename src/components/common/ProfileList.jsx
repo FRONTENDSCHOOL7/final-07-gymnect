@@ -8,7 +8,7 @@ export default function ProfileList({ image, name, intro, children }) {
           <UserProfile src={image} alt="유저 프로필 사진" />
           <UserBox>
               <UserName>{name}</UserName>
-              {/* <UserIntro>{intro} </UserIntro> */}
+              <UserIntro>{intro} </UserIntro>
           </UserBox>
           {children}
       </Container>
