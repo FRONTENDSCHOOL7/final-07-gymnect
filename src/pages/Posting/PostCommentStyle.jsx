@@ -61,3 +61,9 @@ export const Button = styled.button`
     color: #006cd8;
   }
 `;
+
+export const NoComment = styled.p`
+  margin-top: 2rem;
+  text-align: center;
+  color: #006cd8;
+`;
