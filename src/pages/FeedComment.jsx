@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import iconDot from "../assets/images/icon-dot.svg";
@@ -11,29 +11,55 @@ import {
   Contents,
   UserInfo,
   UserName,
+  Time,
   Comment,
   Button
 } from "./FeedCommentStyle";
+import profileImage from "../assets/images/signup-profile.svg";
 
-export default function FeedComment({ content, handleClickMoreButton}) {
+export default function FeedComment({ content, time, authorAccount, handleClickMoreButton }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
+
+  const createdTime = () => {
+    const year = time.slice(0, 4) + "년 ";
+    const month = time.slice(5, 7) + "월 ";
+    const date = time.slice(8, 10) + "일";
+    return year + month + date;
+  };
+
+  const getImageSrc = (image) => {
+    if (
+      image.includes("https://api.mandarin.weniv.co.kr%22/") &&
+      !image.includes("undefined")
+    ) {
+      console.log("이미지가 존재합니다.");
+      return image;
+    } else {
+      console.log("!!이미지가 존재하지 않습니다.");
+      return profileImage;
+    }
+  };
 
   return (
     <>
       <Container>
         <CommentSection>
           <Link to={`/profile/${userInfo.account}`}>
-            <Image src={userInfo.profileImg} alt="유저 프로필 이미지" />
+            <Image
+              src={getImageSrc(userInfo.profileImg)}
+              alt="유저 프로필 이미지"
+            />
           </Link>
           <Contents>
             <UserInfo>
               <UserName>{userInfo.username}</UserName>
+              <Time>{createdTime()}</Time>
             </UserInfo>
             <Comment>{content}</Comment>
           </Contents>
         </CommentSection>
-        <Button onClick={handleClickMoreButton}>
+        <Button onClick={() => handleClickMoreButton(authorAccount)}>
           <img src={iconDot} alt="삭제" />
         </Button>
       </Container>
