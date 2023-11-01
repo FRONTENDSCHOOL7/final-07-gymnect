@@ -6,25 +6,15 @@ export const MyProfileUpContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 26px;
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid rgb(219, 219, 219);
 `;
 
 export const Wrap = styled.div`
   display: flex;
+  justify-content: space-around;
+  align-items: center;
   margin-top: 38px;
   gap: 38px;
-`;
-
-export const FollowerWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-export const FollowingWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 export const UserImg = styled.img`
@@ -35,24 +25,24 @@ export const UserImg = styled.img`
   object-fit: cover;
 `;
 
-export const FollowerNum = styled.span`
+export const FollowerNum = styled.div`
   font-weight: bold;
   font-size: 20px;
   text-align: center;
   margin-bottom: 9px;
 `;
-export const Follower = styled.span`
+export const Follower = styled.div`
   text-align: center;
   color: #767676;
   font-size: 14px;
 `;
-export const FollowingNum = styled.span`
+export const FollowingNum = styled.div`
   font-weight: bold;
   font-size: 20px;
   text-align: center;
   margin-bottom: 9px;
 `;
-export const Following = styled.span`
+export const Following = styled.div`
   text-align: center;
   color: #767676;
   font-size: 14px;

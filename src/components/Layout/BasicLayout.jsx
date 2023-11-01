@@ -14,6 +14,7 @@ const BasicLayout = ({ children }) => {
 export default BasicLayout;
 
 const LayoutContainer = styled.div`
+position: relative;
   max-width: 390px;
   height: 100vh;
   /* min-height: 100vh; */

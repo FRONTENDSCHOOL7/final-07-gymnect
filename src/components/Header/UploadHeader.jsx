@@ -3,11 +3,11 @@ import styled from "styled-components";
 import BackButton from "../common/Button/BackButton";
 import Button from "../common/Button/ButtonContainer";
 
-export default function UploadNav() {
+export default function UploadNav(props) {
   return (
     <Container>
       <BackButton />
-      <Button width="85.29px" height="29px" color="#006CD8" bgColor="#FFFFFF">
+      <Button onClick={props.saveData} width="85.29px" height="29px" color="#006CD8" bgColor="#FFFFFF">
         업로드
       </Button>
     </Container>

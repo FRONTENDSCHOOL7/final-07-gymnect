@@ -20,7 +20,7 @@ export default function ButtonContainer({
       $bgColor={bgColor}
       $width={width}
       $height={height}
-      $disabled={disabled}
+      disabled={disabled}
       onClick={onClick}
       $border={border}
       $fontSize={fontSize}>

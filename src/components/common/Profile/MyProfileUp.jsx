@@ -1,10 +1,11 @@
 import React from "react";
-import userImg from "../../../assets/images/signup-profile.svg";
+import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../../atoms/UserAtom";
+import { Link, useNavigate } from "react-router-dom";
+// import userImg from "../../../assets/images/signup-profile.svg";
 import {
   MyProfileUpContainer,
   Wrap,
-  FollowerWrap,
-  FollowingWrap,
   UserImg,
   FollowerNum,
   Follower,
@@ -18,25 +19,33 @@ import {
 import Button from "../Button/ButtonContainer";
 
 export default function MyProfileUp() {
+  const navigate = useNavigate();
+  const userInfo = useRecoilValue(userInfoAtom);
+  const goToProfileEdit = () => {
+    navigate(`/profile/${userInfo.account}/edit`);
+  };
+
   return (
     <>
       <MyProfileUpContainer>
         <Wrap>
-          <FollowerWrap>
+          <Link to={`/profile/${userInfo.account}/follower`}>
             <FollowerNum>2950</FollowerNum>
             <Follower>팔로워</Follower>
-          </FollowerWrap>
-          <UserImg src={userImg} alt="유저사진"></UserImg>
-          <FollowingWrap>
+          </Link>
+          <UserImg src={userInfo.profileImg} alt="유저사진"></UserImg>
+          <Link to={`/profile/${userInfo.account}/following`}>
             <FollowingNum>128</FollowingNum>
             <Following>팔로잉</Following>
-          </FollowingWrap>
+          </Link>
         </Wrap>
-        <UserSpan>애월읍 위니브 감귤농장</UserSpan>
-        <AccountSpan>@weniv_Mandarin</AccountSpan>
-        <IntroSpan>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</IntroSpan>
+        <UserSpan>{userInfo.username}</UserSpan>
+        <AccountSpan>{userInfo.account}</AccountSpan>
+        <IntroSpan>{userInfo.intro}</IntroSpan>
         <ButtonWrap>
-          <Button height="34px">프로필 수정</Button>
+          <Button height="34px" onClick={goToProfileEdit}>
+            프로필 수정
+          </Button>
           <Button width="100px" height="34px">
             운동 분석
           </Button>

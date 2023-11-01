@@ -25,7 +25,7 @@ const Container = styled.header`
   position: sticky;
   top: 0;
   height: 48px;
-  z-index: 999;
+  z-index: 999; //요소가 화면 맨앞에 나오도록
   background-color: #006cd8;
   padding: 0 12px;
 `;

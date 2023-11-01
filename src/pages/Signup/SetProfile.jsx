@@ -36,7 +36,6 @@ const ProfileSettingPage = () => {
   const [accountnameErrorMsg, setAccountnameErrorMsg] = useState("");
   const [usernameValid, setUsernameValid] = useState(false);
   const [accountnameValid, setAccountnameValid] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const formData = new FormData();
   const blobToFile = (blob, filename) => {
     const file = new File([blob], filename);
@@ -126,11 +125,8 @@ const ProfileSettingPage = () => {
         intro,
         image
       );
-      setIsComplete(true);
       console.log(signupData);
       navigate("/login");
-    } else {
-      setIsComplete(false);
     }
   };
 

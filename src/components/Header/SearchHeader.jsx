@@ -2,12 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import BackButton from "../common/Button/BackButton";
 
-const SearchNav = () => {
+const SearchNav = ({ value, onChange }) => {
   return (
     <Container>
       <BackButton />
       <Form>
-        <Input type="text" placeholder="계정 검색" />
+        <Input
+          type="text"
+          placeholder="계정 검색"
+          value={value}
+          onChange={onChange}
+        />
       </Form>
     </Container>
   );
@@ -43,9 +48,9 @@ const Input = styled.input`
     color: #d9d9d9;
   }
 
-&:focus {
+  &:focus {
     outline: none;
-}
+  }
 `;
 
 export default SearchNav;

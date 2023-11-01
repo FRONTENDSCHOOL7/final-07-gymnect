@@ -105,7 +105,10 @@ export const ImageSection = styled.section`
 
 export const Image = styled.img`
   width: 42px;
-  height: auto;
+  height: 42px;
+  border-radius: 50%; //원형으로 만듬
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
 `;
 
 export const ChatSection = styled.section`

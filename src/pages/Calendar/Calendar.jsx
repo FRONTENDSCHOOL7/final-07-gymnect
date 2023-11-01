@@ -80,7 +80,15 @@ const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf; // 스크롤바 색상
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888; // 여기에 원하는 hover 시의 색상을 지정하세요
   }
 `;
 

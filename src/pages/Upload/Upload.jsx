@@ -1,7 +1,33 @@
-import React, { useState } from "react";
+import { postContentUpload } from "../../api/post";
+import React, { useRef, useState } from "react";
 import UploadNav from "../../components/Header/UploadHeader";
-import styled from "styled-components";
 import Button from "../../components/common/Button/ButtonContainer";
+import {
+  Container,
+  DropDown,
+  ArrowIcon,
+  OptionsContainer,
+  Option,
+  BtnWrapper,
+  ExerciseNameInput,
+  LabelExerciseName,
+  Input,
+  SetContainer,
+  Count,
+  SetInputContainer,
+  SetInput,
+  SetBtn,
+  KmContainer,
+  KmInput,
+  TimeInputContainer,
+  TimeField,
+  StyledTextarea,
+  StyledImageBtn,
+  ImagesContainer,
+  ImageWrapper,
+  StyledImage,
+  CloseButton
+} from "./UploadStyle";
 
 // 셀렉트창 운동종류 데이터
 const ExerciseData = [
@@ -20,6 +46,75 @@ const ExerciseData = [
 ];
 
 function Upload() {
+  //데이터 저장
+  const createApiData = () => {
+    let contentData = postContent;
+    let imageString = uploadedImages.join(", ");
+
+    let exerciseData = "";
+    if (selectedValue === "근력 운동") {
+      exerciseData = exerciseEntries
+        .map((entry) => {
+          return `${entry.name} - ${entry.sets
+            .map((set) => `${set.weight}kg x ${set.reps}회`)
+            .join(", ")}`;
+        })
+        .join("; ");
+      exerciseData = `${selectedValue}:${exerciseData}`;
+    } else if (
+      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
+    ) {
+      exerciseData = `${selectedValue}:${distanceInput}km`;
+    } else {
+      exerciseData = `${selectedValue}`;
+    }
+
+    let timeData = `${hour}시간 ${minute}분`;
+
+    contentData = `${contentData}\n${exerciseData}\n${timeData}`;
+
+    return {
+      post: {
+        content: contentData,
+        image: imageString
+      }
+    };
+  };
+
+  const saveDataToAPI = async () => {
+    try {
+      const apiData = createApiData();
+      const token = localStorage.getItem("token");
+      const content = apiData.post.content;
+      const imageString = apiData.post.image;
+
+      const response = await postContentUpload(content, imageString, token);
+
+      if (response) {
+        console.log("성공적으로 API를 저장했습니다!");
+      } else {
+        console.error("Error while saving data to the API:", response.data);
+      }
+    } catch (error) {
+      console.error(
+        "API call error:",
+        error.response ? error.response.data : error
+      );
+    }
+  };
+
+  const saveData = async () => {
+    console.log("Data saved:", {
+      selectedValue,
+      hour,
+      minute,
+      exerciseEntries,
+      postContent,
+      uploadedImages
+    });
+    await saveDataToAPI();
+  };
+
   // 운동 선택 toggle
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("운동 종류");
@@ -84,13 +179,53 @@ function Upload() {
     setExerciseEntries(newEntries);
   };
 
+  // km 저장
+  const [distanceInput, setDistanceInput] = useState("");
+
+  // 게시물 작성
+  const [postContent, setPostContent] = useState("");
+
+  // Textarea 높이 자동조절
+  function autoResizeTextarea(event) {
+    event.target.style.height = "auto";
+    event.target.style.height = event.target.scrollHeight + "px";
+  }
+
+  // 아이콘 클릭하면 파일 선택 다이얼로그 열게 하기
+  const inputRef = useRef(null);
+
+  const handleIconClick = () => {
+    inputRef.current.click();
+  };
+
+  // 사진 업로드 처리
+  const [uploadedImages, setUploadedImages] = useState([]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImages([...uploadedImages, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 이미지 삭제
+  const removeImage = (index) => {
+    const newImages = [...uploadedImages];
+    newImages.splice(index, 1);
+    setUploadedImages(newImages);
+  };
+
   return (
     <>
-      <UploadNav />
+      <UploadNav saveData={saveData} />
       <Container>
         <DropDown onClick={handleDropdownToggle}>
           <ArrowIcon $isOpen={isOpen}></ArrowIcon>
-          <SelectedValue>{selectedValue}</SelectedValue>
+          <span>{selectedValue}</span>
         </DropDown>
         <OptionsContainer $isOpen={isOpen}>
           {ExerciseData.map((item) => (
@@ -101,14 +236,14 @@ function Upload() {
         </OptionsContainer>
         {selectedValue === "근력 운동" && (
           <>
-            <PlusExerciseBtn>
+            <BtnWrapper>
               <Button
                 width="310px"
                 height="29px"
                 onClick={handleAddExerciseInput}>
                 + 운동 추가
               </Button>
-            </PlusExerciseBtn>
+            </BtnWrapper>
             {exerciseEntries.map((exercise, exerciseIndex) => (
               <div key={exerciseIndex}>
                 <ExerciseNameInput>
@@ -125,6 +260,7 @@ function Upload() {
                   <Button
                     width="68px"
                     height="29px"
+                    fontSize="12px"
                     onClick={() => handleRemoveExerciseInput(exerciseIndex)}>
                     삭제
                   </Button>
@@ -132,7 +268,7 @@ function Upload() {
                 {exercise.sets.map((set, setIndex) => (
                   <SetContainer key={setIndex}>
                     <Count>{setIndex + 1} </Count>
-                    <div>
+                    <SetInputContainer>
                       <SetInput
                         id="kgInput"
                         value={set.weight}
@@ -145,9 +281,9 @@ function Upload() {
                           )
                         }
                       />
-                      <Labelset htmlFor="kgInput">kg</Labelset>
-                    </div>
-                    <div>
+                      <label htmlFor="kgInput">kg</label>
+                    </SetInputContainer>
+                    <SetInputContainer>
                       <SetInput
                         id="NumInput"
                         value={set.reps}
@@ -160,8 +296,8 @@ function Upload() {
                           )
                         }
                       />
-                      <Labelset htmlFor="NumInput">회</Labelset>
-                    </div>
+                      <label htmlFor="NumInput">회</label>
+                    </SetInputContainer>
                     <Button
                       className="setSubBtn"
                       width="10px"
@@ -174,17 +310,18 @@ function Upload() {
                     </Button>
                   </SetContainer>
                 ))}
-                <SetBtn>
-                  <Button
+                <BtnWrapper>
+                  <SetBtn
                     width="310px"
                     height="29px"
                     bgColor="#FFFFF"
                     border="1px solid #006CD8"
                     color="#000000"
+                    fontSize="12px"
                     onClick={() => handleAddSet(exerciseIndex)}>
                     + 세트 추가
-                  </Button>
-                </SetBtn>
+                  </SetBtn>
+                </BtnWrapper>
               </div>
             ))}
           </>
@@ -194,11 +331,16 @@ function Upload() {
           selectedValue === "등산" ||
           selectedValue === "자전거 타기") && (
           <KmContainer>
-            <KmInput id="distanceInput" type="number" />
-            <Kmlabel htmlFor="distanceInput">km</Kmlabel>
+            <KmInput
+              id="distanceInput"
+              type="number"
+              value={distanceInput}
+              onChange={(e) => setDistanceInput(e.target.value)}
+            />
+            <label htmlFor="distanceInput">km</label>
           </KmContainer>
         )}
-        <InputContainer $isOpen={isOpen}>
+        <TimeInputContainer $isOpen={isOpen}>
           <TimeField
             id="timeInput"
             type="number"
@@ -207,7 +349,7 @@ function Upload() {
             min="0"
             max="23"
           />
-          <TimeLabel htmlFor="timeInput">시간</TimeLabel>
+          <label htmlFor="timeInput">시간</label>
           <TimeField
             id="MinuteInput"
             type="number"
@@ -216,181 +358,37 @@ function Upload() {
             min="0"
             max="59"
           />
-          <MinuteLabel htmlFor="MinuteInput">분</MinuteLabel>
-        </InputContainer>
+          <label htmlFor="MinuteInput">분</label>
+        </TimeInputContainer>
+        <>
+          <StyledTextarea
+            value={postContent}
+            onChange={(e) => {
+              setPostContent(e.target.value);
+              autoResizeTextarea(e);
+            }}
+            placeholder="게시글을 작성해주세요."
+          />
+          <StyledImageBtn onClick={handleIconClick} />
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            ref={inputRef}
+            onChange={handleImageUpload}
+          />
+          <ImagesContainer>
+            {uploadedImages.map((image, index) => (
+              <ImageWrapper key={index}>
+                <StyledImage src={image} alt={`Uploaded Preview ${index}`} />
+                <CloseButton onClick={() => removeImage(index)}>×</CloseButton>
+              </ImageWrapper>
+            ))}
+          </ImagesContainer>
+        </>
       </Container>
     </>
   );
 }
 
 export default Upload;
-
-const SelectedValue = styled.span``;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ArrowIcon = styled.span`
-  display: inline-block;
-  transform: ${({ $isOpen }) => ($isOpen ? "rotate(180deg)" : "rotate(0deg)")};
-  transition: transform 0.1s;
-  margin-right: 8px;
-  &:before {
-    content: "▼";
-  }
-`;
-
-const OptionsContainer = styled.div`
-  border-top: none;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow-y: auto;
-  max-height: ${({ $isOpen }) => ($isOpen ? "150px" : "0")};
-  transition: max-height 0.2s ease-in-out;
-
-  &::-webkit-scrollbar {
-    width: 7px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 50px;
-  }
-`;
-
-const Option = styled.div`
-  padding: 8px 35px;
-  cursor: pointer;
-  font-size: 14px;
-`;
-
-const DropDown = styled.div`
-  padding: 12px;
-  font-size: 14px;
-  cursor: pointer;
-  /* border-bottom: 1px solid #d9d9d9; */
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 14px;
-  border-bottom: 1px solid #d9d9d9;
-  padding: 11px;
-`;
-
-const TimeField = styled.input`
-  width: 75px;
-  border: none;
-  border-bottom: 1px solid #d9d9d9;
-  font-size: 14px;
-  text-align: center;
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
-
-const ExerciseNameInput = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 14px 23px;
-`;
-
-const SetContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 51px 15px;
-  :last-child {
-    margin-bottom: 5px;
-  }
-`;
-
-const SetInput = styled.input`
-  width: 42px;
-  height: 24px;
-  font-size: 14px;
-  border-bottom: 1px solid #d9d9d9;
-  text-align: center;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Input = styled.input`
-  width: 178px;
-  height: 24px;
-  text-align: center;
-  font-size: 14px;
-  border-bottom: 1px solid #d9d9d9;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Count = styled.span`
-  font-size: 14px;
-  font-weight: border;
-`;
-
-const PlusExerciseBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 8px;
-`;
-
-const LabelExerciseName = styled.label`
-  font-size: 14px;
-  margin-right: 12px;
-`;
-
-const SetBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-`;
-
-const Labelset = styled.label`
-  font-size: 14px;
-`;
-
-const MinuteLabel = styled.label``;
-
-const TimeLabel = styled.label``;
-
-const KmInput = styled.input`
-  width: 71px;
-  height: 24px;
-  font-size: 14px;
-  text-align: center;
-  border-bottom: 1px solid #d9d9d9;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
-
-const Kmlabel = styled.label`
-  font-size: 14px;
-`;
-
-const KmContainer = styled.div`
-  margin-left: 90px;
-`;
