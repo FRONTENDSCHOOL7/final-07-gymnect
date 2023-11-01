@@ -5,6 +5,7 @@ import ModalHeader from "../../components/Header/ModalHeader";
 import Comment from "../FeedComment";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import Post from "../../components/common/Post/Post";
+import { getPostDetail } from "../../api/post";
 import {
   Container,
   TopContainer,
@@ -25,11 +26,11 @@ export default function PostComment() {
   const location = useLocation();
   const data = location.state?.data;
   const postId = location.state?.data.id;
+  const [postDetail, setPostDetail] = useState(null);
   const navigate = useNavigate();
 
   const [commentData, setCommentData] = useState([]);
   const [inputComment, setInputComment] = useState("");
-
 
   useEffect(() => {
     if (postId) {
@@ -52,11 +53,21 @@ export default function PostComment() {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     const response = await postComment(token, postId, inputComment);
-    console.log('Post Comment Response:', response);
+    console.log("Post Comment Response:", response);
     setInputComment("");
     fetchCommentList();
   };
-  
+
+  useEffect(() => {
+    const fetchPostDetail = async () => {
+      const postData = await getPostDetail(postId);
+      setPostDetail(postData);
+    };
+
+    fetchPostDetail();
+  }, [postId]);
+
+  console.log(data);
 
   return (
     <>
@@ -66,7 +77,7 @@ export default function PostComment() {
           <Post data={data} />
         </TopContainer>
         <BottomContainer>
-        {commentData && commentData.length > 0 ? (
+          {commentData && commentData.length > 0 ? (
             commentData.map((comment, index) => (
               <Comment
                 key={comment.id}
@@ -91,7 +102,7 @@ export default function PostComment() {
                 value={inputComment}
               />
             </CommentInput>
-            <Button active={inputComment.trim() !== ""} type="submit">
+            <Button $active={inputComment.trim() !== ""} type="submit">
               게시
             </Button>
           </Form>

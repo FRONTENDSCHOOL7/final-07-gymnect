@@ -50,8 +50,8 @@ function Upload() {
   const createApiData = () => {
     let contentData = postContent;
     let imageString = uploadedImages.join(", ");
-
     let exerciseData = "";
+
     if (selectedValue === "근력 운동") {
       exerciseData = exerciseEntries
         .map((entry) => {
