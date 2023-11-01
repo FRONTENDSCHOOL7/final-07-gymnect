@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useRecoilValue } from "recoil";
 import ChatHeader from "../../components/Header/ChatHeader";
 import ChatFooter from "../../components/Footer/ChatFooter";
 import profileImage from "../../assets/images/signup-profile.svg";
