@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserProfile } from "../../../api/profile";
 // import userImg from "../../../assets/images/signup-profile.svg";
 import {
   MyProfileUpContainer,
@@ -18,30 +19,61 @@ import {
 } from "./MyProfileUpStyle";
 import Button from "../Button/ButtonContainer";
 
-export default function MyProfileUp() {
+export default function MyProfileUp({ accountId }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
+  const [profileInfo, setProfileInfo] = useState("");
+  const token = localStorage.getItem("token");
+
   const goToProfileEdit = () => {
     navigate(`/profile/${userInfo.account}/edit`);
   };
+
+  useEffect(() => {
+    const fetchMyProfile = async () => {
+      try {
+        const profileData = await getUserProfile(token, accountId);
+        setProfileInfo(profileData);
+      } catch (error) {
+        console.log("프로필 정보를 가져오는데 실패했습니다:", error);
+      }
+    };
+    fetchMyProfile();
+  }, []);
+
+  console.log(profileInfo);
 
   return (
     <>
       <MyProfileUpContainer>
         <Wrap>
-          <Link to={`/profile/${userInfo.account}/follower`}>
-            <FollowerNum>2950</FollowerNum>
+          <Link
+            to={`/profile/${
+              profileInfo && profileInfo.profile.accountname
+            }/follower`}>
+            <FollowerNum>
+              {profileInfo && profileInfo.profile.followerCount}
+            </FollowerNum>
             <Follower>팔로워</Follower>
           </Link>
-          <UserImg src={userInfo.profileImg} alt="유저사진"></UserImg>
-          <Link to={`/profile/${userInfo.account}/following`}>
-            <FollowingNum>128</FollowingNum>
+          <UserImg
+            src={profileInfo && profileInfo.profile.image}
+            alt="유저사진"></UserImg>
+          <Link
+            to={`/profile/${
+              profileInfo && profileInfo.profile.accountname
+            }/following`}>
+            <FollowingNum>
+              {profileInfo && profileInfo.profile.followingCount}
+            </FollowingNum>
             <Following>팔로잉</Following>
           </Link>
         </Wrap>
-        <UserSpan>{userInfo.username}</UserSpan>
-        <AccountSpan>{userInfo.account}</AccountSpan>
-        <IntroSpan>{userInfo.intro}</IntroSpan>
+        <UserSpan>{profileInfo && profileInfo.profile.username}</UserSpan>
+        <AccountSpan>
+          {profileInfo && profileInfo.profile.accountname}
+        </AccountSpan>
+        <IntroSpan>{profileInfo && profileInfo.profile.Intro}</IntroSpan>
         <ButtonWrap>
           <Button height="34px" onClick={goToProfileEdit}>
             프로필 수정
