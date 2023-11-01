@@ -17,7 +17,7 @@ export default function FollowerPage() {
   useEffect(() => {
     getFollowerList(userInfo.account)
       .then(data => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data)) { 
           setFollowers(data);
           console.log("Followers Data:", data);
 
@@ -39,13 +39,13 @@ export default function FollowerPage() {
     <Container>
       <BackNav />
       {followers.map(follower => (
-        <ListContainer key={follower.id}> 
+        <ListContainer to={`/profile/${follower.username}`} key={follower.id}> 
           <FollowerProfile 
-            name={follower.username}
             image={follower.image}
+            name={follower.username}
             intro={follower.intro}
           />
-          <FollowButton />
+          <StyledFollowButton onClick={(e) => e.stopPropagation()}/>
         </ListContainer>
       ))}
     </Container>
@@ -59,10 +59,17 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const ListContainer = styled.div`
+const ListContainer = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
   margin: 16px;
+  text-decoration: none;
+  color: inherit;
+`;
+
+const StyledFollowButton = styled(FollowButton)`
+  pointer-events: auto; 
+  z-index: 2; 
 `;
