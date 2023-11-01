@@ -4,6 +4,7 @@ import SearchNav from "../../../components/Header/SearchHeader";
 import styled from "styled-components";
 import { getUserSearch } from "../../../api/search";
 import profileImage from "../../../assets/images/signup-profile.svg";
+import LoadingLogo from "../../../assets/images/home-loading-logo.svg";
 
 const Search = () => {
   const [query, setQuery] = useState(""); //검색입력창의 값을 저장
@@ -18,6 +19,11 @@ const Search = () => {
         try {
           const results = await getUserSearch(query);
           setSearchResults(results);
+          // if (Array.isArray(results)) {
+          //   setSearchResults(results);
+          // } else {
+          //   setSearchResults([]);
+          // }
         } catch (error) {
           console.error("Failed to fetch search results:", error);
         }
@@ -49,7 +55,11 @@ const Search = () => {
   };
 
   const getImageSrc = (index) => {
-    if (searchResults && searchResults[index].image) {
+    if (
+      searchResults &&
+      searchResults[index].image.includes("api.mandarin.weniv.co.kr") &&
+      !searchResults[index].image.includes("undefined")
+    ) {
       console.log("이미지가 존재합니다.");
       return searchResults[index].image;
     } else {
@@ -63,7 +73,10 @@ const Search = () => {
       <Container>
         <Main>
           {searchResults.length === 0 ? (
-            <Text>검색 결과가 없습니다.</Text>
+            <LogoSection>
+              <LogoImage src={LoadingLogo} />
+              <Text>검색 결과가 없습니다.</Text>
+            </LogoSection>
           ) : (
             searchResults.map((user, index) => (
               <Button
@@ -128,8 +141,23 @@ const Main = styled.div`
   margin-left: 1.6rem;
   //background-color: #bed2f7;
 `;
+const LogoSection = styled.div`
+  //background-color: #aed2ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 30vh;
+  margin-right: 1vh;
+`;
+const LogoImage = styled.img`
+  width: 97.61px;
+  height: 95.112px;
+`;
 const Text = styled.p`
   font-size: 1.4rem;
+  color: #767676;
 `;
 const Button = styled.button`
   display: flex;

@@ -5,6 +5,7 @@ import ModalHeader from "../../components/Header/ModalHeader";
 import Comment from "../FeedComment";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import Post from "../../components/common/Post/Post";
+import { getPostDetail } from "../../api/post";
 import {
   Container,
   TopContainer,
@@ -33,6 +34,7 @@ export default function PostComment() {
   const location = useLocation();
   const data = location.state?.data;
   const postId = location.state?.data.id;
+  const [postDetail, setPostDetail] = useState(null);
   const navigate = useNavigate();
 
   const [commentData, setCommentData] = useState([]);
@@ -111,6 +113,17 @@ export default function PostComment() {
   const closeDeleteCommentModal = () => setDeleteCommentModalOpen(false);
   const closeReportModal = () => setReportModalOpen(false);
 
+  useEffect(() => {
+    const fetchPostDetail = async () => {
+      const postData = await getPostDetail(postId);
+      setPostDetail(postData);
+    };
+
+    fetchPostDetail();
+  }, [postId]);
+
+  console.log(data);
+
   return (
     <>
       <ModalHeader />
@@ -144,7 +157,7 @@ export default function PostComment() {
                 value={inputComment}
               />
             </CommentInput>
-            <Button active={inputComment.trim() !== ""} type="submit">
+            <Button $active={inputComment.trim() !== ""} type="submit">
               게시
             </Button>
           </Form>
