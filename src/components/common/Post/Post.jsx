@@ -31,7 +31,7 @@ import {
   MessageButton
 } from "./PostStyle";
 
-export default function Post({ data }) {
+export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const imageCheck = data.image ? true : false;
@@ -123,12 +123,12 @@ export default function Post({ data }) {
           </FeedButton>
           <ButtonWrap>
             <HeartButton onClick={handleToggleLike}>
-              <HeartIcon liked={postLikeState} />
+              <HeartIcon isLiked={postLikeState} />
               <HeartSpan>{postLikeCount}</HeartSpan>
             </HeartButton>
             <MessageButton onClick={handleFeedClick}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
-              <MessageSpan>0</MessageSpan>
+              <MessageSpan>{data.commentCount}</MessageSpan>
             </MessageButton>
           </ButtonWrap>
           <PostDay>{formatDate(data.createdAt)}</PostDay>

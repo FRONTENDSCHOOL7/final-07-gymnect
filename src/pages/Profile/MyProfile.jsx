@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Post from "../../components/common/Post/Post";
 import MyProfileUp from "../../components/common/Profile/MyProfileUp";
 import ModalNav from "../../components/Header/ModalHeader";
@@ -34,6 +34,7 @@ export default function MyProfile() {
   const userInfo = useRecoilValue(userInfoAtom);
   const account = userInfo.account;
   const token = localStorage.getItem("token");
+  const { id } = useParams();
 
   const handleIconClick = (viewType) => {
     if (viewType === "grid") {
@@ -56,7 +57,7 @@ export default function MyProfile() {
   useEffect(() => {
     const fetchMyPosts = async () => {
       try {
-        const data = await getUserPosts(token, account, 10, 0);
+        const data = await getUserPosts(token, id, 10, 0);
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
         } else {
@@ -66,7 +67,6 @@ export default function MyProfile() {
         console.log("게시글을 가져오는데 실패했습니다:", error);
       }
     };
-
     fetchMyPosts();
   }, [userInfo]);
 
@@ -74,7 +74,7 @@ export default function MyProfile() {
     <>
       <ModalNav toggleModal={toggleModal} />
       <Container>
-        <MyProfileUp />
+        <MyProfileUp accountId={id} />
         <MainWrap>
           <Wrap>
             <FlexIconImg
