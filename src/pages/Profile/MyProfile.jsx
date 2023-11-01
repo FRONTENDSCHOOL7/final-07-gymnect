@@ -89,7 +89,7 @@ export default function MyProfile() {
             />
           </Wrap>
           {isExpandedView ? (
-            <GridContainer isExpanded={true}>
+            <GridContainer>
               <GridItem />
               <GridItem>
                 <SVGIcon src={layer} alt="SVG Icon" />

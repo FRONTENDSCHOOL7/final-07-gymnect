@@ -60,15 +60,18 @@ function Upload() {
             .join(", ")}`;
         })
         .join("; ");
+      exerciseData = `${selectedValue}:${exerciseData}`;
     } else if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
     ) {
-      exerciseData = `${selectedValue}: ${distanceInput}km`;
+      exerciseData = `${selectedValue}:${distanceInput}km`;
+    } else {
+      exerciseData = `${selectedValue}`;
     }
 
     let timeData = `${hour}시간 ${minute}분`;
 
-    contentData = `${contentData}\n\n${exerciseData}\n${timeData}`;
+    contentData = `${contentData}\n${exerciseData}\n${timeData}`;
 
     return {
       post: {

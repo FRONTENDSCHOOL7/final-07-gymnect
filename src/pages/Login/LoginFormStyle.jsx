@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.main`
   margin: 0 auto;
+  width: 39rem;
 `;
 
 export const Title = styled.h1`
@@ -12,10 +13,16 @@ export const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
 `;
-export const Form = styled.form``;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 export const Section = styled.div`
   padding-bottom: 30px;
 `;
+
 
 export const ErrorMessage = styled.p`
   margin-top: 6px;

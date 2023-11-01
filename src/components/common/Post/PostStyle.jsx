@@ -6,6 +6,7 @@ export const PostArticle = styled.article`
 `;
 export const PostFlexWrap = styled.div`
   display: flex;
+  position: relative;
 `;
 
 export const ProfileButton = styled.button`
@@ -39,20 +40,15 @@ export const AccountSpan = styled.span`
 `;
 
 export const Time = styled.p`
-  margin-left: 70px;
-  padding-top: 15px;
+  position: absolute;
+  top: 20px;
+  right: 30px;
   font-weight: bold;
-  margin-right: 10px;
-  & > span {
-    display: inline-block;
-    margin-left: 5px;
-    font-weight: 400;
-    width: 20px;
-    text-align: center;
-  }
+  font-size: 12px;
 `;
 
 export const DotButton = styled.button`
+  margin-left: auto;
   width: 18px;
   height: 18px;
 `;
@@ -87,37 +83,17 @@ export const HealthList = styled.li`
     text-align: center;
     font-weight: 400;
   }
-  & > span:first-child {
-    width: 112px;
-    margin-right: 25px;
-  }
-  & > span:nth-child(2) {
-    width: 40px;
-  }
-  & > span:nth-child(3) {
-    width: 30px;
-    margin-left: 10px;
-  }
-  & > span:last-child {
-    margin-left: 10px;
-    width: 30px;
-  }
 `;
 
-export const PostContent = styled.div`
+export const PostContent = styled.p`
   margin: 16px 0;
   font-size: 14px;
+  text-align: left;
 `;
 
 export const PostUploadImg = styled.img`
   width: 328px;
   border-radius: 10px;
-`;
-
-export const HeartImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
 `;
 
 export const MessageImg = styled.img`
@@ -133,16 +109,25 @@ export const PostDay = styled.p`
 `;
 
 export const ButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 12px;
   margin-bottom: 16px;
 `;
 
-export const HeartSpan = styled.span``;
+export const HeartSpan = styled.span`
+  margin-left: 6px;
+`;
 
 export const MessageSpan = styled.span``;
 
-export const HeartButton = styled.button``;
+export const HeartButton = styled.button`
+  display: flex;
+  align-items: center; // 수직 중앙 정렬
+`;
 
 export const MessageButton = styled.button`
+  display: flex;
+  align-items: center; // 수직 중앙 정렬
   margin-left: 16px;
 `;
