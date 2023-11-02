@@ -16,7 +16,12 @@ import {
 } from "./FeedCommentStyle";
 import profileImage from "../assets/images/signup-profile.svg";
 
-export default function FeedComment({ content, time, authorAccount, handleCommentClick }) {
+export default function FeedComment({
+  content,
+  time,
+  authorAccount,
+  handleCommentClick
+}) {
   const userInfo = useRecoilValue(userInfoAtom);
 
   const createdTime = () => {

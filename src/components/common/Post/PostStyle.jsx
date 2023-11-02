@@ -73,7 +73,6 @@ export const HealthWrap = styled.ul`
   margin-bottom: 11px;
   padding-bottom: 11px;
   font-size: 14px;
-  border-bottom: 1px solid #dbdbdb;
 `;
 
 export const HealthList = styled.li`

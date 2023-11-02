@@ -92,14 +92,24 @@ export default function MyProfile() {
             <GridContainer>
               {myPosts &&
                 myPosts
-                  .filter((post) => post && post.image)
-                  .map((post, index) => (
-                    <GridItem key={index}>
-                      <Link to={`/post/${id}/${post.id}`}>
-                        <img src={post.image} alt="Post Thumbnail" />
-                      </Link>
-                    </GridItem>
-                  ))}
+                  .filter((post) => {
+                    return post && post.image;
+                  })
+                  .map((post, index) => {
+                    console.log(post);
+                    return (
+                      <>
+                        <GridItem key={index}>
+                          <Link
+                            to={{
+                              pathname: `/post/${id}/${post.id}`
+                            }}>
+                            <img src={post.image} alt="Post Thumbnail" />
+                          </Link>
+                        </GridItem>
+                      </>
+                    );
+                  })}
             </GridContainer>
           ) : (
             <PostContainer>

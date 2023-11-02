@@ -93,16 +93,16 @@ export default function MyProfileUp({ accountId }) {
         <IntroSpan>{profileInfo && profileInfo.profile.intro}</IntroSpan>
         <ButtonWrap>
           {account === accountId ? (
-            <ButtonWrap>
+            <>
               <Button height="34px" onClick={goToProfileEdit}>
                 프로필 수정
               </Button>
-              <Button width="100px" height="34px">
+              <Button height="34px" onClick={handleOpenModal}>
                 운동 분석
               </Button>
-            </ButtonWrap>
+            </>
           ) : (
-            <Button onClick={handleFollowToggle}>
+            <Button width="120px" height="34px" onClick={handleFollowToggle}>
               {isFollowed ? "언팔로우" : "팔로우"}
             </Button>
           )}
