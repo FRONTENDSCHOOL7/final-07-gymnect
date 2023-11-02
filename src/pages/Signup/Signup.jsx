@@ -70,6 +70,7 @@ const Signup = () => {
       setUserPassword(userPassword);
     }
   };
+
   const handleInputPasswordCheck = (e) => {
     const userPasswordCheck = e.target.value;
     if (userPassword !== userPasswordCheck) {

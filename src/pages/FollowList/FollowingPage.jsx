@@ -1,8 +1,8 @@
-import React, { useState, useEffect }  from "react";
-import { userInfoAtom } from "../../atoms/UserAtom"; 
-import { getFollowingList, postFollow, deleteFollow } from "../../api/follow"; 
+import React, { useState, useEffect } from "react";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import { getFollowingList, postFollow, deleteFollow } from "../../api/follow";
 import { useRecoilValue } from "recoil";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import BackNav from "../../components/Header/BackspaceHeader";
 import FollowerProfile from "../../components/common/ProfileList";
@@ -13,27 +13,25 @@ export default function FollowingPage() {
   const userInfo = useRecoilValue(userInfoAtom);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  console.log("hi");
+  console.log(id);
 
   useEffect(() => {
-    getFollowingList(userInfo.account)
-      .then(data => {
-        if (Array.isArray(data)) { // Check if data is an array
-          setFollowings(data);
-          console.log("Followings Data:", data);
-
-        } else {
-          console.error("Received data is not an array:", data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching followings:", err);
-        setLoading(false);
-      });
+    const fetchMyFollowingList = async () => {
+      try {
+        const data = await getFollowingList(id);
+        setFollowings(data);
+      } catch (error) {
+        console.error("데이터를 가져오는데 실패했습니다:", error);
+      }
+    };
+    fetchMyFollowingList();
   }, [userInfo.account]);
 
-  if (loading) return <div>Loading...</div>;
+  console.log(followings);
+  // console.log(followings && followings[0].username);
+  // console.log(followings && followings[0].accountname);
 
   const handleFollow = async (followerId, isCurrentlyFollowing) => {
     try {
@@ -44,12 +42,12 @@ export default function FollowingPage() {
         console.log(`Following user with ID: ${followerId}`);
         await postFollow(followerId);
       }
-  
+
       // Update the state to reflect the changes
-      setFollowings(prevFollowings => 
-        prevFollowings.map(follower => 
-          follower.id === followerId 
-            ? { ...follower, isFollowing: !isCurrentlyFollowing } 
+      setFollowings((prevFollowings) =>
+        prevFollowings.map((follower) =>
+          follower.id === followerId
+            ? { ...follower, isFollowing: !isCurrentlyFollowing }
             : follower
         )
       );
@@ -57,27 +55,24 @@ export default function FollowingPage() {
       console.error("Error while updating follow status:", error);
     }
   };
-  
+
   // const handleFollow = (followerId, isCurrentlyFollowing) => {
-  //   setFollowings(prevFollowings => 
-  //     prevFollowings.map(following => 
-  //       following.id === followerId 
-  //         ? { ...following, isFollowing: isCurrentlyFollowing } 
+  //   setFollowings(prevFollowings =>
+  //     prevFollowings.map(following =>
+  //       following.id === followerId
+  //         ? { ...following, isFollowing: isCurrentlyFollowing }
   //         : following
   //     )
   //   );
   // };
 
-  
-
-
   return (
     <Container>
       <BackNav />
-      {followings.map(Following => (
-        <ListContainer key={Following.id}> 
+      {followings.map((Following) => (
+        <ListContainer key={Following.id}>
           <Link to={`/profile/${Following.username}`}>
-            <FollowerProfile 
+            <FollowerProfile
               image={Following.image}
               name={Following.username}
               intro={Following.intro}
@@ -85,7 +80,9 @@ export default function FollowingPage() {
           </Link>
           <ButtonContainer>
             <FollowButton
-              followAction={(followerId, isFollowing) => handleFollow(followerId, isFollowing)}
+              followAction={(followerId, isFollowing) =>
+                handleFollow(followerId, isFollowing)
+              }
               FollowingId={Following.id}
               initialFollowingStatus={false}
             />
@@ -103,7 +100,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const ListContainer = styled.div` 
+const ListContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

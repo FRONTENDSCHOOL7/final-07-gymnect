@@ -117,13 +117,14 @@ const ProfileSettingPage = () => {
   const handleProfileSignup = async (e) => {
     e.preventDefault();
     if (usernameValid && accountnameValid) {
+      const finalImage = image || BasicProfileImg;
       const signupData = await postUserSignup(
         username,
         userEmail,
         userPassword,
         accountname,
         intro,
-        image
+        finalImage
       );
       console.log(signupData);
       navigate("/login");

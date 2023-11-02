@@ -46,14 +46,7 @@ export const GridIconImg = styled(FlexIconImg)`
 export const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
-`;
-
-export const Post = styled.div`
-  height: 200px;
-  width: 100%;
-  background: lightgray;
-  margin-bottom: ${(props) => (props.isGrid ? "0px" : "20px")};
+  gap: 45px;
 `;
 
 export const GridItem = styled.div`
