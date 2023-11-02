@@ -50,7 +50,6 @@ export default function PostComment() {
     }
     setIsDelete(false);
     setIsModalOpen(false);
-    console.log(11);
   }, [isDelete]);
 
   useEffect(() => {
@@ -144,7 +143,8 @@ export default function PostComment() {
                 user={comment.author.username}
                 time={comment.createdAt}
                 content={comment.content}
-                authorAccount={comment.author.account}
+                authorAccount={comment.author.accountname}
+                image={comment.author.image}
                 handleCommentClick={() => onShowCommentModal(index, comment)}
               />
             ))

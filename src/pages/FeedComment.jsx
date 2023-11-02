@@ -17,7 +17,7 @@ import {
 import profileImage from "../assets/images/signup-profile.svg";
 import {getTimeGap} from "../utils/getTime";
 
-export default function FeedComment({ content, time, authorAccount, handleCommentClick }) {
+export default function FeedComment({ user, content, time, image, authorAccount, handleCommentClick }) {
   const userInfo = useRecoilValue(userInfoAtom);
 
   const getImageSrc = (image) => {
@@ -37,15 +37,15 @@ export default function FeedComment({ content, time, authorAccount, handleCommen
     <>
       <Container>
         <CommentSection>
-          <Link to={`/profile/${userInfo.account}`}>
+          <Link to={`/profile/${authorAccount}`}>
             <Image
-              src={getImageSrc(userInfo.profileImg)}
+              src={getImageSrc(image)}
               alt="유저 프로필 이미지"
             />
           </Link>
           <Contents>
             <UserInfo>
-              <UserName>{userInfo.username}</UserName>
+              <UserName>{user}</UserName>
               <Time>{getTimeGap(time)}</Time>
             </UserInfo>
             <Comment>{content}</Comment>
