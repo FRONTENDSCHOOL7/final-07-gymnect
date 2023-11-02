@@ -1,4 +1,3 @@
-import React from "react";
 import { deletePost, reportPost, putEditPost } from "../../../api/post";
 import { deleteComment, reportComment } from "../../../api/comment";
 
@@ -21,6 +20,7 @@ export const deleteUserComment = async (
 export const reportUserComment = async (token, pickedPost, commentData) => {
   try {
     await reportComment(token, pickedPost, commentData);
+    alert('신고되었습니다!');
   } catch (error) {
     console.error("Error report user comment:", error);
   }
@@ -40,7 +40,7 @@ export const deletePostData = async (userToken, pickedPost, setIsDelete) => {
   export const reportUserPost = async (loginData, pickedPost) => {
     try {
       await reportPost(loginData, pickedPost);
-      alert('신고되었습니다.');
+      alert('신고되었습니다!');
     } catch (error) {
       console.error('Error report user posts:', error);
     }
