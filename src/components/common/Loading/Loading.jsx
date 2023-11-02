@@ -42,21 +42,18 @@ const LoadingCircle = styled.div`
   animation: ${rotateLoading} 1s linear infinite;
   transform-origin: 50% 50%;
   transition: all 0.5s ease-in-out;
-
-  /* &:hover {
-    border-color: transparent #e45635 transparent #e45635;
-  } */
 `;
 
 const LoadingContainer = styled.div`
   height: 100px;
-  position: relative;
   width: 100px;
   border-radius: 100%;
-  margin: 300px auto;
-  /* &:hover ${LoadingCircle} {
-    border-color: transparent #e45635 transparent #e45635;
-  } */
+  position: absolute; // 상위 요소에 대한 절대 위치 지정
+  top: 45%; // 상위 요소의 중앙에 위치
+  left: 50%; // 상위 요소의 중앙에 위치
+  transform: translate(-50%, -50%); // 요소 자신의 크기에 따라 중앙으로 이동
+  // 기존 스타일
+  margin: 0 auto; // margin-top과 margin-bottom을 0으로 설정
 `;
 
 const LoadingText = styled.div`
@@ -72,5 +69,4 @@ const LoadingText = styled.div`
   text-transform: uppercase;
   top: 0;
   width: 100px;
-  //z-index: 1; // z-index 추가
 `;
