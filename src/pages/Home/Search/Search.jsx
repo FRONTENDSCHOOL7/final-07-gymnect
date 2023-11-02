@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchNav from "../../../components/Header/SearchHeader";
-import styled from "styled-components";
 import { getUserSearch } from "../../../api/search";
 import profileImage from "../../../assets/images/signup-profile.svg";
 import LoadingLogo from "../../../assets/images/home-loading-logo.svg";
-
+import {
+  Container,
+  Main,
+  LogoSection,
+  LogoImage,
+  Text,
+  Button,
+  Image,
+  Section,
+  UserName,
+  NickName
+} from "./SearchStyle";
 const Search = () => {
   const [query, setQuery] = useState(""); //검색입력창의 값을 저장
   const [searchResults, setSearchResults] = useState([]); //api호출결과롤 받아온 회원 검색결과 저장
@@ -14,31 +24,26 @@ const Search = () => {
   /*검색어가 변경될 때마다 api를 호출하여 검색 결과를 가져옴*/
   useEffect(() => {
     if (query) {
-      console.log("검색어 있음");
+      //검색어 있다면
       const fetchData = async () => {
         try {
           const results = await getUserSearch(query);
           setSearchResults(results);
-          // if (Array.isArray(results)) {
-          //   setSearchResults(results);
-          // } else {
-          //   setSearchResults([]);
-          // }
         } catch (error) {
           console.error("Failed to fetch search results:", error);
         }
       };
       fetchData();
     } else {
+      //검색어 없다면
       setSearchResults([]); //만약 검색어가 없으면 결과를 초기화함
-      console.log("검색어 없음");
     }
   }, [query]);
 
   /*프로필 클릭*/
   const handleProfileClick = (index) => {
     if (searchResults && searchResults[index]) {
-      //데이터가 존재한다면
+      //데이터가 존재하고 데이터의 이미지가 존재한다면
       navigate(`/profile/${searchResults[index].accountname}`, {
         state: { searchResults: searchResults[index] }
       });
@@ -50,12 +55,14 @@ const Search = () => {
     const regex = new RegExp(`(${searchTerm})`, "gi");
     return text.replace(
       regex,
-      (match) => `<span style="color:#006CD8">${match}</span>`
+      (match) =>
+        `<span style="color:#006CD8; font-weight: bold;">${match}</span>`
     );
   };
-
+  /*이미지가 있으면 보여주고 없으면 기본이미지 보여줌*/
   const getImageSrc = (index) => {
     if (
+      //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
       searchResults &&
       searchResults[index].image.includes("api.mandarin.weniv.co.kr") &&
       !searchResults[index].image.includes("undefined")
@@ -63,7 +70,7 @@ const Search = () => {
       console.log("이미지가 존재합니다.");
       return searchResults[index].image;
     } else {
-      console.log("!!이미지가 존재아지 않습니다.");
+      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };
@@ -96,14 +103,6 @@ const Search = () => {
                   />
                   <NickName>{"@" + user.accountname}</NickName>
                 </Section>
-                {/* <p>
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: highlightTerm(user.username, query)
-                    }}
-                  />
-                </p>
-                <p>아이디 : @{user.accountname}</p> */}
               </Button>
             ))
           )}
@@ -113,81 +112,3 @@ const Search = () => {
   );
 };
 export default Search;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  //justify-content: center;
-  //align-items: center;
-  height: calc(100vh - 108px);
-  overflow-y: scroll;
-  /* &::-webkit-scrollbar {
-    display: none;
-  } */
-  &::-webkit-scrollbar {
-    width: 7px; // 스크롤바 너비
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #bfbfbf; // 스크롤바 색상
-    border-radius: 50px;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: #888; // 여기에 원하는 hover 시의 색상을 지정하세요
-  }
-`;
-const Main = styled.div`
-  height: 100%;
-  margin-top: 2rem;
-  margin-left: 1.6rem;
-  //background-color: #bed2f7;
-`;
-const LogoSection = styled.div`
-  //background-color: #aed2ff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-top: 30vh;
-  margin-right: 1vh;
-`;
-const LogoImage = styled.img`
-  width: 97.61px;
-  height: 95.112px;
-`;
-const Text = styled.p`
-  font-size: 1.4rem;
-  color: #767676;
-`;
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-`;
-const Image = styled.img`
-  width: 5rem;
-  height: 5rem;
-  margin-right: 1.2rem;
-  border-radius: 50%;
-  /* width: 42px;
-  height: 42px; */
-  border: 1px solid #d9d9d9;
-  background-color: #fff;
-`;
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-`;
-// const HighlightedText = styled.span`
-//   color: ${({ theme }) => theme.colors.mainColor};
-//   font-weight: bold;
-// `;
-const UserName = styled.p`
-  margin-bottom: 0.6rem;
-  font-size: 14px;
-`;
-const NickName = styled.p`
-  font-size: 10px;
-  color: #767676;
-`;
