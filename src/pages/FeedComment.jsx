@@ -15,16 +15,10 @@ import {
   Button
 } from "./FeedCommentStyle";
 import profileImage from "../assets/images/signup-profile.svg";
+import {getTimeGap} from "../utils/getTime";
 
 export default function FeedComment({ content, time, authorAccount, handleCommentClick }) {
   const userInfo = useRecoilValue(userInfoAtom);
-
-  const createdTime = () => {
-    const year = time.slice(0, 4) + "년 ";
-    const month = time.slice(5, 7) + "월 ";
-    const date = time.slice(8, 10) + "일";
-    return year + month + date;
-  };
 
   const getImageSrc = (image) => {
     if (
@@ -52,7 +46,7 @@ export default function FeedComment({ content, time, authorAccount, handleCommen
           <Contents>
             <UserInfo>
               <UserName>{userInfo.username}</UserName>
-              <Time>{createdTime()}</Time>
+              <Time>{getTimeGap(time)}</Time>
             </UserInfo>
             <Comment>{content}</Comment>
           </Contents>
