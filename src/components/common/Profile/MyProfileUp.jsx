@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../api/profile";
 import AnalysisModal from "../../common/Modal/AnalysisModal";
 // import userImg from "../../../assets/images/signup-profile.svg";
+import FollowButton from "../Button/FollowButton";
 import {
   MyProfileUpContainer,
   Wrap,
@@ -53,13 +54,6 @@ export default function MyProfileUp({ accountId }) {
     fetchMyProfile();
   }, []);
 
-  const handleFollowToggle = () => {
-    setIsFollowed(!isFollowed); // 팔로우 상태 토글
-
-    // 실제로 API를 사용하여 팔로우/언팔로우 상태를 변경하는 코드를 여기에 추가해야 합니다.
-    // 예: if(isFollowed) { unfollowUser(accountId) } else { followUser(accountId) }
-  };
-
   return (
     <>
       <MyProfileUpContainer>
@@ -102,9 +96,12 @@ export default function MyProfileUp({ accountId }) {
               </Button>
             </>
           ) : (
-            <Button width="120px" height="34px" onClick={handleFollowToggle}>
-              {isFollowed ? "언팔로우" : "팔로우"}
-            </Button>
+            <>
+              <FollowButton
+                data={profileInfo && profileInfo.profile.isfollow}
+                accountname={profileInfo && profileInfo.profile.accountname}
+              />
+            </>
           )}
         </ButtonWrap>
       </MyProfileUpContainer>
