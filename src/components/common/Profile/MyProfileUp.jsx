@@ -28,7 +28,6 @@ export default function MyProfileUp({ accountId }) {
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
   const account = userInfo.account;
-  const [isFollowed, setIsFollowed] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -52,7 +51,7 @@ export default function MyProfileUp({ accountId }) {
       }
     };
     fetchMyProfile();
-  }, []);
+  }, [accountId, token]);
 
   return (
     <>

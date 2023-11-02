@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { userInfoAtom } from "../../atoms/UserAtom";
 import { getFollowingList } from "../../api/follow";
-import { useRecoilValue } from "recoil";
 import { Link, useParams } from "react-router-dom";
 
 import BackNav from "../../components/Header/BackspaceHeader";
@@ -10,7 +8,6 @@ import FollowButton from "../../components/common/Button/FollowButton";
 import styled from "styled-components";
 
 export default function FollowingPage() {
-  const userInfo = useRecoilValue(userInfoAtom);
   const [followings, setFollowings] = useState([]);
   const { id } = useParams();
 
@@ -24,7 +21,7 @@ export default function FollowingPage() {
       }
     };
     fetchMyFollowingList();
-  }, [userInfo.account]);
+  }, [id]);
 
   console.log(followings);
 

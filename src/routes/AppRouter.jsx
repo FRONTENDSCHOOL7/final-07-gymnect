@@ -16,6 +16,7 @@ import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
 import PostComment from "../pages/Posting/PostComment";
+import Error from "../pages/Error/Error";
 
 export default function AppRouter() {
   return (
@@ -104,6 +105,14 @@ export default function AppRouter() {
             <>
               <Navbar />
               <ProfileEdit />
+            </>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <>
+              <Error />
             </>
           }
         />
