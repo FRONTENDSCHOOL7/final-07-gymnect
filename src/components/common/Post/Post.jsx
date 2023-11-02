@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import iconDot from "../../../assets/images/icon-dot.svg";
 import HeartIcon from "./HeartStyle";
 import iconMessage from "../../../assets/images/icon-reply.svg";
-import Modal from "../Modal/DeleteEditModal";
+import { deletePostData, reportUserPost } from "../Modal/ModalFunction";
+import Modal from "../Modal/Modal";
+import { userInfoAtom } from "../../../atoms/UserAtom";
+import IconPostModal from "../Modal/IconPostModal";
 import { postLike, deleteLike } from "../../../api/post";
+import { useRecoilValue } from "recoil";
 import {
   PostArticle,
   PostProfileImg,
@@ -33,13 +37,20 @@ import {
 
 export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
+  const userInfo = useRecoilValue(userInfoAtom);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalText, setModalText] = useState([]);
+  const [modalFunc, setModalFunc] = useState([]);
   const imageCheck = data.image ? true : false;
   const arr = data.content.split("\n");
   const token = localStorage.getItem("token");
+  const account = userInfo.account;
   const [liked, setLiked] = useState(false);
   const [postLikeState, setPostLikeState] = useState(data.hearted);
   const [postLikeCount, setPostLikeCount] = useState(data.heartCount);
+  const [isDelete, setIsDelete] = useState(false);
   console.log(arr[1]);
 
   const handleProfileClick = (e) => {
@@ -49,7 +60,7 @@ export default function Post({ data, commentCount }) {
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/${data.author.accountname}`, {
+    navigate(`/post/${data.author.accountname}/${data.id}`, {
       state: { data: data }
     });
   };
@@ -89,11 +100,39 @@ export default function Post({ data, commentCount }) {
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
+  // 모달
+  useEffect(() => {
+    if (isDelete) {
+      setIsDelete(false);
+      setIsModalOpen(false);
+    }
+  }, [isDelete]);
+
+  const onShowModal = (post) => {
+    if (!isModalOpen) {
+      setIsModalOpen(true);
+      if (data.author.accountname === account) {
+        setModalText(["삭제", "수정"]);
+        setModalFunc([
+          () => {
+            deletePostData(token, post.id, setIsDelete);
+            setIsVisible(false);
+          },
+          () =>
+            navigate(`edit`, {
+              state: {
+                data: post
+              }
+            })
+        ]);
+      } else {
+        setModalText(["신고"]);
+        setModalFunc([() => reportUserPost(token, post.id)]);
+      }
+    }
   };
 
-  return (
+  return isVisible ? (
     <>
       <PostArticle>
         <PostFlexWrap>
@@ -107,7 +146,7 @@ export default function Post({ data, commentCount }) {
             </PostNameWrap>
           </ProfileButton>
           <Time>{arr[arr.length - 1]}</Time>
-          <DotButton onClick={toggleModal}>
+          <DotButton onClick={() => onShowModal(data)}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
@@ -134,7 +173,17 @@ export default function Post({ data, commentCount }) {
           <PostDay>{formatDate(data.createdAt)}</PostDay>
         </Wrap>
       </PostArticle>
-      {isModalVisible && <Modal toggleModal={toggleModal} />}
+      {isModalOpen && ( // 여기에 모달을 추가합니다.
+        <Modal setIsModalOpen={setIsModalOpen}>
+          {modalText.map((text, index) => (
+            <IconPostModal
+              key={index}
+              text={text}
+              onButtonClick={modalFunc[index]}
+            />
+          ))}
+        </Modal>
+      )}
     </>
-  );
+  ) : null;
 }

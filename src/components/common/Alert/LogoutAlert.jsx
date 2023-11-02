@@ -1,14 +1,20 @@
-import React from 'react';
-import { Container, Section, Message, Button, ButtonContainer } from './LogoutAlertStyle'; 
+import React from "react";
+import {
+  Container,
+  Section,
+  Message,
+  Button,
+  ButtonContainer
+} from "./LogoutAlertStyle";
 
-function ReportAlert() {
+function ReportAlert({ handleLogout, closeAlert }) {
   return (
     <Container>
       <Section>
         <Message>로그아웃 하시겠어요?</Message>
         <ButtonContainer>
-          <Button>취소</Button>
-          <Button>로그아웃</Button>
+          <Button onClick={closeAlert}>취소</Button>
+          <Button onClick={handleLogout}>로그아웃</Button>
         </ButtonContainer>
       </Section>
     </Container>

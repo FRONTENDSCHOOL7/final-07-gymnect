@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../api/profile";
+import AnalysisModal from "../../common/Modal/AnalysisModal";
 // import userImg from "../../../assets/images/signup-profile.svg";
 import {
   MyProfileUpContainer,
@@ -24,6 +25,17 @@ export default function MyProfileUp({ accountId }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [profileInfo, setProfileInfo] = useState("");
   const token = localStorage.getItem("token");
+  const [showModal, setShowModal] = useState(false);
+  const account = userInfo.account;
+  const [isFollowed, setIsFollowed] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const goToProfileEdit = () => {
     navigate(`/profile/${userInfo.account}/edit`);
@@ -41,7 +53,12 @@ export default function MyProfileUp({ accountId }) {
     fetchMyProfile();
   }, []);
 
-  console.log(profileInfo);
+  const handleFollowToggle = () => {
+    setIsFollowed(!isFollowed); // 팔로우 상태 토글
+
+    // 실제로 API를 사용하여 팔로우/언팔로우 상태를 변경하는 코드를 여기에 추가해야 합니다.
+    // 예: if(isFollowed) { unfollowUser(accountId) } else { followUser(accountId) }
+  };
 
   return (
     <>
@@ -75,14 +92,25 @@ export default function MyProfileUp({ accountId }) {
         </AccountSpan>
         <IntroSpan>{profileInfo && profileInfo.profile.intro}</IntroSpan>
         <ButtonWrap>
-          <Button height="34px" onClick={goToProfileEdit}>
-            프로필 수정
-          </Button>
-          <Button width="100px" height="34px">
-            운동 분석
-          </Button>
+          {account === accountId ? (
+            <ButtonWrap>
+              <Button height="34px" onClick={goToProfileEdit}>
+                프로필 수정
+              </Button>
+              <Button width="100px" height="34px">
+                운동 분석
+              </Button>
+            </ButtonWrap>
+          ) : (
+            <Button onClick={handleFollowToggle}>
+              {isFollowed ? "언팔로우" : "팔로우"}
+            </Button>
+          )}
         </ButtonWrap>
       </MyProfileUpContainer>
+      {showModal && (
+        <AnalysisModal isOpen={handleOpenModal} onClose={handleCloseModal} />
+      )}
     </>
   );
 }

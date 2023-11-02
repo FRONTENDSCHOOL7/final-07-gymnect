@@ -1,6 +1,5 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router-dom";
 import iconDot from "../assets/images/icon-dot.svg";
 import { Link } from "react-router-dom";
 import { userInfoAtom } from "../atoms/UserAtom";
@@ -17,8 +16,7 @@ import {
 } from "./FeedCommentStyle";
 import profileImage from "../assets/images/signup-profile.svg";
 
-export default function FeedComment({ content, time, authorAccount, handleClickMoreButton }) {
-  const navigate = useNavigate();
+export default function FeedComment({ content, time, authorAccount, handleCommentClick }) {
   const userInfo = useRecoilValue(userInfoAtom);
 
   const createdTime = () => {
@@ -59,7 +57,7 @@ export default function FeedComment({ content, time, authorAccount, handleClickM
             <Comment>{content}</Comment>
           </Contents>
         </CommentSection>
-        <Button onClick={() => handleClickMoreButton(authorAccount)}>
+        <Button onClick={() => handleCommentClick(authorAccount)}>
           <img src={iconDot} alt="삭제" />
         </Button>
       </Container>
