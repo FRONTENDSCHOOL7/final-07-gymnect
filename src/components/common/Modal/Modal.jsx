@@ -19,7 +19,7 @@ export default function Modal({ setIsModalOpen, children }) {
         return '프로필을 변경할까요?';
       } else if (message === '삭제' || message === '수정') {
         return `게시글을 ${message}할까요?`;
-      } else if (message === '댓글 삭제' || message === '댓글 수정') {
+      } else if (message === '댓글 삭제') {
         return `댓글을 ${message.split(" ")[1]}할까요?`; // "댓글 삭제"에서 "삭제"만 추출하여 사용
       } else {
         return `${message}하시겠어요?`;
