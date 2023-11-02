@@ -1,40 +1,36 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { authInstance } from "../../../api/axiosInstance";
-
+import { postFollow, deleteFollow } from "../../../api/follow";
 import styled from "styled-components";
 
-export default function FollowButton({ followAction, followerId, initialFollowingStatus = false }) {
-  const [following, setFollowing] = useState(initialFollowingStatus);
-
+export default function FollowButton({ data: initialize, accountname }) {
+  console.log(initialize, accountname);
+  const [isfollow, setIsfollow] = useState(initialize);
   const handleClick = async () => {
-    const newFollowingStatus = !following;
     try {
-      if (newFollowingStatus) {
-        // 팔로우 요청
-        await authInstance.post(`/follow/${followerId}`);
+      if (isfollow) {
+        await deleteFollow(accountname); // accountname을 매개변수로 전달
       } else {
-        // 언팔로우 요청
-        await authInstance.delete(`/unfollow/${followerId}`);
+        await postFollow(accountname); // accountname을 매개변수로 전달
       }
-      
-      setFollowing(newFollowingStatus);
+      setIsfollow(!isfollow);
     } catch (error) {
       console.error("Error while trying to follow/unfollow:", error);
     }
   };
 
-
   return (
-    <StyledButton following={following} onClick={handleClick}>
-      {following ? "팔로우" : "취소"}
+    <StyledButton $follow={isfollow} onClick={handleClick}>
+      {isfollow ? "취소" : "팔로우"}
     </StyledButton>
   );
 }
 
 const StyledButton = styled.button`
-  background-color: ${props => props.following ? '#006cd8' : '#FFFFFF'};
-  color: ${props => props.following ? '#FFFFFF' : '#767676'};
-  border: ${props => props.following ? '1px solid #006cd8' : '1px solid #D9D9D9'};
+  background-color: ${(props) => (!props.$follow ? "#006cd8" : "#FFFFFF")};
+  color: ${(props) => (!props.$follow ? "#FFFFFF" : "#767676")};
+  border: ${(props) =>
+    !props.$follow ? "1px solid #006cd8" : "1px solid #D9D9D9"};
   width: 55px;
   height: 27px;
   border-radius: 26px;
