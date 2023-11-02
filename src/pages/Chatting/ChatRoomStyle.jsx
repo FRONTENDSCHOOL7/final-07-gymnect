@@ -10,7 +10,7 @@ export const Main = styled.main`
   padding: 1rem 0.8rem 0;
 
   background-color: #f2f2f2;
-  height: 89.1vh;
+  height: calc(100vh - 104px);
   overflow: auto; //컨텐츠 넘치면 자동으로 스크롤바 생기면서 확장
 
   &::-webkit-scrollbar {
