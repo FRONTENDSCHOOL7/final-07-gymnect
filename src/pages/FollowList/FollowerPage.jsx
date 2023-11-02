@@ -17,7 +17,7 @@ export default function FollowerPage() {
   useEffect(() => {
     getFollowerList(userInfo.account)
       .then(data => {
-        if (Array.isArray(data)) { // Check if data is an array
+        if (Array.isArray(data)) { 
           setFollowers(data);
           console.log("Followers Data:", data);
 
@@ -34,16 +34,15 @@ export default function FollowerPage() {
 
   if (loading) return <div>Loading...</div>;
 
-  // 팔로우 및 취소 동작
+  // 팔로우 및 언팔로우(취소) 동작
   const handleFollow = (followerId, isCurrentlyFollowing) => {
-    // This is where you'd typically make an API call to follow or unfollow
-    // For now, we'll just log the action
+    
     if (isCurrentlyFollowing) {
       console.log(`Unfollowing user with ID: ${followerId}`);
-      // Call your API to unfollow here
+      
     } else {
       console.log(`Following user with ID: ${followerId}`);
-      // Call your API to follow here
+      
     }
   };
 
@@ -80,7 +79,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const ListContainer = styled.div` 
+const ListContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

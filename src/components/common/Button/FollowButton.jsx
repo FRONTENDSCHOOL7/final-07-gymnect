@@ -10,38 +10,18 @@ export default function FollowButton({ followAction, followerId, initialFollowin
     const newFollowingStatus = !following;
     try {
       if (newFollowingStatus) {
-        // Call the API to follow this user
+        // 팔로우 요청
         await authInstance.post(`/follow/${followerId}`);
       } else {
-        // Call the API to unfollow this user
+        // 언팔로우 요청
         await authInstance.delete(`/unfollow/${followerId}`);
       }
-      // If the API calls are successful, update the local state
+      
       setFollowing(newFollowingStatus);
     } catch (error) {
       console.error("Error while trying to follow/unfollow:", error);
     }
   };
-
-  // const handleClick = async () => {
-  //   const newFollowingStatus = !following;
-  //   try {
-  //     if (newFollowingStatus) {
-  //       // Call the API to follow this user
-  //       await authInstance.post(`/follow/${followerId}`);
-  //     } else {
-  //       // Call the API to unfollow this user
-  //       await authInstance.delete(`/unfollow/${followerId}`);
-  //     }
-  //     // If the API calls are successful, update the local state
-  //     setFollowing(newFollowingStatus);
-  //     // Notify the parent component about the change
-  //     followAction(followerId, newFollowingStatus);
-  //   } catch (error) {
-  //     console.error("Error while trying to follow/unfollow:", error);
-  //   }
-  // };
-
 
 
   return (
