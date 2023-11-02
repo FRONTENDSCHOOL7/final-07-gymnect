@@ -7,7 +7,6 @@ export const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  /* background-color: rgba(0, 0, 0, 0.5); */
   z-index: 9999;
 `;
 
@@ -36,11 +35,13 @@ export const Container = styled.div`
   margin: 0 auto;
   position: absolute;
   bottom: 0;
-  height: 54rem;
+  height: 73vh;
+  /* height: 70rem; */
   padding: 3rem 0 0 0;
   background: #ffffff;
   border-top-left-radius: 0.8rem;
   border-top-right-radius: 0.8rem;
+  box-sizing: border-box;
   
   animation: ${css`
     ${slideUpAnimation} 0.5s ease-in-out forwards;
@@ -66,4 +67,6 @@ export const Button = styled.button`
   height: 46px;
   font-size: 14px;
   padding : 14px 0 0 26px;
+  box-sizing: border-box;
+
 `;

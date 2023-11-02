@@ -1,5 +1,4 @@
 // 스플래시 마지막 스크린
-
 import React, { useState, useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -56,11 +55,12 @@ export const Container = styled.div`
   background-color: #006cd8;
   width: 100%;
   min-height: 100vh; // 높이를 최소한으로 설정
+
 `;
 
 export const TitleDiv = styled.div`
-  margin-top: 50px;
-  /* margin-top: 270px; */
+  margin-top: 40px;
+  /* min-height: 100vh; */
 `;
 
 export const Title = styled.h1`
