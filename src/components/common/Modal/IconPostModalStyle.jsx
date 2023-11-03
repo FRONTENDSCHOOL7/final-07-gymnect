@@ -9,6 +9,7 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   width: 38rem;
   color: black;
+  padding: 7px 0;
 `;
 
 export const Button = styled.button`

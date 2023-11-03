@@ -5,17 +5,24 @@ import { ReactComponent as ImageBtn } from "../../assets/images/icon-img-btn.svg
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 108px);
-  overflow-y: scroll;
+  /* box-sizing: border-box; */
+  max-height: calc(100vh - 48px);
+  /* overflow-y: auto; */
+`;
+
+export const TopContainer = styled.div`
+  box-sizing: border-box;
+  max-height: 50vh;
+  overflow-y: auto;
   &::-webkit-scrollbar {
-    width: 7px;
+    width: 0px;
   }
 
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 50px;
   }
-`;
+`
 
 export const DropDown = styled.div`
   padding: 12px;
@@ -123,15 +130,16 @@ export const SetBtn = styled(Button)`
 `;
 
 export const KmContainer = styled.div`
-  margin-left: 90px;
+  margin-left: 89px;
   font-size: 14px;
 `;
 
 export const KmInput = styled.input`
-  width: 71px;
+  width: 75px;
   height: 24px;
   font-size: 14px;
   text-align: center;
+  margin-right: 8.5px;
   border-bottom: 1px solid #d9d9d9;
   &:focus {
     outline: none;
@@ -149,7 +157,6 @@ export const TimeInputContainer = styled.div`
   justify-content: center;
   gap: 8px;
   font-size: 14px;
-  border-bottom: 1px solid #d9d9d9;
   padding: 11px;
 `;
 
@@ -170,11 +177,16 @@ export const TimeField = styled.input`
   }
 `;
 
-export const StyledTextarea = styled.textarea`
-  width: 346px;
-  font-size: 14.3px;
-  padding: 17px 0;
+export const BottomContainer = styled.div`
+  width: 390px;
   margin: 0 auto;
+`
+
+export const StyledTextarea = styled.textarea`
+  width: 390px;
+  font-size: 14.3px;
+  border-top: 1px solid #d9d9d9;
+  padding: 17px 25px;
   &::-webkit-scrollbar {
     display: none;
   }
