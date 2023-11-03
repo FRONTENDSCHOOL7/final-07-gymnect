@@ -35,7 +35,7 @@ import {
   MessageButton
 } from "./PostStyle";
 
-export default function Post({ data }) {
+export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
   const [isVisible, setIsVisible] = useState(true);
@@ -111,15 +111,15 @@ export default function Post({ data }) {
   const onShowModal = (post) => {
     if (!isModalOpen) {
       setIsModalOpen(true);
-      if (data?.author.accountname === account) {
-        setModalText(["삭제", "수정"]);
+      if (data.author.accountname === account) {
+        setModalText(["삭제"]);
         setModalFunc([
           () => {
-            deletePostData(token, post.id, setIsDelete);
+            deletePostData(token, postId, setIsDelete);
             setIsVisible(false);
           },
           () =>
-            navigate(`edit`, {
+            navigate(`uploadedit`, {
               state: {
                 data: post
               }
@@ -169,7 +169,7 @@ export default function Post({ data }) {
             </HeartButton>
             <MessageButton onClick={handleFeedClick}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
-              <MessageSpan>{data?.commentCount}</MessageSpan>
+              <MessageSpan>{commentCount}</MessageSpan>
             </MessageButton>
           </ButtonWrap>
           <PostDay>{formatDate(data?.createdAt)}</PostDay>

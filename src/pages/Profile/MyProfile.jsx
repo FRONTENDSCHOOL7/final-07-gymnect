@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
-import { userInfoAtom } from "../../atoms/UserAtom";
 import { useNavigate, useParams } from "react-router-dom";
 import Post from "../../components/common/Post/Post";
 import MyProfileUp from "../../components/common/Profile/MyProfileUp";
@@ -31,8 +30,6 @@ export default function MyProfile() {
   const [myPosts, setMyPosts] = useState([]);
   const setLogin = useSetRecoilState(loginAtom);
   const navigate = useNavigate();
-  const userInfo = useRecoilValue(userInfoAtom);
-  const account = userInfo.account;
   const token = localStorage.getItem("token");
   const { id } = useParams();
 
@@ -68,7 +65,7 @@ export default function MyProfile() {
       }
     };
     fetchMyPosts();
-  }, [userInfo, id, token]);
+  }, [id, token]);
 
   return (
     <>
@@ -114,7 +111,11 @@ export default function MyProfile() {
           ) : (
             <PostContainer>
               {myPosts.map((post, index) => (
-                <Post key={index} data={post} />
+                <Post
+                  key={index}
+                  data={post}
+                  commentCount={post.commentCount}
+                />
               ))}
             </PostContainer>
           )}

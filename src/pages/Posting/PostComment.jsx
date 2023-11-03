@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Modal from "../../components/common/Modal/Modal";
 import IconPostModal from "../../components/common/Modal/IconPostModal";
@@ -30,11 +30,9 @@ export default function PostComment() {
   const userInfo = useRecoilValue(userInfoAtom);
   const account = userInfo.account;
   const token = localStorage.getItem("token");
-  const location = useLocation();
-  const data = location.state?.data;
   const navigate = useNavigate();
   const { postId } = useParams();
-
+  const [commentCount, setCommentCount] = useState();
   const [commentData, setCommentData] = useState([]);
   const [inputComment, setInputComment] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +41,6 @@ export default function PostComment() {
 
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
-  const [pickedPost, setPickedPost] = useState("");
   const [detailPost, setDetailPost] = useState("");
 
   useEffect(() => {
@@ -52,7 +49,7 @@ export default function PostComment() {
     }
     setIsDelete(false);
     setIsModalOpen(false);
-  }, [isDelete]);
+  }, [isDelete, navigate]);
 
   useEffect(() => {
     setIsDeleteComment(false);
@@ -66,6 +63,7 @@ export default function PostComment() {
     }
   }, [postId]);
 
+  /*상세 게시글 받아오기*/
   useEffect(() => {
     const fetchDetailPosts = async () => {
       try {
@@ -83,6 +81,7 @@ export default function PostComment() {
   const fetchCommentList = async () => {
     const response = await getComment(postId, token);
     setCommentData(response.comments);
+    setCommentCount(response.comments.length);
   };
 
   const handleInput = (e) => {
@@ -92,6 +91,12 @@ export default function PostComment() {
   /* 댓글 작성 */
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+
+    if (!inputComment.trim()) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+
     const response = await postComment(token, postId, inputComment);
     console.log("Post Comment Response:", response);
     setInputComment("");
@@ -112,12 +117,6 @@ export default function PostComment() {
     }
   };
 
-  /* 모달 */
-  const hiddenText = {
-    whiteSpace: "normal",
-    wordWrap: "break-word"
-  };
-
   // 댓글
   const onShowCommentModal = (index, comment) => {
     if (!isModalOpen) {
@@ -128,7 +127,7 @@ export default function PostComment() {
           () =>
             deleteUserComment(
               token,
-              detailPost.id,
+              detailPost.post.id,
               commentData[index],
               setIsDeleteComment
             )
@@ -136,23 +135,18 @@ export default function PostComment() {
       } else {
         setModalText(["댓글 신고"]);
         setModalFunc([
-          () => reportUserComment(token, pickedPost, commentData[index])
+          () => reportUserComment(token, detailPost.post.id, commentData[index])
         ]);
       }
     }
   };
-  console.log("postComment");
-  console.log(detailPost.post);
+
   return (
     <>
       <ModalHeader />
       <Container>
         <TopContainer>
-          <Post
-            data={detailPost.post}
-            userFeedTextStyle={hiddenText}
-            setPickedPost={setPickedPost}
-          />
+          <Post data={detailPost.post} commentCount={commentCount} />
         </TopContainer>
         <BottomContainer>
           {commentData && commentData.length > 0 ? (
