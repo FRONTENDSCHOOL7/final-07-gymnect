@@ -51,6 +51,11 @@ export default function Post({ data }) {
   const [postLikeCount, setPostLikeCount] = useState(data?.heartCount);
   const [isDelete, setIsDelete] = useState(false);
 
+  useEffect(() => {
+    setPostLikeCount(data && data.heartCount);
+    setPostLikeState(data && data.hearted);
+  }, [data]);
+
   const handleProfileClick = (e) => {
     navigate(`/profile/${data?.author.accountname}`);
   };
