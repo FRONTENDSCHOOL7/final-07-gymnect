@@ -39,7 +39,9 @@ export default function Home() {
       <Container>
         <PostContainer>
           {posts && posts.length > 0 ? (
-            posts.map((post, index) => <Post key={index} data={post} />)
+            posts.map((post, index) => (
+              <Post key={index} data={post} commentCount={post.commentCount} />
+            ))
           ) : (
             <NoFollowerHome />
           )}

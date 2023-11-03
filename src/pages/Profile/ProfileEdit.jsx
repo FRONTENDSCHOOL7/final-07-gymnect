@@ -46,7 +46,7 @@ export default function ProfileEdit() {
       });
     };
     fetchMyInfo();
-  }, [setUserInfo, token, userInfo]);
+  }, []);
 
   /* 이미지 업로드 */
   const handleInputImage = async (e) => {

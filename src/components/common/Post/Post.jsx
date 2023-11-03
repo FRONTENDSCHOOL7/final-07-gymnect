@@ -10,6 +10,7 @@ import IconPostModal from "../Modal/IconPostModal";
 import { postLike, deleteLike } from "../../../api/post";
 import { useRecoilValue } from "recoil";
 import HealthData from "./HealthData";
+import profileImage from "../../../assets/images/signup-profile.svg";
 import {
   PostArticle,
   PostProfileImg,
@@ -132,13 +133,27 @@ export default function Post({ data, commentCount }) {
     }
   };
 
+  /*이미지가 있으면 보여주고 없으면 기본이미지 보여줌*/
+  const getImageSrc = (image) => {
+    if (
+      //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
+      image.includes("api.mandarin.weniv.co.kr")
+    ) {
+      console.log("이미지가 존재합니다.");
+      return image;
+    } else {
+      console.log("!!이미지가 존재하지 않습니다.");
+      return profileImage;
+    }
+  };
+  console.log(data?.author.image);
   return isVisible ? (
     <>
       <PostArticle>
         <PostFlexWrap>
           <ProfileButton onClick={handleProfileClick}>
             <PostProfileImg
-              src={data?.author.image}
+              src={data && getImageSrc(data?.author.image)}
               alt="프로필사진"></PostProfileImg>
             <PostNameWrap>
               <UserSpan>{data?.author.username}</UserSpan>

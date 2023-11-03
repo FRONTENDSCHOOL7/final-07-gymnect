@@ -4,7 +4,7 @@ import { userInfoAtom } from "../../../atoms/UserAtom";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../api/profile";
 import AnalysisModal from "../../common/Modal/AnalysisModal";
-// import userImg from "../../../assets/images/signup-profile.svg";
+import profileImage from "../../../assets/images/signup-profile.svg";
 import FollowButton from "../Button/FollowButton";
 import {
   MyProfileUpContainer,
@@ -28,7 +28,7 @@ export default function MyProfileUp({ accountId }) {
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
   const account = userInfo.account;
-
+  const [lender, setLender] = useState(true);
   const handleOpenModal = () => {
     setShowModal(true);
   };
@@ -51,9 +51,20 @@ export default function MyProfileUp({ accountId }) {
       }
     };
     fetchMyProfile();
-  }, [accountId, token]);
+  }, [accountId, token, lender]);
 
-  console.log(profileInfo && profileInfo.profile.isfollow);
+  const getImageSrc = (image) => {
+    if (
+      //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
+      image.includes("api.mandarin.weniv.co.kr")
+    ) {
+      console.log("이미지가 존재합니다.");
+      return image;
+    } else {
+      console.log("!!이미지가 존재하지 않습니다.");
+      return profileImage;
+    }
+  };
 
   return (
     <>
@@ -69,7 +80,7 @@ export default function MyProfileUp({ accountId }) {
             <Follower>팔로워</Follower>
           </Link>
           <UserImg
-            src={profileInfo && profileInfo.profile.image}
+            src={profileInfo && getImageSrc(profileInfo.profile.image)}
             alt="유저사진"></UserImg>
           <Link
             to={`/profile/${
@@ -102,6 +113,7 @@ export default function MyProfileUp({ accountId }) {
                 data={profileInfo && profileInfo.profile.isfollow}
                 accountname={profileInfo && profileInfo.profile.accountname}
                 type="A"
+                setLender={setLender}
               />
             </>
           )}

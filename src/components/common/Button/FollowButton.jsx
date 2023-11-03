@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { postFollow, deleteFollow } from "../../../api/follow";
 import styled from "styled-components";
 
-export default function FollowButton({ data, accountname, type }) {
+export default function FollowButton({ data, accountname, type, setLender }) {
   const [isfollow, setIsfollow] = useState(data);
 
   useEffect(() => {
@@ -17,6 +17,7 @@ export default function FollowButton({ data, accountname, type }) {
         await postFollow(accountname); // accountname을 매개변수로 전달
       }
       setIsfollow(!isfollow);
+      setLender((pre) => !pre);
     } catch (error) {
       console.error("Error while trying to follow/unfollow:", error);
     }
