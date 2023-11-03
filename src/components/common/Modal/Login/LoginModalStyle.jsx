@@ -35,8 +35,9 @@ export const Container = styled.div`
   margin: 0 auto;
   position: fixed;
   bottom: 0;
-  height: 70vh;
+  height: 75vh;
   /* height: 70rem; */
+  /* min-height: 75vh; */
   overflow-y: auto;
   padding: 3rem 0 0 0;
   background: #ffffff;
