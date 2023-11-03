@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Modal from "../../components/common/Modal/Modal";
 import IconPostModal from "../../components/common/Modal/IconPostModal";
-import { deleteUserComment, reportUserComment, deletePostData, reportUserPost } from "../../components/common/Modal/ModalFunction";
+import { deleteUserComment, reportUserComment } from "../../components/common/Modal/ModalFunction";
 import ModalHeader from "../../components/Header/ModalHeader";
 import Comment from "../FeedComment";
 import Post from "../../components/common/Post/Post";
@@ -78,6 +78,12 @@ export default function PostComment() {
   /* 댓글 작성 */
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+
+    if (!inputComment.trim()) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+  
     const response = await postComment(token, postId, inputComment);
     console.log("Post Comment Response:", response);
     setInputComment("");
