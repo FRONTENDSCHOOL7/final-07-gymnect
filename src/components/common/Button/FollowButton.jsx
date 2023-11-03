@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { authInstance } from "../../../api/axiosInstance";
 import { postFollow, deleteFollow } from "../../../api/follow";
 import styled from "styled-components";
 

@@ -17,6 +17,8 @@ import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
 import PostComment from "../pages/Posting/PostComment";
 import ProtectedRoute from "./ProtectedRoute";
+import Error from "../pages/Error/Error";
+
 
 export default function AppRouter() {
   return (
@@ -120,6 +122,14 @@ export default function AppRouter() {
               <Navbar />
               <ProfileEdit />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <>
+              <Error />
+            </>
           }
         />
       </Routes>

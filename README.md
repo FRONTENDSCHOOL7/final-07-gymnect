@@ -32,7 +32,7 @@
 
 | 강민주                       | 권영우                    | 임연정                      | 오가람                        |
 | ---------------------------- | ------------------------- | --------------------------- | ----------------------------- |
-|                              |                           |                             | (사진첨부하기)                |
+|                              |                           |                             |                               |
 | https://github.com/Minju9187 | https://github.com/kwonup | https://github.com/limm1222 | https://github.com/rami242424 |
 | 팀장                         | 팀원                      | 팀원                        | 팀원                          |
 
@@ -44,19 +44,71 @@
 
 ---
 
-src
 
-ㄴapi
+🌌우주연가
 
-ㄴassets
+🔭public
 
-ㄴcomponents
+ ┣ 🌠favicon.ico
+ ┗ 🌠index.html
+ 
+🔭src
+ ┣ 🌠api
+ ┃ ┣🪐auth.js
+ ┃ ┣🪐axiosInstance.js
+ ┃ ┣🪐comment.js
+ ┃ ┣🪐follow.js
+ ┃ ┣🪐post.js
+ ┃ ┣🪐profile.js
+ ┃ ┗🪐search.js
+ ┣ 🌠assets
+ ┃ ┣🪐images
+ ┃ ┗🪐sprite
+ ┣ 🌠atoms
+ ┃ ┣🪐LoginAtom.js
+ ┃ ┗🪐UserAtom.js
+ ┣ 🌠components
+ ┃ ┣ 🪐common
+ ┃ ┃ ┣🪐Alert
+ ┃ ┃ ┣🪐Button
+ ┃ ┃ ┣🪐Input
+ ┃ ┃ ┣🪐Loading
+ ┃ ┃ ┣🪐Modal
+ ┃ ┃ ┣🪐Post
+ ┃ ┃ ┣🪐Profile
+ ┃ ┃ ┗🪐ProfileList.jsx
+ ┃ ┣ 🪐Footer
+ ┃ ┣ 🪐Header
+ ┃ ┗ 🪐Layout
+ ┣ 🌠hooks
+ ┃ ┗ 🪐temp.js
+ ┣ 🌠pages
+ ┃ ┣ 🪐Calendar
+ ┃ ┣ 🪐Chatting
+ ┃ ┣ 🪐Error
+ ┃ ┣ 🪐FollowList
+ ┃ ┣ 🪐Home
+ ┃ ┣ 🪐Login
+ ┃ ┣ 🪐Posting
+ ┃ ┣ 🪐Profile
+ ┃ ┣ 🪐Randing
+ ┃ ┣ 🪐Signup
+ ┃ ┣ 🪐Splash
+ ┃ ┣ 🪐Upload
+ ┃ ┣ 🪐FeedComment.jsx
+ ┃ ┗ 🪐FeedCommentStyle.jsx
+ ┣ 🌠routes
+ ┃ ┃ ┗🪐AppRouter.jsx
+ ┣ 🌠styles
+ ┣ 🌠utils
+ ┣ 🌠App.js
+ ┣ 🌠index.js
+ 🔭.gitignore
+ 🔭.prettierrc.js
+ 🔭package-lock.json
+ 🔭package.json
+ 🔭README.md
 
-ㄴhooks
-
-ㄴpages
-
-ㄴstyle
 
 ## 5. 구현 기능
 

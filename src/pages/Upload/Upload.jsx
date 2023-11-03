@@ -55,12 +55,12 @@ function Upload() {
     if (selectedValue === "근력 운동") {
       exerciseData = exerciseEntries
         .map((entry) => {
-          return `${entry.name} - ${entry.sets
+          return `${entry.name}-${entry.sets
             .map((set) => `${set.weight}kg x ${set.reps}회`)
             .join(", ")}`;
         })
-        .join("; ");
-      exerciseData = `${selectedValue}:${exerciseData}`;
+        .join(";");
+      exerciseData = `${exerciseData}`;
     } else if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
     ) {
@@ -71,7 +71,7 @@ function Upload() {
 
     let timeData = `${hour}시간 ${minute}분`;
 
-    contentData = `${contentData}\n${exerciseData}\n${timeData}`;
+    contentData = `${selectedValue}\n${exerciseData}\n${contentData}\n${timeData}`;
 
     return {
       post: {
@@ -82,6 +82,59 @@ function Upload() {
   };
 
   const saveDataToAPI = async () => {
+    if (selectedValue === null) {
+      alert("운동을 선택해주세요!");
+      return;
+    }
+
+    if (!postContent || postContent.trim().length === 0) {
+      alert("게시글을 입력해주세요!");
+      return;
+    }
+
+    if (!timeisNumeric(hour) || !timeisNumeric(minute)) {
+      alert("시간 입력 창에는 숫자만 입력해주세요!");
+      return;
+    }
+
+    if (
+      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue) &&
+      (!distanceInput || !timeisNumeric(distanceInput))
+    ) {
+      alert("km 입력 창에는 숫자만 입력해주세요!");
+      return;
+    }
+
+    const emptyExerciseNames = exerciseEntries.some(
+      (entry) => !entry.name || entry.name.trim().length === 0
+    );
+    if (emptyExerciseNames) {
+      alert("운동 이름을 입력해주세요!");
+      return;
+    }
+
+    if (postContent.length > 500) {
+      alert("게시글은 500자를 초과할 수 없습니다!");
+      return;
+    }
+
+    const invalidSets = exerciseEntries.some((entry) => {
+      return entry.sets.some((set) => {
+        if (!set.weight || !set.reps) {
+          return true;
+        }
+        if (!timeisNumeric(set.weight) || !timeisNumeric(set.reps)) {
+          return true;
+        }
+        return false;
+      });
+    });
+
+    if (invalidSets) {
+      alert("무게와 횟수를 올바르게 입력해주세요!");
+      return;
+    }
+
     try {
       const apiData = createApiData();
       const token = localStorage.getItem("token");
@@ -122,13 +175,20 @@ function Upload() {
   const handleDropdownToggle = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (value) => {
+    console.log("Selected Value before:", selectedValue);
     setSelectedValue(value);
+    console.log("Selected Value after:", value);
     setIsOpen(false);
   };
 
   // 시간 입력
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
+
+  // 시간 확인
+  const timeisNumeric = (value) => {
+    return !isNaN(value) && !isNaN(parseFloat(value));
+  };
 
   // 운동이름과 세트 추가
   const [exerciseEntries, setExerciseEntries] = useState([
@@ -363,6 +423,7 @@ function Upload() {
         <>
           <StyledTextarea
             value={postContent}
+            maxLength={500}
             onChange={(e) => {
               setPostContent(e.target.value);
               autoResizeTextarea(e);

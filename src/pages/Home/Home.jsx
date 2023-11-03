@@ -23,7 +23,7 @@ export default function Home() {
       }
     };
     fetchFeed();
-  }, []);
+  }, [userToken]);
 
   // 팔로우하는 사람이 없거나 게시물이 없을 경우 NoFollowerHome 컴포넌트를 보여줍니다.
   if (isLoading) {

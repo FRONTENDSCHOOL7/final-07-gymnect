@@ -67,6 +67,6 @@ export const ImageInput = styled.input`
 export const ErrorMessage = styled.p`
   margin-top: 6px;
   font-size: 12px;
-  color: rgba(235, 87, 87, 1);
+  color: #eb5757;
   align-self: flex-start;
 `;

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { userInfoAtom } from "../../atoms/UserAtom";
 import { getFollowingList } from "../../api/follow";
-import { useRecoilValue } from "recoil";
 import { Link, useParams } from "react-router-dom";
 
 import BackNav from "../../components/Header/BackspaceHeader";
@@ -10,7 +8,6 @@ import FollowButton from "../../components/common/Button/FollowButton";
 import styled from "styled-components";
 
 export default function FollowingPage() {
-  const userInfo = useRecoilValue(userInfoAtom);
   const [followings, setFollowings] = useState([]);
   const { id } = useParams();
 
@@ -24,14 +21,14 @@ export default function FollowingPage() {
       }
     };
     fetchMyFollowingList();
-  }, [userInfo.account]);
+  }, [id]);
 
   console.log(followings);
 
   return (
     <Container>
       <BackNav />
-      {followings &&
+      {followings && followings.length > 0 ? (
         followings.map((data) => (
           <ListContainer key={data._id}>
             <Link to={`/profile/${data.accountname}`}>
@@ -48,7 +45,10 @@ export default function FollowingPage() {
               />
             </ButtonContainer>
           </ListContainer>
-        ))}
+        ))
+      ) : (
+        <NoComment>팔로잉이 존재하지 않습니다.</NoComment>
+      )}
     </Container>
   );
 }
@@ -74,4 +74,11 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const NoComment = styled.p`
+  margin-top: 30px;
+  font-size: 12px;
+  text-align: center;
+  color: #333333;
 `;
