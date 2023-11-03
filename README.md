@@ -46,9 +46,12 @@
 
 
 🌌우주연가
+
 🔭public
+
  ┣ 🌠favicon.ico
  ┗ 🌠index.html
+ 
 🔭src
  ┣ 🌠api
  ┃ ┣🪐auth.js
