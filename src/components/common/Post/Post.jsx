@@ -27,39 +27,44 @@ import {
   MessageSpan,
   Time,
   HealthWrap,
+  HealthList,
   ProfileButton,
   FeedButton,
   DotButton,
   HeartButton,
   MessageButton
 } from "./PostStyle";
-import HealthData from "./HealthData";
 
-export default function Post({ data }) {
+export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
-  const imageCheck = data?.image ? true : false;
-  const arr = data?.content.split("\n");
+  const imageCheck = data.image ? true : false;
+  const arr = data.content.split("\n");
   const token = localStorage.getItem("token");
   const account = userInfo.account;
   const [liked, setLiked] = useState(false);
-  const [postLikeState, setPostLikeState] = useState(data?.hearted);
-  const [postLikeCount, setPostLikeCount] = useState(data?.heartCount);
+  const [postLikeState, setPostLikeState] = useState(data.hearted);
+  const [postLikeCount, setPostLikeCount] = useState(data.heartCount);
   const [isDelete, setIsDelete] = useState(false);
+  console.log(arr[1]);
 
   const handleProfileClick = (e) => {
-    navigate(`/profile/${data?.author.accountname}`);
+    navigate(`/profile/${data.author.accountname}`, {
+      state: { data: data }
+    });
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/${data?.author.accountname}/${data?.id}`);
+    navigate(`/post/${data.author.accountname}/${data.id}`, {
+      state: { data: data }
+    });
   };
-
-  const postId = data?.id;
+  const postId = data.id;
   /* 좋아요 기능 */
   const fetchLike = async () => {
     const response = await postLike(token, postId);
@@ -106,7 +111,7 @@ export default function Post({ data }) {
   const onShowModal = (post) => {
     if (!isModalOpen) {
       setIsModalOpen(true);
-      if (data?.author.accountname === account) {
+      if (data.author.accountname === account) {
         setModalText(["삭제", "수정"]);
         setModalFunc([
           () => {
@@ -133,29 +138,27 @@ export default function Post({ data }) {
         <PostFlexWrap>
           <ProfileButton onClick={handleProfileClick}>
             <PostProfileImg
-              src={data?.author.image}
+              src={data.author.image}
               alt="프로필사진"></PostProfileImg>
             <PostNameWrap>
-              <UserSpan>{data?.author.username}</UserSpan>
-              <AccountSpan>{data?.author.accountname}</AccountSpan>
+              <UserSpan>{data.author.username}</UserSpan>
+              <AccountSpan>{data.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
-          <Time>{data && arr[3]}</Time>
-          <DotButton onClick={() => onShowModal("")}>
+          <Time>{arr[arr.length - 1]}</Time>
+          <DotButton onClick={() => onShowModal(data)}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
         <Wrap>
           <FeedButton onClick={handleFeedClick}>
-            <HealthWrap>
-              <HealthData kind={data && arr[0]} data={data && arr[1]} />
-            </HealthWrap>
+            <HealthWrap>{arr[1]};</HealthWrap>
             {imageCheck && (
               <PostUploadImg
-                src={data?.image}
+                src={data.image}
                 alt="업로드한 사진"></PostUploadImg>
             )}
-            <PostContent>{data && arr[2]}</PostContent>
+            <PostContent>{arr[0]}</PostContent>
           </FeedButton>
           <ButtonWrap>
             <HeartButton onClick={handleToggleLike}>
@@ -164,10 +167,10 @@ export default function Post({ data }) {
             </HeartButton>
             <MessageButton onClick={handleFeedClick}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
-              <MessageSpan>{data?.commentCount}</MessageSpan>
+              <MessageSpan>{data.commentCount}</MessageSpan>
             </MessageButton>
           </ButtonWrap>
-          <PostDay>{formatDate(data?.createdAt)}</PostDay>
+          <PostDay>{formatDate(data.createdAt)}</PostDay>
         </Wrap>
       </PostArticle>
       {isModalOpen && ( // 여기에 모달을 추가합니다.

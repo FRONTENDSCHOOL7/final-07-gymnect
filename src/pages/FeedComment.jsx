@@ -22,13 +22,13 @@ export default function FeedComment({ user, content, time, image, authorAccount,
 
   const getImageSrc = (image) => {
     if (
-      image.includes("https://api.mandarin.weniv.co.kr%22/") &&
-      !image.includes("undefined")
+      image &&
+      !image.includes('https://api.mandarin.weniv.co.kr%22/') &&
+      !image.includes('undefined') &&
+      !image.includes('Ellipse')
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };

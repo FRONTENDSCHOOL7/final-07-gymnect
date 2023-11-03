@@ -82,7 +82,7 @@ function Upload() {
   };
 
   const saveDataToAPI = async () => {
-    if (selectedValue === "운동 종류") {
+    if (selectedValue === null) {
       alert("운동을 선택해주세요!");
       return;
     }
@@ -175,7 +175,9 @@ function Upload() {
   const handleDropdownToggle = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (value) => {
+    console.log("Selected Value before:", selectedValue);
     setSelectedValue(value);
+    console.log("Selected Value after:", value);
     setIsOpen(false);
   };
 
