@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   height: calc(100vh - 108px);
   overflow-y: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 7px; // 스크롤바 너비
   }

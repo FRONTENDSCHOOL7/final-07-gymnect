@@ -16,6 +16,7 @@ import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
 import PostComment from "../pages/Posting/PostComment";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRouter() {
   return (
@@ -28,83 +29,97 @@ export default function AppRouter() {
         <Route
           path="/home"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Home />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/search"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Search />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/chatlist"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <ChatList />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/chatlist/:name"
           element={
-            <>
+            <ProtectedRoute>
               <ChatRoom />
-            </>
+            </ProtectedRoute>
           }
         />
-        <Route path="/post/:id/:postId" element={<PostComment />} />
-        <Route path="/post/upload" element={<Upload />} />
+        <Route
+          path="/post/:id/:postId"
+          element={
+            <ProtectedRoute>
+              <PostComment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/post/upload"
+          element={
+            <ProtectedRoute>
+              <Upload />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/calendar"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Calendar />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile/:id"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Profile />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile/:id/follower"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Follower />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile/:id/following"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <Following />
-            </>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile/:id/edit"
           element={
-            <>
+            <ProtectedRoute>
               <Navbar />
               <ProfileEdit />
-            </>
+            </ProtectedRoute>
           }
         />
       </Routes>
