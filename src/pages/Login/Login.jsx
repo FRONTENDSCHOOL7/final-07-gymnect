@@ -40,6 +40,7 @@ export default function Login() {
       <TitleDiv>
         <Title>
           <MainLogo src={mainLogo} alt="짐넥 로고" />
+          <BackLogo src={backLogo} alt="아령 로고" />
           <ThunderDiv>
             <ThunderIcon />
           </ThunderDiv>
@@ -51,16 +52,33 @@ export default function Login() {
   );
 }
 
+const slideUpAnimation = keyframes`
+  0% {
+    transform: translateY(270px);
+  }
+  100% {
+    transform: translateY(100px);
+  }
+`;
+
+const BackOpacity = keyframes`
+0% {
+  opacity: 1;
+}
+100% {
+  opacity: 0;
+}
+`;
+
 export const Container = styled.div`
   background-color: #006cd8;
   width: 100%;
-  min-height: 100vh; // 높이를 최소한으로 설정
+  min-height: 100vh;
 
 `;
 
 export const TitleDiv = styled.div`
-  margin-top: 40px;
-  /* min-height: 100vh; */
+  animation: ${slideUpAnimation} 0.7s ease-in-out forwards;
 `;
 
 export const Title = styled.h1`
@@ -75,6 +93,17 @@ export const MainLogo = styled.img`
   width: 105px;
   aspect-ratio: 2/1;
   z-index: 5;
+`;
+
+export const BackLogo = styled.img`
+  position: absolute;
+  width: 262px;
+  height: 149px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: ${BackOpacity} 0.7s ease-in-out forwards;
 `;
 
 export const SubTitle = styled.p`

@@ -35,7 +35,7 @@ export const Container = styled.div`
   margin: 0 auto;
   position: fixed;
   bottom: 0;
-  height: 75vh;
+  height: 70vh;
   /* height: 70rem; */
   /* min-height: 75vh; */
   overflow-y: auto;
@@ -46,7 +46,7 @@ export const Container = styled.div`
   box-sizing: border-box;
   
   animation: ${css`
-    ${slideUpAnimation} 0.5s ease-in-out forwards;
+    ${slideUpAnimation} 0.7s ease-in-out forwards;
   `};
 
   &:before {
