@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const Container = styled.main`
   margin: 0 auto;
   width: 39rem;
+  min-height: 100%; 
 `;
 
 export const Title = styled.h1`
