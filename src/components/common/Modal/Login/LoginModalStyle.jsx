@@ -33,10 +33,11 @@ export const slideUpAnimation = keyframes`
 export const Container = styled.div`
   width: 39rem;
   margin: 0 auto;
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  height: 73vh;
+  height: 70vh;
   /* height: 70rem; */
+  overflow-y: auto;
   padding: 3rem 0 0 0;
   background: #ffffff;
   border-top-left-radius: 0.8rem;
