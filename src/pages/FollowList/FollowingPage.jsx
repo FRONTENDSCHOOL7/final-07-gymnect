@@ -28,7 +28,7 @@ export default function FollowingPage() {
   return (
     <Container>
       <BackNav />
-      {followings &&
+      {followings && followings.length > 0 ? (
         followings.map((data) => (
           <ListContainer key={data._id}>
             <Link to={`/profile/${data.accountname}`}>
@@ -45,7 +45,10 @@ export default function FollowingPage() {
               />
             </ButtonContainer>
           </ListContainer>
-        ))}
+        ))
+      ) : (
+        <NoComment>팔로잉이 존재하지 않습니다.</NoComment>
+      )}
     </Container>
   );
 }
@@ -71,4 +74,11 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const NoComment = styled.p`
+  margin-top: 30px;
+  font-size: 12px;
+  text-align: center;
+  color: #333333;
 `;

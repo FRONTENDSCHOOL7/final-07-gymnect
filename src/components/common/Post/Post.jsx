@@ -27,18 +27,17 @@ import {
   MessageSpan,
   Time,
   HealthWrap,
-  HealthList,
   ProfileButton,
   FeedButton,
   DotButton,
   HeartButton,
   MessageButton
 } from "./PostStyle";
+import HealthData from "./HealthData";
 
 export default function Post({ data }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState([]);
@@ -141,20 +140,22 @@ export default function Post({ data }) {
               <AccountSpan>{data?.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
-          <Time>{data && arr[2]}</Time>
+          <Time>{data && arr[3]}</Time>
           <DotButton onClick={() => onShowModal("")}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
         <Wrap>
           <FeedButton onClick={handleFeedClick}>
-            <HealthWrap>{data && arr[1]};</HealthWrap>
+            <HealthWrap>
+              <HealthData kind={data && arr[0]} data={data && arr[1]} />
+            </HealthWrap>
             {imageCheck && (
               <PostUploadImg
                 src={data?.image}
                 alt="업로드한 사진"></PostUploadImg>
             )}
-            <PostContent>{data && arr[0]}</PostContent>
+            <PostContent>{data && arr[2]}</PostContent>
           </FeedButton>
           <ButtonWrap>
             <HeartButton onClick={handleToggleLike}>

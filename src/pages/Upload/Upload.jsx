@@ -55,12 +55,12 @@ function Upload() {
     if (selectedValue === "근력 운동") {
       exerciseData = exerciseEntries
         .map((entry) => {
-          return `${entry.name} - ${entry.sets
+          return `${entry.name}-${entry.sets
             .map((set) => `${set.weight}kg x ${set.reps}회`)
             .join(", ")}`;
         })
-        .join("; ");
-      exerciseData = `${selectedValue}:${exerciseData}`;
+        .join(";");
+      exerciseData = `${exerciseData}`;
     } else if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
     ) {
@@ -71,7 +71,7 @@ function Upload() {
 
     let timeData = `${hour}시간 ${minute}분`;
 
-    contentData = `${contentData}\n${exerciseData}\n${timeData}`;
+    contentData = `${selectedValue}\n${exerciseData}\n${contentData}\n${timeData}`;
 
     return {
       post: {
@@ -98,7 +98,7 @@ function Upload() {
     }
 
     if (
-      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue) && 
+      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue) &&
       (!distanceInput || !timeisNumeric(distanceInput))
     ) {
       alert("km 입력 창에는 숫자만 입력해주세요!");
@@ -129,7 +129,7 @@ function Upload() {
         return false;
       });
     });
-    
+
     if (invalidSets) {
       alert("무게와 횟수를 올바르게 입력해주세요!");
       return;
