@@ -19,7 +19,7 @@ export const Section = styled.div`
 export const ErrorMessage = styled.p`
   margin-top: 6px;
   font-size: 12px;
-  color: rgba(235, 87, 87, 1);
+  color: #eb5757;
 `;
 
 export const SuccessMessage = styled.p`

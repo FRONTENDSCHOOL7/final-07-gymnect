@@ -68,7 +68,7 @@ export default function MyProfile() {
       }
     };
     fetchMyPosts();
-  }, [userInfo]);
+  }, [userInfo, id, token]);
 
   return (
     <>
