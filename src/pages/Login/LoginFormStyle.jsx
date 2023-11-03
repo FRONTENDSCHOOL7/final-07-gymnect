@@ -24,10 +24,9 @@ export const Section = styled.div`
   padding-bottom: 30px;
 `;
 
-
 export const ErrorMessage = styled.p`
   margin-top: 6px;
-  color: rgba(235, 87, 87, 1);
+  color: #eb5757;
 `;
 
 export const SuccessMessage = styled.p`
