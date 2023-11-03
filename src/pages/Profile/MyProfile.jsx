@@ -24,6 +24,7 @@ import gridIconOn from "../../assets/images/icon-grid-on.svg";
 import gridIconOff from "../../assets/images/icon-grid-off.svg";
 import layer from "../../assets/images/icon-img-layers.svg";
 import Modal from "../../components/common/Modal/PostModal";
+import Loading from "../../components/common/Loading/Loading";
 
 export default function MyProfile() {
   const [isExpandedView, setIsExpandedView] = useState(false);
@@ -35,6 +36,7 @@ export default function MyProfile() {
   const account = userInfo.account;
   const token = localStorage.getItem("token");
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true); //데이터가 로딩중인지 나타냄
 
   const handleIconClick = (viewType) => {
     if (viewType === "grid") {
@@ -63,13 +65,21 @@ export default function MyProfile() {
         } else {
           console.error("API response is not an array:", data);
         }
+        setIsLoading(false);
       } catch (error) {
         console.log("게시글을 가져오는데 실패했습니다:", error);
+        setIsLoading(false);
       }
     };
     fetchMyPosts();
   }, [userInfo, id, token]);
-
+  if (isLoading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
   return (
     <>
       <ModalNav toggleModal={toggleModal} />
