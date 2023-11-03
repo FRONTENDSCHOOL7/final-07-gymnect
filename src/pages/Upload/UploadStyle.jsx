@@ -206,7 +206,7 @@ export const ImagesContainer = styled.div`
   display: flex;
   overflow-x: auto;
   margin: 24px;
-  gap: 4px;
+  justify-content: center;
   &::-webkit-scrollbar {
     display: none;
   }

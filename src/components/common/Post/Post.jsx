@@ -112,14 +112,14 @@ export default function Post({ data, commentCount }) {
     if (!isModalOpen) {
       setIsModalOpen(true);
       if (data.author.accountname === account) {
-        setModalText(["삭제", "수정"]);
+        setModalText(["삭제"]);
         setModalFunc([
           () => {
             deletePostData(token, post.id, setIsDelete);
             setIsVisible(false);
           },
           () =>
-            navigate(`edit`, {
+            navigate(`uploadedit`, {
               state: {
                 data: post
               }
