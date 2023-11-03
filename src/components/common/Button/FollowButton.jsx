@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { postFollow, deleteFollow } from "../../../api/follow";
 import styled from "styled-components";
 
-export default function FollowButton({ data: initialize, accountname }) {
-  console.log(initialize, accountname);
-  const [isfollow, setIsfollow] = useState(initialize);
+export default function FollowButton({ data, accountname, type }) {
+  const [isfollow, setIsfollow] = useState(data);
+
+  useEffect(() => {
+    setIsfollow(data);
+  }, [data]);
+
   const handleClick = async () => {
     try {
       if (isfollow) {
@@ -19,8 +23,14 @@ export default function FollowButton({ data: initialize, accountname }) {
   };
 
   return (
-    <StyledButton $follow={isfollow} onClick={handleClick}>
-      {isfollow ? "취소" : "팔로우"}
+    <StyledButton $type={type} $follow={isfollow} onClick={handleClick}>
+      {type === "A"
+        ? isfollow
+          ? "언팔로우"
+          : "팔로우"
+        : isfollow
+        ? "취소"
+        : "팔로우"}
     </StyledButton>
   );
 }
@@ -30,8 +40,8 @@ const StyledButton = styled.button`
   color: ${(props) => (!props.$follow ? "#FFFFFF" : "#767676")};
   border: ${(props) =>
     !props.$follow ? "1px solid #006cd8" : "1px solid #D9D9D9"};
-  width: 55px;
-  height: 27px;
+  width: ${(props) => (props.$type === "A" ? "120px" : "56px")};
+  height: ${(props) => (props.$type === "A" ? "34px" : "28px")};
   border-radius: 26px;
   font-size: 12px;
 `;

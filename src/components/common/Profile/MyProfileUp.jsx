@@ -53,6 +53,8 @@ export default function MyProfileUp({ accountId }) {
     fetchMyProfile();
   }, [accountId, token]);
 
+  console.log(profileInfo && profileInfo.profile.isfollow);
+
   return (
     <>
       <MyProfileUpContainer>
@@ -99,6 +101,7 @@ export default function MyProfileUp({ accountId }) {
               <FollowButton
                 data={profileInfo && profileInfo.profile.isfollow}
                 accountname={profileInfo && profileInfo.profile.accountname}
+                type="A"
               />
             </>
           )}

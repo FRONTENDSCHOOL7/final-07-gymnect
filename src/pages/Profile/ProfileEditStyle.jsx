@@ -50,11 +50,12 @@ export const Form = styled.form`
 `;
 
 export const Image = styled.img`
+  width: 100%;
   border-radius: 50%;
   border: 1px solid #dbdbdb;
-  width: 110px;
   aspect-ratio: 1/1;
   object-fit: cover;
+  overflow: hidden;
 `;
 
 export const ImageInput = styled.input`
