@@ -68,7 +68,7 @@ function Upload() {
     } else if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
     ) {
-      exerciseData = `${selectedValue}:${distanceInput}km`;
+      exerciseData = `${distanceInput}km`;
     } else {
       exerciseData = `${selectedValue}`;
     }
