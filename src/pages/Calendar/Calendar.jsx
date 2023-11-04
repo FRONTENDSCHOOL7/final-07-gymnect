@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import BackNav from "../../components/Header/BackspaceHeader";
-
 function ScrollableCalendar() {
   const [months, setMonths] = useState([
     moment().subtract(1, "months").format("YYYY-MM"),
     moment().format("YYYY-MM"),
     moment().add(1, "months").format("YYYY-MM")
   ]);
-
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
     if (scrollTop + clientHeight >= scrollHeight && months.length < 6) {
@@ -21,14 +19,12 @@ function ScrollableCalendar() {
       ]);
     }
   };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
-
   return (
     <>
       <BackNav />
