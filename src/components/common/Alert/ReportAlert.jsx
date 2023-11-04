@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Section, Message, Button, ButtonContainer } from './ReportAlertStyle'; 
 
-function ReportAlert() {
+function ReportAlert({ handleShowAlert, closeAlert }) {
   return (
     <Container>
       <Section>
         <Message>신고 하시겠어요?</Message>
         <ButtonContainer>
-          <Button>취소</Button>
-          <Button>네</Button>
+          <Button onClick={closeAlert}>취소</Button>
+          <Button onClick={handleShowAlert}>네</Button>
         </ButtonContainer>
       </Section>
     </Container>

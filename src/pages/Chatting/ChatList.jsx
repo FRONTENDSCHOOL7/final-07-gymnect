@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ModalHeader from "../../components/Header/ModalHeader";
+import BackNav from "../../components/Header/BackspaceHeader"
 import profileImage from "../../assets/images/signup-profile.svg";
 import styled from "styled-components";
 
@@ -34,7 +34,7 @@ const ChatList = () => {
 
   return (
     <>
-      <ModalHeader />
+    <BackNav />
       <Container>
         <Main>
           <Title>채팅리스트</Title>
@@ -69,10 +69,7 @@ export default ChatList;
 export const Container = styled.div`
   width: 390px;
   height: calc(100vh - 108px);
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  overflow-y: none;
 `;
 
 export const Main = styled.main`

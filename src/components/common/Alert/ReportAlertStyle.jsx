@@ -10,6 +10,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 100000;
 `;
 
 export const Section = styled.div`
