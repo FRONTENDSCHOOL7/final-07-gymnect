@@ -70,3 +70,27 @@ export const ButtonWrap = styled.div`
   display: flex;
   gap: 12px;
 `;
+
+export const CommentButton = styled.button`
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+`;
+
+export const CommentImg = styled.img`
+  width: 20px;
+  aspect-ratio: 1/1;
+`;
+
+export const ShareButton = styled.button`
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+`;
+
+export const ShareImg = styled.img`
+  width: 20px;
+  aspect-ratio: 1/1;
+`;

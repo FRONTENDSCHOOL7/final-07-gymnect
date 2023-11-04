@@ -8,7 +8,7 @@ import {
   deleteUserComment,
   reportUserComment
 } from "../../components/common/Modal/ModalFunction";
-import ModalHeader from "../../components/Header/ModalHeader";
+import BackNav from "../../components/Header/BackspaceHeader.jsx";
 import Comment from "../../components/common/Comment/FeedComment.jsx";
 import Post from "../../components/common/Post/Post";
 import { userInfoAtom } from "../../atoms/UserAtom";
@@ -143,7 +143,7 @@ export default function PostComment() {
 
   return (
     <>
-      <ModalHeader />
+      <BackNav />
       <Container>
         <TopContainer>
           <Post data={detailPost.post} commentCount={commentCount} />
