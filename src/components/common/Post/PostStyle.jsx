@@ -62,7 +62,7 @@ export const DotImg = styled.img`
 
 export const Wrap = styled.div`
   width: 358px;
-  padding-left: 30px;
+  padding: 0 16px;
 `;
 
 export const FeedButton = styled.button``;
@@ -72,7 +72,6 @@ export const HealthWrap = styled.ul`
   flex-direction: column;
   gap: 16px;
   margin-top: 22px;
-  margin-bottom: 11px;
   padding-bottom: 11px;
   font-size: 14px;
 `;

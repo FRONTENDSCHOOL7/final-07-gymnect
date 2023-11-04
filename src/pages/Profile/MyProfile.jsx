@@ -58,7 +58,7 @@ export default function MyProfile() {
   useEffect(() => {
     const fetchMyPosts = async () => {
       try {
-        const data = await getUserPosts(token, id, 10, 0);
+        const data = await getUserPosts(token, id, Infinity, 0);
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
         } else {
