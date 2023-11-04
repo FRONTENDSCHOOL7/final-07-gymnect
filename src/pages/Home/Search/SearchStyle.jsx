@@ -34,6 +34,7 @@ export const LogoSection = styled.div`
 export const LogoImage = styled.img`
   width: 97.61px;
   height: 95.112px;
+  aspect-ratio: 1/1;
 `;
 export const Text = styled.p`
   font-size: 1.4rem;

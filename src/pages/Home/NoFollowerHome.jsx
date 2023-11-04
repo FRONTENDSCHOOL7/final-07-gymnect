@@ -34,6 +34,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 24px;
+  margin-top: -25px;
   height: calc(100vh - 108px);
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -49,6 +50,7 @@ const Text = styled.p`
 export const Image = styled.img`
   width: 97.61px;
   height: 95.112px;
+  aspect-ratio: 1/1;
 `;
 
 export default NoFollowerHome;
