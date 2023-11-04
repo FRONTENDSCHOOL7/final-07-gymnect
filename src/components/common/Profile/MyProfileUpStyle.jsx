@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const MyProfileUpContainer = styled.div`
-  width: 390px;
   display: flex;
   flex-direction: column;
   align-items: center;

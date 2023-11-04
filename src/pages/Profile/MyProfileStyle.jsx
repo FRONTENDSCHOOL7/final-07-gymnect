@@ -1,11 +1,18 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-  width: 390px;
-  height: calc(100vh - 108px);
+  max-height: calc(100vh - 108px);
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf; // 스크롤바 색상
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888;
   }
 `;
 

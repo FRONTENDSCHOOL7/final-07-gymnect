@@ -9,6 +9,8 @@ import { userInfoAtom } from "../../../atoms/UserAtom";
 import IconPostModal from "../Modal/IconPostModal";
 import { postLike, deleteLike } from "../../../api/post";
 import { useRecoilValue } from "recoil";
+import HealthData from "./HealthData";
+import profileImage from "../../../assets/images/signup-profile.svg";
 import {
   PostArticle,
   PostProfileImg,
@@ -27,7 +29,6 @@ import {
   MessageSpan,
   Time,
   HealthWrap,
-  HealthList,
   ProfileButton,
   FeedButton,
   DotButton,
@@ -38,20 +39,18 @@ import {
 export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
-  const imageCheck = data.image ? true : false;
-  const arr = data.content.split("\n");
+  const imageCheck = data?.image ? true : false;
+  const arr = data?.content.split("\n");
   const token = localStorage.getItem("token");
   const account = userInfo.account;
   const [liked, setLiked] = useState(false);
-  const [postLikeState, setPostLikeState] = useState(data.hearted);
-  const [postLikeCount, setPostLikeCount] = useState(data.heartCount);
+  const [postLikeState, setPostLikeState] = useState(data && data.hearted);
+  const [postLikeCount, setPostLikeCount] = useState(data && data.heartCount);
   const [isDelete, setIsDelete] = useState(false);
-  console.log(arr[1]);
 
   useEffect(() => {
     setPostLikeCount(data && data.heartCount);
@@ -59,17 +58,14 @@ export default function Post({ data, commentCount }) {
   }, [data]);
 
   const handleProfileClick = (e) => {
-    navigate(`/profile/${data.author.accountname}`, {
-      state: { data: data }
-    });
+    navigate(`/profile/${data?.author.accountname}`);
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/${data.author.accountname}/${data.id}`, {
-      state: { data: data }
-    });
+    navigate(`/post/${data?.author.accountname}/${data?.id}`);
   };
-  const postId = data.id;
+
+  const postId = data?.id;
   /* 좋아요 기능 */
   const fetchLike = async () => {
     const response = await postLike(token, postId);
@@ -120,7 +116,7 @@ export default function Post({ data, commentCount }) {
         setModalText(["삭제"]);
         setModalFunc([
           () => {
-            deletePostData(token, post.id, setIsDelete);
+            deletePostData(token, postId, setIsDelete);
             setIsVisible(false);
           },
           () =>
@@ -137,33 +133,49 @@ export default function Post({ data, commentCount }) {
     }
   };
 
+  /*이미지가 있으면 보여주고 없으면 기본이미지 보여줌*/
+  const getImageSrc = (image) => {
+    if (
+      //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
+      image.includes("api.mandarin.weniv.co.kr")
+    ) {
+      console.log("이미지가 존재합니다.");
+      return image;
+    } else {
+      console.log("!!이미지가 존재하지 않습니다.");
+      return profileImage;
+    }
+  };
+  console.log(data?.author.image);
   return isVisible ? (
     <>
       <PostArticle>
         <PostFlexWrap>
           <ProfileButton onClick={handleProfileClick}>
             <PostProfileImg
-              src={data.author.image}
+              src={data && getImageSrc(data?.author.image)}
               alt="프로필사진"></PostProfileImg>
             <PostNameWrap>
-              <UserSpan>{data.author.username}</UserSpan>
-              <AccountSpan>{data.author.accountname}</AccountSpan>
+              <UserSpan>{data?.author.username}</UserSpan>
+              <AccountSpan>{data?.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
-          <Time>{arr[arr.length - 1]}</Time>
-          <DotButton onClick={() => onShowModal(data)}>
+          <Time>{data && arr[3]}</Time>
+          <DotButton onClick={() => onShowModal("")}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
         <Wrap>
           <FeedButton onClick={handleFeedClick}>
-            <HealthWrap>{arr[1]};</HealthWrap>
+            <HealthWrap>
+              <HealthData kind={data && arr[0]} data={data && arr[1]} />
+            </HealthWrap>
             {imageCheck && (
               <PostUploadImg
-                src={data.image}
+                src={data?.image}
                 alt="업로드한 사진"></PostUploadImg>
             )}
-            <PostContent>{arr[0]}</PostContent>
+            <PostContent>{data && arr[2]}</PostContent>
           </FeedButton>
           <ButtonWrap>
             <HeartButton onClick={handleToggleLike}>
@@ -172,10 +184,10 @@ export default function Post({ data, commentCount }) {
             </HeartButton>
             <MessageButton onClick={handleFeedClick}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
-              <MessageSpan>{data.commentCount}</MessageSpan>
+              <MessageSpan>{commentCount}</MessageSpan>
             </MessageButton>
           </ButtonWrap>
-          <PostDay>{formatDate(data.createdAt)}</PostDay>
+          <PostDay>{formatDate(data?.createdAt)}</PostDay>
         </Wrap>
       </PostArticle>
       {isModalOpen && ( // 여기에 모달을 추가합니다.

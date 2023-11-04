@@ -17,7 +17,7 @@ import {
 import Input from "../../components/common/Input/Input";
 
 export default function ProfileEdit() {
-  const URL = "https://api.mandarin.weniv.co.kr";
+  const URL = "https://api.mandarin.weniv.co.kr/";
   const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export default function ProfileEdit() {
     const file = e.target.files[0];
     formData.append("image", file);
     const imgData = await postUploadProfile(formData);
-    setImage(URL + "/" + imgData.filename);
+    setImage(URL + imgData.filename);
   };
 
   // username 유효성 검사

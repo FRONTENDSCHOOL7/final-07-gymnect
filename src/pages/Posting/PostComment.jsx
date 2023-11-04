@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Modal from "../../components/common/Modal/Modal";
 import IconPostModal from "../../components/common/Modal/IconPostModal";
-import { deleteUserComment, reportUserComment } from "../../components/common/Modal/ModalFunction";
+import { getPostDetail } from "../../api/post";
+import {
+  deleteUserComment,
+  reportUserComment
+} from "../../components/common/Modal/ModalFunction";
 import ModalHeader from "../../components/Header/ModalHeader";
 import Comment from "../FeedComment";
 import Post from "../../components/common/Post/Post";
@@ -19,21 +23,16 @@ import {
   Button,
   NoComment
 } from "./PostCommentStyle.jsx";
-import {
-  postComment,
-  getComment
-} from "../../api/comment";
+import { postComment, getComment } from "../../api/comment";
 import profileImage from "../../assets/images/signup-profile.svg";
 
 export default function PostComment() {
   const userInfo = useRecoilValue(userInfoAtom);
   const account = userInfo.account;
   const token = localStorage.getItem("token");
-  const location = useLocation();
-  const data = location.state?.data;
-  const postId = location.state?.data.id;
   const navigate = useNavigate();
-
+  const { postId } = useParams();
+  const [commentCount, setCommentCount] = useState();
   const [commentData, setCommentData] = useState([]);
   const [inputComment, setInputComment] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,7 +41,7 @@ export default function PostComment() {
 
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
-  const [pickedPost, setPickedPost] = useState('');
+  const [detailPost, setDetailPost] = useState("");
 
   useEffect(() => {
     if (isDelete) {
@@ -50,7 +49,7 @@ export default function PostComment() {
     }
     setIsDelete(false);
     setIsModalOpen(false);
-  }, [isDelete]);
+  }, [isDelete, navigate]);
 
   useEffect(() => {
     setIsDeleteComment(false);
@@ -64,11 +63,25 @@ export default function PostComment() {
     }
   }, [postId]);
 
+  /*상세 게시글 받아오기*/
+  useEffect(() => {
+    const fetchDetailPosts = async () => {
+      try {
+        const data = await getPostDetail(postId);
+        setDetailPost(data);
+        console.log("hi", data.post);
+      } catch (error) {
+        console.log("상세게시글을 가져오는데 실패했습니다:", error);
+      }
+    };
+    fetchDetailPosts();
+  }, [postId]);
+
   /* 댓글 리스트 받아오기 */
   const fetchCommentList = async () => {
     const response = await getComment(postId, token);
     setCommentData(response.comments);
-    data.commentCount = response.comments.length;
+    setCommentCount(response.comments.length);
   };
 
   const handleInput = (e) => {
@@ -83,7 +96,7 @@ export default function PostComment() {
       alert("댓글을 입력해주세요.");
       return;
     }
-  
+
     const response = await postComment(token, postId, inputComment);
     console.log("Post Comment Response:", response);
     setInputComment("");
@@ -94,9 +107,9 @@ export default function PostComment() {
   const getImageSrc = (image) => {
     if (
       image &&
-      !image.includes('https://api.mandarin.weniv.co.kr%22/') &&
-      !image.includes('undefined') &&
-      !image.includes('Ellipse')
+      !image.includes("https://api.mandarin.weniv.co.kr%22/") &&
+      !image.includes("undefined") &&
+      !image.includes("Ellipse")
     ) {
       return image;
     } else {
@@ -104,31 +117,25 @@ export default function PostComment() {
     }
   };
 
-  /* 모달 */
-  const hiddenText = {
-    whiteSpace: 'normal',
-    wordWrap: 'break-word',
-  };
-
   // 댓글
   const onShowCommentModal = (index, comment) => {
     if (!isModalOpen) {
       setIsModalOpen(true);
       if (commentData[index].author.accountname === account) {
-        setModalText(['댓글 삭제']);
+        setModalText(["댓글 삭제"]);
         setModalFunc([
           () =>
             deleteUserComment(
               token,
-              data.id,
+              detailPost.post.id,
               commentData[index],
               setIsDeleteComment
-            ),
+            )
         ]);
       } else {
-        setModalText(['댓글 신고']);
+        setModalText(["댓글 신고"]);
         setModalFunc([
-          () => reportUserComment(token, pickedPost, commentData[index]),
+          () => reportUserComment(token, detailPost.post.id, commentData[index])
         ]);
       }
     }
@@ -139,9 +146,7 @@ export default function PostComment() {
       <ModalHeader />
       <Container>
         <TopContainer>
-          <Post data={data}
-          userFeedTextStyle={hiddenText}
-          setPickedPost={setPickedPost}/>
+          <Post data={detailPost.post} commentCount={commentCount} />
         </TopContainer>
         <BottomContainer>
           {commentData && commentData.length > 0 ? (
