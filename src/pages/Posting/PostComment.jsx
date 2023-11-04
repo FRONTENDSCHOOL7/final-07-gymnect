@@ -9,7 +9,7 @@ import {
   reportUserComment
 } from "../../components/common/Modal/ModalFunction";
 import ModalHeader from "../../components/Header/ModalHeader";
-import Comment from "../FeedComment";
+import Comment from "../../components/common/Comment/FeedComment.jsx";
 import Post from "../../components/common/Post/Post";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import {

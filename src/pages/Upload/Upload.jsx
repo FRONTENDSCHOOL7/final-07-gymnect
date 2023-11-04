@@ -75,7 +75,7 @@ function Upload() {
 
     let timeData = `${hour}시간 ${minute}분`;
 
-    contentData = `${selectedValue}\n${exerciseData}\n${contentData}\n${timeData}`;
+    contentData = `${selectedValue}&&&&${exerciseData}&&&&${contentData}&&&&${timeData}`;
 
     return {
       post: {
@@ -115,11 +115,13 @@ function Upload() {
     }
 
     if (selectedValue === "근력 운동") {
-      const emptyNames = exerciseEntries.some(entry => entry.name.trim() === '');
-    if (emptyNames) {
-      alert("운동 이름을 입력해주세요!");
-      return;
-    }
+      const emptyNames = exerciseEntries.some(
+        (entry) => entry.name.trim() === ""
+      );
+      if (emptyNames) {
+        alert("운동 이름을 입력해주세요!");
+        return;
+      }
 
       const invalidSets = exerciseEntries.some((entry) => {
         return entry.sets.some((set) => {
@@ -132,7 +134,7 @@ function Upload() {
           return false;
         });
       });
-  
+
       if (invalidSets) {
         alert("무게와 횟수를 올바르게 입력해주세요!");
         return;
@@ -149,8 +151,8 @@ function Upload() {
 
       if (response) {
         console.log("성공적으로 API를 저장했습니다!");
-        alert('게시글을 성공적으로 올렸습니다!');
-        navigate('/home');
+        alert("게시글을 성공적으로 올렸습니다!");
+        navigate("/home");
       } else {
         console.error("Error while saving data to the API:", response.data);
       }
@@ -269,10 +271,10 @@ function Upload() {
 
   const handleImageUpload = (e) => {
     if (uploadedImages.length >= 1) {
-      alert('이미지는 한 장만 등록할 수 있습니다.');
+      alert("이미지는 한 장만 등록할 수 있습니다.");
       return;
     }
-  
+
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -301,7 +303,9 @@ function Upload() {
           </DropDown>
           <OptionsContainer $isOpen={isOpen}>
             {ExerciseData.map((item) => (
-              <Option key={item.id} onClick={() => handleOptionClick(item.value)}>
+              <Option
+                key={item.id}
+                onClick={() => handleOptionClick(item.value)}>
                 {item.value}
               </Option>
             ))}
@@ -377,7 +381,9 @@ function Upload() {
                         bgColor="#FFFFF"
                         border="none"
                         color="#000000"
-                        onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
+                        onClick={() =>
+                          handleRemoveSet(exerciseIndex, setIndex)
+                        }>
                         ㅡ
                       </Button>
                     </SetContainer>

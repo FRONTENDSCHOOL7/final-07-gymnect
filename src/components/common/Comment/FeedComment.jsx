@@ -1,5 +1,5 @@
 import React from "react";
-import iconDot from "../assets/images/icon-dot.svg";
+import iconDot from "../../../assets/images/icon-dot.svg";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -12,8 +12,8 @@ import {
   Comment,
   Button
 } from "./FeedCommentStyle";
-import profileImage from "../assets/images/signup-profile.svg";
-import { getTimeGap } from "../utils/getTime";
+import profileImage from "../../../assets/images/signup-profile.svg";
+import { getTimeGap } from "../../../utils/getTime";
 
 export default function FeedComment({
   user,

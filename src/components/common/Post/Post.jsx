@@ -44,7 +44,7 @@ export default function Post({ data, commentCount }) {
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
   const imageCheck = data?.image ? true : false;
-  const arr = data?.content.split("\n");
+  const arr = data?.content.split("&&&&");
   const token = localStorage.getItem("token");
   const account = userInfo.account;
   const [liked, setLiked] = useState(false);
@@ -146,6 +146,7 @@ export default function Post({ data, commentCount }) {
       return profileImage;
     }
   };
+  console.log(arr);
   console.log(data?.author.image);
   return isVisible ? (
     <>
