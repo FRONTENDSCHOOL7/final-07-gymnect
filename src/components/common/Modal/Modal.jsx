@@ -44,7 +44,13 @@ export default function Modal({ setIsModalOpen, children }) {
       {showAlert && (
         <Alert
           message={getAlertMessage(message)}
-          Func={tempFunc}
+          Func={async () => {
+            if (tempFunc) {
+              await tempFunc(); // tempFunc가 비동기 함수라면 await을 사용
+            }
+            setShowAlert(false); // Alert 닫기
+            setIsModalOpen(false); // 모달 닫기
+          }}
           cancel={setShowAlert}
           closeModal={setIsModalOpen}
         />
