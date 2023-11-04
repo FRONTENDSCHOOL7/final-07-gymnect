@@ -19,14 +19,15 @@ export default function Modal({ handleShowAlert, toggleModal }) {
     setAlertVisible(true);
   };
 
-  const closeAlert = () => {
+  const closeAlertAndModal = () => {
     setAlertVisible(false);
+    toggleModal();
   };
 
   return (
     <>
     {isAlertVisible && (
-      <ReportAlert handleShowAlert={handleShowAlert} closeAlert={closeAlert} />
+      <ReportAlert handleShowAlert={handleShowAlert} closeAlert={closeAlertAndModal} />
       )}
       <Background onClick={handleOutsideClick} />
       <Section onClick={handleInsideClick}>

@@ -8,10 +8,11 @@ import {
   DeleteButton,
 } from './AlertStyle';
 
-const Alert = ({ message, Func, cancel }) => {
+const Alert = ({ message, Func, cancel, closeModal }) => {
   const handleClickCancel = () => {
     console.log('no');
     cancel(false);
+    closeModal(false);
   };
 
   const handleClickYes = () => {

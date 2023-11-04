@@ -46,6 +46,7 @@ export default function Modal({ setIsModalOpen, children }) {
           message={getAlertMessage(message)}
           Func={tempFunc}
           cancel={setShowAlert}
+          closeModal={setIsModalOpen}
         />
       )}
     </>

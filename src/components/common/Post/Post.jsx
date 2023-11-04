@@ -104,10 +104,10 @@ export default function Post({ data, commentCount }) {
   // 모달
   useEffect(() => {
     if (isDelete) {
+      navigate(`/profile/${data?.author.accountname}`);
       setIsDelete(false);
-      setIsModalOpen(false);
     }
-  }, [isDelete]);
+  }, [isDelete, navigate, data?.author.accountname]);
 
   const onShowModal = (post) => {
     if (!isModalOpen) {

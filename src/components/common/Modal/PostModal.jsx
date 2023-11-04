@@ -18,15 +18,16 @@ export default function Modal({ handleLogout, toggleModal }) {
   const showAlert = () => {
     setAlertVisible(true);
   };
-
-  const closeAlert = () => {
+  
+  const closeAlertAndModal = () => {
     setAlertVisible(false);
+    toggleModal();
   };
 
   return (
     <>
       {isAlertVisible && (
-        <ReportAlert handleLogout={handleLogout} closeAlert={closeAlert} />
+        <ReportAlert handleLogout={handleLogout} closeAlert={closeAlertAndModal} />
       )}
       <Background onClick={handleOutsideClick} />
       <Section onClick={handleInsideClick}>
