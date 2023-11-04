@@ -1,9 +1,11 @@
 import { postContentUpload } from "../../api/post";
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import UploadNav from "../../components/Header/UploadHeader";
 import Button from "../../components/common/Button/ButtonContainer";
 import {
   Container,
+  TopContainer,
   DropDown,
   ArrowIcon,
   OptionsContainer,
@@ -14,6 +16,7 @@ import {
   Input,
   SetContainer,
   Count,
+  BottomContainer,
   SetInputContainer,
   SetInput,
   SetBtn,
@@ -46,6 +49,7 @@ const ExerciseData = [
 ];
 
 function Upload() {
+  const navigate = useNavigate();
   //데이터 저장
   const createApiData = () => {
     let contentData = postContent;
@@ -82,8 +86,8 @@ function Upload() {
   };
 
   const saveDataToAPI = async () => {
-    if (selectedValue === null) {
-      alert("운동을 선택해주세요!");
+    if (selectedValue === "운동 종류") {
+      alert(`운동을 선택해주세요!`);
       return;
     }
 
@@ -93,7 +97,7 @@ function Upload() {
     }
 
     if (!timeisNumeric(hour) || !timeisNumeric(minute)) {
-      alert("시간 입력 창에는 숫자만 입력해주세요!");
+      alert("시간 입력 창을 올바르게 입력해주세요!");
       return;
     }
 
@@ -101,15 +105,7 @@ function Upload() {
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue) &&
       (!distanceInput || !timeisNumeric(distanceInput))
     ) {
-      alert("km 입력 창에는 숫자만 입력해주세요!");
-      return;
-    }
-
-    const emptyExerciseNames = exerciseEntries.some(
-      (entry) => !entry.name || entry.name.trim().length === 0
-    );
-    if (emptyExerciseNames) {
-      alert("운동 이름을 입력해주세요!");
+      alert("km 입력 창을 올바르게 입력해주세요!");
       return;
     }
 
@@ -118,21 +114,29 @@ function Upload() {
       return;
     }
 
-    const invalidSets = exerciseEntries.some((entry) => {
-      return entry.sets.some((set) => {
-        if (!set.weight || !set.reps) {
-          return true;
-        }
-        if (!timeisNumeric(set.weight) || !timeisNumeric(set.reps)) {
-          return true;
-        }
-        return false;
-      });
-    });
-
-    if (invalidSets) {
-      alert("무게와 횟수를 올바르게 입력해주세요!");
+    if (selectedValue === "근력 운동") {
+      const emptyNames = exerciseEntries.some(entry => entry.name.trim() === '');
+    if (emptyNames) {
+      alert("운동 이름을 입력해주세요!");
       return;
+    }
+
+      const invalidSets = exerciseEntries.some((entry) => {
+        return entry.sets.some((set) => {
+          if (!set.weight || !set.reps) {
+            return true;
+          }
+          if (!timeisNumeric(set.weight) || !timeisNumeric(set.reps)) {
+            return true;
+          }
+          return false;
+        });
+      });
+  
+      if (invalidSets) {
+        alert("무게와 횟수를 올바르게 입력해주세요!");
+        return;
+      }
     }
 
     try {
@@ -145,6 +149,8 @@ function Upload() {
 
       if (response) {
         console.log("성공적으로 API를 저장했습니다!");
+        alert('게시글을 성공적으로 올렸습니다!');
+        navigate('/home');
       } else {
         console.error("Error while saving data to the API:", response.data);
       }
@@ -262,6 +268,11 @@ function Upload() {
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleImageUpload = (e) => {
+    if (uploadedImages.length >= 1) {
+      alert('이미지는 한 장만 등록할 수 있습니다.');
+      return;
+    }
+  
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -283,144 +294,146 @@ function Upload() {
     <>
       <UploadNav saveData={saveData} />
       <Container>
-        <DropDown onClick={handleDropdownToggle}>
-          <ArrowIcon $isOpen={isOpen}></ArrowIcon>
-          <span>{selectedValue}</span>
-        </DropDown>
-        <OptionsContainer $isOpen={isOpen}>
-          {ExerciseData.map((item) => (
-            <Option key={item.id} onClick={() => handleOptionClick(item.value)}>
-              {item.value}
-            </Option>
-          ))}
-        </OptionsContainer>
-        {selectedValue === "근력 운동" && (
-          <>
-            <BtnWrapper>
-              <Button
-                width="310px"
-                height="29px"
-                onClick={handleAddExerciseInput}>
-                + 운동 추가
-              </Button>
-            </BtnWrapper>
-            {exerciseEntries.map((exercise, exerciseIndex) => (
-              <div key={exerciseIndex}>
-                <ExerciseNameInput>
-                  <LabelExerciseName htmlFor="exerciseName">
-                    운동 이름
-                  </LabelExerciseName>
-                  <Input
-                    id="exerciseName"
-                    value={exercise.name}
-                    onChange={(e) =>
-                      handleExerciseNameChange(exerciseIndex, e.target.value)
-                    }
-                  />
-                  <Button
-                    width="68px"
-                    height="29px"
-                    fontSize="12px"
-                    onClick={() => handleRemoveExerciseInput(exerciseIndex)}>
-                    삭제
-                  </Button>
-                </ExerciseNameInput>
-                {exercise.sets.map((set, setIndex) => (
-                  <SetContainer key={setIndex}>
-                    <Count>{setIndex + 1} </Count>
-                    <SetInputContainer>
-                      <SetInput
-                        id="kgInput"
-                        value={set.weight}
-                        onChange={(e) =>
-                          handleSetChange(
-                            exerciseIndex,
-                            setIndex,
-                            "weight",
-                            e.target.value
-                          )
-                        }
-                      />
-                      <label htmlFor="kgInput">kg</label>
-                    </SetInputContainer>
-                    <SetInputContainer>
-                      <SetInput
-                        id="NumInput"
-                        value={set.reps}
-                        onChange={(e) =>
-                          handleSetChange(
-                            exerciseIndex,
-                            setIndex,
-                            "reps",
-                            e.target.value
-                          )
-                        }
-                      />
-                      <label htmlFor="NumInput">회</label>
-                    </SetInputContainer>
-                    <Button
-                      className="setSubBtn"
-                      width="10px"
-                      height="10px"
-                      bgColor="#FFFFF"
-                      border="none"
-                      color="#000000"
-                      onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
-                      ㅡ
-                    </Button>
-                  </SetContainer>
-                ))}
-                <BtnWrapper>
-                  <SetBtn
-                    width="310px"
-                    height="29px"
-                    bgColor="#FFFFF"
-                    border="1px solid #006CD8"
-                    color="#000000"
-                    fontSize="12px"
-                    onClick={() => handleAddSet(exerciseIndex)}>
-                    + 세트 추가
-                  </SetBtn>
-                </BtnWrapper>
-              </div>
+        <TopContainer>
+          <DropDown onClick={handleDropdownToggle}>
+            <ArrowIcon $isOpen={isOpen}></ArrowIcon>
+            <span>{selectedValue}</span>
+          </DropDown>
+          <OptionsContainer $isOpen={isOpen}>
+            {ExerciseData.map((item) => (
+              <Option key={item.id} onClick={() => handleOptionClick(item.value)}>
+                {item.value}
+              </Option>
             ))}
-          </>
-        )}
-        {(selectedValue === "걷기" ||
-          selectedValue === "달리기" ||
-          selectedValue === "등산" ||
-          selectedValue === "자전거 타기") && (
-          <KmContainer>
-            <KmInput
-              id="distanceInput"
+          </OptionsContainer>
+          {selectedValue === "근력 운동" && (
+            <>
+              <BtnWrapper>
+                <Button
+                  width="310px"
+                  height="29px"
+                  onClick={handleAddExerciseInput}>
+                  + 운동 추가
+                </Button>
+              </BtnWrapper>
+              {exerciseEntries.map((exercise, exerciseIndex) => (
+                <div key={exerciseIndex}>
+                  <ExerciseNameInput>
+                    <LabelExerciseName htmlFor="exerciseName">
+                      운동 이름
+                    </LabelExerciseName>
+                    <Input
+                      id="exerciseName"
+                      value={exercise.name}
+                      onChange={(e) =>
+                        handleExerciseNameChange(exerciseIndex, e.target.value)
+                      }
+                    />
+                    <Button
+                      width="68px"
+                      height="29px"
+                      fontSize="12px"
+                      onClick={() => handleRemoveExerciseInput(exerciseIndex)}>
+                      삭제
+                    </Button>
+                  </ExerciseNameInput>
+                  {exercise.sets.map((set, setIndex) => (
+                    <SetContainer key={setIndex}>
+                      <Count>{setIndex + 1} </Count>
+                      <SetInputContainer>
+                        <SetInput
+                          id="kgInput"
+                          value={set.weight}
+                          onChange={(e) =>
+                            handleSetChange(
+                              exerciseIndex,
+                              setIndex,
+                              "weight",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <label htmlFor="kgInput">kg</label>
+                      </SetInputContainer>
+                      <SetInputContainer>
+                        <SetInput
+                          id="NumInput"
+                          value={set.reps}
+                          onChange={(e) =>
+                            handleSetChange(
+                              exerciseIndex,
+                              setIndex,
+                              "reps",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <label htmlFor="NumInput">회</label>
+                      </SetInputContainer>
+                      <Button
+                        className="setSubBtn"
+                        width="10px"
+                        height="10px"
+                        bgColor="#FFFFF"
+                        border="none"
+                        color="#000000"
+                        onClick={() => handleRemoveSet(exerciseIndex, setIndex)}>
+                        ㅡ
+                      </Button>
+                    </SetContainer>
+                  ))}
+                  <BtnWrapper>
+                    <SetBtn
+                      width="310px"
+                      height="29px"
+                      bgColor="#FFFFF"
+                      border="1px solid #006CD8"
+                      color="#000000"
+                      fontSize="12px"
+                      onClick={() => handleAddSet(exerciseIndex)}>
+                      + 세트 추가
+                    </SetBtn>
+                  </BtnWrapper>
+                </div>
+              ))}
+            </>
+          )}
+          {(selectedValue === "걷기" ||
+            selectedValue === "달리기" ||
+            selectedValue === "등산" ||
+            selectedValue === "자전거 타기") && (
+            <KmContainer>
+              <KmInput
+                id="distanceInput"
+                type="number"
+                value={distanceInput}
+                onChange={(e) => setDistanceInput(e.target.value)}
+              />
+              <label htmlFor="distanceInput">km</label>
+            </KmContainer>
+          )}
+          <TimeInputContainer $isOpen={isOpen}>
+            <TimeField
+              id="timeInput"
               type="number"
-              value={distanceInput}
-              onChange={(e) => setDistanceInput(e.target.value)}
+              value={hour}
+              onChange={(e) => setHour(e.target.value)}
+              min="0"
+              max="23"
             />
-            <label htmlFor="distanceInput">km</label>
-          </KmContainer>
-        )}
-        <TimeInputContainer $isOpen={isOpen}>
-          <TimeField
-            id="timeInput"
-            type="number"
-            value={hour}
-            onChange={(e) => setHour(e.target.value)}
-            min="0"
-            max="23"
-          />
-          <label htmlFor="timeInput">시간</label>
-          <TimeField
-            id="MinuteInput"
-            type="number"
-            value={minute}
-            onChange={(e) => setMinute(e.target.value)}
-            min="0"
-            max="59"
-          />
-          <label htmlFor="MinuteInput">분</label>
-        </TimeInputContainer>
-        <>
+            <label htmlFor="timeInput">시간</label>
+            <TimeField
+              id="MinuteInput"
+              type="number"
+              value={minute}
+              onChange={(e) => setMinute(e.target.value)}
+              min="0"
+              max="59"
+            />
+            <label htmlFor="MinuteInput">분</label>
+          </TimeInputContainer>
+        </TopContainer>
+        <BottomContainer>
           <StyledTextarea
             value={postContent}
             maxLength={500}
@@ -446,7 +459,7 @@ function Upload() {
               </ImageWrapper>
             ))}
           </ImagesContainer>
-        </>
+        </BottomContainer>
       </Container>
     </>
   );
