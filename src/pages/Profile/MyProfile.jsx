@@ -1,128 +1,126 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { loginAtom } from "../../atoms/LoginAtom";
-import { useNavigate, useParams } from "react-router-dom";
-import Post from "../../components/common/Post/Post";
-import MyProfileUp from "../../components/common/Profile/MyProfileUp";
-import ModalNav from "../../components/Header/ModalHeader";
-import { getUserPosts } from "../../api/post";
+import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../../atoms/UserAtom";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserProfile } from "../../../api/profile";
+import AnalysisModal from "../../common/Modal/AnalysisModal";
+import profileImage from "../../../assets/images/signup-profile.svg";
+import FollowButton from "../Button/FollowButton";
 import {
-  FlexIconImg,
-  GridIconImg,
-  MainWrap,
-  GridContainer,
+  MyProfileUpContainer,
   Wrap,
-  GridItem,
-  Container,
-  PostContainer
-} from "./MyProfileStyle";
-import flexIconOn from "../../assets/images/icon-flex-on.svg";
-import flexIconOff from "../../assets/images/icon-flex-off.svg";
-import gridIconOn from "../../assets/images/icon-grid-on.svg";
-import gridIconOff from "../../assets/images/icon-grid-off.svg";
-import layer from "../../assets/images/icon-img-layers.svg";
-import Modal from "../../components/common/Modal/PostModal";
+  UserImg,
+  FollowerNum,
+  Follower,
+  FollowingNum,
+  Following,
+  UserSpan,
+  AccountSpan,
+  IntroSpan,
+  ButtonWrap
+} from "./MyProfileUpStyle";
+import Button from "../Button/ButtonContainer";
 
-export default function MyProfile() {
-  const [isExpandedView, setIsExpandedView] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [myPosts, setMyPosts] = useState([]);
-  const setLogin = useSetRecoilState(loginAtom);
+export default function MyProfileUp({ accountId }) {
   const navigate = useNavigate();
+  const userInfo = useRecoilValue(userInfoAtom);
+  const [profileInfo, setProfileInfo] = useState("");
   const token = localStorage.getItem("token");
-  const { id } = useParams();
-
-  const handleIconClick = (viewType) => {
-    if (viewType === "grid") {
-      setIsExpandedView(true);
-    } else if (viewType === "flex") {
-      setIsExpandedView(false);
-    }
+  const [showModal, setShowModal] = useState(false);
+  const account = userInfo.account;
+  const [lender, setLender] = useState(true);
+  const handleOpenModal = () => {
+    setShowModal(true);
   };
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
-  const handleLogout = () => {
-    setLogin(false); // Recoil 상태 변경
-    localStorage.removeItem("token"); // 만약 토큰을 로컬 스토리지에 저장했다면 삭제합니다.
-    navigate("/login"); // 로그인 페이지로 리다이렉트
+  const goToProfileEdit = () => {
+    navigate(`/profile/${userInfo.account}/edit`);
   };
 
   useEffect(() => {
-    const fetchMyPosts = async () => {
+    const fetchMyProfile = async () => {
       try {
-        const data = await getUserPosts(token, id, 10, 0);
-        if (Array.isArray(data.post)) {
-          setMyPosts(data.post);
-        } else {
-          console.error("API response is not an array:", data);
-        }
+        const profileData = await getUserProfile(token, accountId);
+        setProfileInfo(profileData);
       } catch (error) {
-        console.log("게시글을 가져오는데 실패했습니다:", error);
+        console.log("프로필 정보를 가져오는데 실패했습니다:", error);
       }
     };
-    fetchMyPosts();
-  }, [id, token]);
+    fetchMyProfile();
+  }, [accountId, token, lender]);
+
+  const getImageSrc = (image) => {
+    if (
+      //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
+      image.includes("api.mandarin.weniv.co.kr")
+    ) {
+      console.log("이미지가 존재합니다.");
+      return image;
+    } else {
+      console.log("!!이미지가 존재하지 않습니다.");
+      return profileImage;
+    }
+  };
 
   return (
     <>
-      <ModalNav toggleModal={toggleModal} />
-      <Container>
-        <MyProfileUp accountId={id} />
-        <MainWrap>
-          <Wrap>
-            <FlexIconImg
-              src={!isExpandedView ? flexIconOn : flexIconOff}
-              alt="나열방식"
-              onClick={() => handleIconClick("flex")}
-            />
-            <GridIconImg
-              src={isExpandedView ? gridIconOn : gridIconOff}
-              alt="그리드방식"
-              onClick={() => handleIconClick("grid")}
-            />
-          </Wrap>
-          {isExpandedView ? (
-            <GridContainer>
-              {myPosts &&
-                myPosts
-                  .filter((post) => {
-                    return post && post.image;
-                  })
-                  .map((post, index) => {
-                    console.log(post);
-                    return (
-                      <>
-                        <GridItem key={index}>
-                          <Link
-                            to={{
-                              pathname: `/post/${id}/${post.id}`
-                            }}>
-                            <img src={post.image} alt="Post Thumbnail" />
-                          </Link>
-                        </GridItem>
-                      </>
-                    );
-                  })}
-            </GridContainer>
+      <MyProfileUpContainer>
+        <Wrap>
+          <Link
+            to={`/profile/${
+              profileInfo && profileInfo.profile.accountname
+            }/follower`}>
+            <FollowerNum>
+              {profileInfo && profileInfo.profile.followerCount}
+            </FollowerNum>
+            <Follower>팔로워</Follower>
+          </Link>
+          <UserImg
+            src={profileInfo && getImageSrc(profileInfo.profile.image)}
+            alt="유저사진"></UserImg>
+          <Link
+            to={`/profile/${
+              profileInfo && profileInfo.profile.accountname
+            }/following`}>
+            <FollowingNum>
+              {profileInfo && profileInfo.profile.followingCount}
+            </FollowingNum>
+            <Following>팔로잉</Following>
+          </Link>
+        </Wrap>
+        <UserSpan>{profileInfo && profileInfo.profile.username}</UserSpan>
+        <AccountSpan>
+          {profileInfo && profileInfo.profile.accountname}
+        </AccountSpan>
+        <IntroSpan>{profileInfo && profileInfo.profile.intro}</IntroSpan>
+        <ButtonWrap>
+          {account === accountId ? (
+            <>
+              <Button height="34px" onClick={goToProfileEdit}>
+                프로필 수정
+              </Button>
+              <Button height="34px" onClick={handleOpenModal}>
+                운동 분석
+              </Button>
+            </>
           ) : (
-            <PostContainer>
-              {myPosts.map((post, index) => (
-                <Post
-                  key={index}
-                  data={post}
-                  commentCount={post.commentCount}
-                />
-              ))}
-            </PostContainer>
+            <>
+              <FollowButton
+                data={profileInfo && profileInfo.profile.isfollow}
+                accountname={profileInfo && profileInfo.profile.accountname}
+                type="A"
+                setLender={setLender}
+              />
+            </>
           )}
-        </MainWrap>
-      </Container>
-      {isModalVisible && (
-        <Modal handleLogout={handleLogout} toggleModal={toggleModal} />
+        </ButtonWrap>
+      </MyProfileUpContainer>
+      {showModal && (
+        <AnalysisModal isOpen={handleOpenModal} onClose={handleCloseModal} />
       )}
     </>
   );
