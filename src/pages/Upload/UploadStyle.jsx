@@ -8,11 +8,6 @@ export const Container = styled.div`
   /* box-sizing: border-box; */
   max-height: calc(100vh - 48px);
   /* overflow-y: auto; */
-`;
-
-export const TopContainer = styled.div`
-  box-sizing: border-box;
-  max-height: 50vh;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 0px;
@@ -22,6 +17,11 @@ export const TopContainer = styled.div`
     background: #888;
     border-radius: 50px;
   }
+`;
+
+export const TopContainer = styled.div`
+  box-sizing: border-box;
+  /* max-height: 50vh; */
 `
 
 export const DropDown = styled.div`
@@ -180,6 +180,7 @@ export const TimeField = styled.input`
 export const BottomContainer = styled.div`
   width: 390px;
   margin: 0 auto;
+  /* height: 500px; */
 `
 
 export const StyledTextarea = styled.textarea`
