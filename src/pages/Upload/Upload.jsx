@@ -60,7 +60,7 @@ function Upload() {
       exerciseData = exerciseEntries
         .map((entry) => {
           return `${entry.name}-${entry.sets
-            .map((set) => `${set.weight}kg x ${set.reps}회`)
+            .map((set) => `${set.weight}x${set.reps}`)
             .join(", ")}`;
         })
         .join(";");

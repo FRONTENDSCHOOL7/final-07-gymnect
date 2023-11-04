@@ -30,12 +30,14 @@ export const PostNameWrap = styled.div`
 export const UserSpan = styled.span`
   font-size: 14px;
   font-weight: bold;
+  text-align: left;
 `;
 
 export const AccountSpan = styled.span`
   margin-top: 2px;
   font-size: 12px;
   font-weight: 400;
+  text-align: left;
   color: rgba(118, 118, 118, 1);
 `;
 

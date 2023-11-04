@@ -146,8 +146,7 @@ export default function Post({ data, commentCount }) {
       return profileImage;
     }
   };
-  console.log(arr);
-  console.log(data?.author.image);
+
   return isVisible ? (
     <>
       <PostArticle>
