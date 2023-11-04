@@ -11,7 +11,8 @@ const Input = ({
   name,
   value,
   hasError,
-  errorText
+  errorText,
+  shake
 }) => {
   return (
     <Container>
@@ -26,6 +27,7 @@ const Input = ({
         onBlur={onBlur}
         hasError={hasError} // 에러 발생 여부 prop 전달
         errorText={errorText}
+        shake={shake}
       />
       {errorText && <div>{errorText}</div>}
     </Container>

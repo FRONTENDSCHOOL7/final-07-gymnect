@@ -25,5 +25,5 @@ export const ErrorMessage = styled.p`
 export const SuccessMessage = styled.p`
   margin-top: 6px;
   font-size: 12px;
-  color: blue;
+  color: #006cd8;
 `;

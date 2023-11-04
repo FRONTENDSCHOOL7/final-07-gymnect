@@ -15,9 +15,9 @@ const Signup = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [emailErrorMsg, setEmailErrorMsg] = useState("");
+  const [emailErrorMsg, setEmailErrorMsg] = useState(""); //이메일에러
   const [emailSuccessMsg, setEmailSuccessMsg] = useState("");
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState(""); //비번에러
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [passwordCheckValid, setPasswordCheckValid] = useState(false);
@@ -25,11 +25,11 @@ const Signup = () => {
   const [passwordCheckErrorMsg, setPasswordCheckErrorMsg] = useState("");
   const [passwordCheckSuccessMsg, setPasswordCheckSuccessMsg] = useState("");
   const [isComplete, setIsComplete] = useState(false);
+  const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
   /* 이메일 유효성 검사 */
   const handleInputEmail = async (e) => {
     const userEmail = e.target.value;
-    const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     if (userEmail === "") {
       setEmailErrorMsg("*입력해주세요");
       setEmailSuccessMsg("");
@@ -45,15 +45,26 @@ const Signup = () => {
   /* 중복된 이메일 확인 */
   /* onBlur event로 설정되어 있어서 input에서 포커스가 벗어날 때 호출됩니다. */
   const handleEmailDuplicate = async (e) => {
-    const checkEmail = await postEmailDuplicate(e.target.value);
-    if (checkEmail.message === "이미 가입된 이메일 주소 입니다.") {
-      setEmailErrorMsg("*이미 가입된 이메일 주소 입니다");
-    } else if (checkEmail.message === "사용 가능한 이메일 입니다.") {
-      setEmailValid(true);
-      setEmailErrorMsg("");
-      setEmailSuccessMsg("사용 가능한 이메일 입니다.");
+    const userEmail = e.target.value;
+    if (emailRegex.test(userEmail)) {
+      try {
+        const checkEmail = await postEmailDuplicate(e.target.value);
+        if (checkEmail.message === "이미 가입된 이메일 주소 입니다.") {
+          setEmailErrorMsg("*이미 가입된 이메일 주소 입니다");
+        } else if (checkEmail.message === "사용 가능한 이메일 입니다.") {
+          setEmailValid(true);
+          setEmailErrorMsg("");
+          setEmailSuccessMsg("사용 가능한 이메일 입니다.");
+        }
+      } catch (error) {
+        console.log("이메일 중복검사를 실패했습니다:", error);
+      }
+    } else {
+      setEmailErrorMsg("*이메일의 형식이 올바르지 않습니다 😥");
+      setEmailValid(false); // 유효하지 않음을 표시
     }
   };
+
   /* 비밀번호 유효성 검사 */
   /* 사용자가 비밀번호 필드에 입력할 때마다 호출되며 입력된 비밀번호가 유효한지 확인합니다. */
   const handleInputPassword = (e) => {

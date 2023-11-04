@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-
+import { keyframes } from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,4 +27,18 @@ export const Text = styled.input`
     font-size: 14px;
     color: rgba(219, 219, 219, 1);
   }
+  animation: ${(props) =>
+    props.shake
+      ? css`
+          ${shakeAnimation} 0.5s ease-in-out
+        `
+      : "none"};
+`;
+
+const shakeAnimation = keyframes`
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
 `;
