@@ -6,7 +6,7 @@ import BackNav from "../../components/Header/BackspaceHeader";
 import { getUserPosts } from "../../api/post";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import Loading from "../../components/common/Loading/Loading";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ScrollableCalendar() {
   const [months, setMonths] = useState([
@@ -37,7 +37,7 @@ function ScrollableCalendar() {
       ]);
     }
   };
-  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -52,7 +52,9 @@ function ScrollableCalendar() {
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
           // 'updatedAt' 속성의 날짜를 'YYYY-MM-DD' 형식으로 변환하여 저장합니다.
-          const dates = data.post.map(post => moment(post.updatedAt).format("YYYY-MM-DD"));
+          const dates = data.post.map((post) =>
+            moment(post.updatedAt).format("YYYY-MM-DD")
+          );
           setPostDates(dates);
         } else {
           console.error("API response is not an array:", data);
@@ -79,7 +81,13 @@ function ScrollableCalendar() {
           <BackNav />
           <CalendarScrollContainer onScroll={handleScroll}>
             {months.map((month) => (
-              <MonthCalendar key={month} month={month} postDates={postDates} myPosts={myPosts} onDayClick={goToPost}/>
+              <MonthCalendar
+                key={month}
+                month={month}
+                postDates={postDates}
+                myPosts={myPosts}
+                onDayClick={goToPost}
+              />
             ))}
           </CalendarScrollContainer>
         </>
@@ -103,18 +111,21 @@ function MonthCalendar({ month, postDates, myPosts, onDayClick }) {
 
   // DayCell 컴포넌트를 렌더링 할 때 현재 날짜와 비교하기
   for (let i = 1; i <= daysInMonth; i++) {
-    const dayDate = moment(`${month}-${String(i).padStart(2, '0')}`).format("YYYY-MM-DD");
+    const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format(
+      "YYYY-MM-DD"
+    );
     const isToday = dayDate === currentDate;
     const isUploadDay = postDates.includes(dayDate);
-    const post = myPosts.find(p => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate);
+    const post = myPosts.find(
+      (p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate
+    );
     days.push(
       <DayCell
         key={i}
         $isToday={isToday}
         $isUploadDay={isUploadDay}
         onClick={() => post && onDayClick(post.id)}
-        style={{ cursor: post ? 'pointer' : 'default' }}
-      >
+        style={{ cursor: post ? "pointer" : "default" }}>
         {i}
       </DayCell>
     );
@@ -166,10 +177,15 @@ const DayCell = styled.div`
   font-size: 16px;
   font-weight: 500;
   border-radius: 50%;
-
+  &:hover {
+    background-color: ${(props) =>
+      props.$isUploadDay ? "#006cd8" : "transparent"};
+    transition: 0.3s;
+  }
   background-color: ${(props) => (props.$isToday ? "#D9D9D9" : "transparent")};
-  background-color: ${props => props.$isUploadDay ? "#1294F2" : 'transparent'};
-  color: ${props => props.$isUploadDay ? "#FFFFFF" : '#000000'};
+  background-color: ${(props) =>
+    props.$isUploadDay ? "#1294F2" : "transparent"};
+  color: ${(props) => (props.$isUploadDay ? "#FFFFFF" : "#000000")};
 `;
 
 const WeekdayCell = styled(DayCell)`

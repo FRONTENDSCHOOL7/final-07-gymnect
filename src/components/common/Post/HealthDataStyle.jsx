@@ -7,7 +7,6 @@ export const HealthWrap = styled.div`
   flex-direction: column;
   padding: 10px 15px 10px 8px;
   border-radius: 10px;
-  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.15);
   transition: 0.3s;
   &:hover {
     background-color: #006cd8;
