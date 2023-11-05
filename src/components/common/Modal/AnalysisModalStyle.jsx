@@ -69,7 +69,7 @@ export const ChartWrapper = styled.div`
 `;
 
 export const Chart = styled.img`
-  padding-top: 10px;
+  padding-top: 12px;
   width: 80%;
   //height: 80%;
 `;
@@ -110,6 +110,14 @@ export const DataContainer = styled.div`
   box-sizing: border-box;
 `;
 
+// DataValue와 DataUnit을 가로로 배치하기 위한 새로운 컨테이너 스타일
+export const DataTop = styled.div`
+  display: flex; // flexbox 적용
+  justify-content: center; // 가운데 정렬
+  align-items: baseline; // 텍스트 베이스라인에 따라 정렬
+  width: 100%; // 컨테이너의 너비를 100%로 설정
+`;
+
 // 데이터 타이틀 스타일링 (거리, 시간 등)
 export const DataTitle = styled.div`
   font-size: 1.2rem;
@@ -122,11 +130,13 @@ export const DataTitle = styled.div`
 export const DataValue = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000;
+  //color: #000;
+  color: #006cd8;
+  padding-top: 7px;
 `;
 // 단위 표시 스타일링 (km, kcal, 걸음)
 export const DataUnit = styled.div`
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #777;
   // margin-top: 2px;
 `;
