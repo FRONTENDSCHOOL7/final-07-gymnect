@@ -19,7 +19,6 @@ import PostComment from "../pages/Posting/PostComment";
 import ProtectedRoute from "./ProtectedRoute";
 import Error from "../pages/Error/Error";
 
-
 export default function AppRouter() {
   return (
     <BrowserRouter>

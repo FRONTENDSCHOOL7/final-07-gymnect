@@ -132,7 +132,11 @@ export default function MyProfileUp({ accountId }) {
         </ButtonWrap>
       </MyProfileUpContainer>
       {showModal && (
-        <AnalysisModal isOpen={handleOpenModal} onClose={handleCloseModal} />
+        <AnalysisModal
+          isOpen={handleOpenModal}
+          onClose={handleCloseModal}
+          username={profileInfo.profile.username}
+        />
       )}
     </>
   );
