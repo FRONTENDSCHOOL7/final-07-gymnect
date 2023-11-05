@@ -1,7 +1,6 @@
-// 스플래시 마지막 스크린
-import React, { useState, useEffect } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
 import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
 
@@ -74,7 +73,6 @@ export const Container = styled.div`
   background-color: #006cd8;
   width: 100%;
   min-height: 100vh;
-
 `;
 
 export const TitleDiv = styled.div`

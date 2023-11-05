@@ -1,5 +1,11 @@
-import React from 'react';
-import { Container, Section, Message, Button, ButtonContainer } from './DeleteAlertStyle'; 
+import React from "react";
+import {
+  Container,
+  Section,
+  Message,
+  Button,
+  ButtonContainer
+} from "./DeleteAlertStyle";
 
 function DeleteAlert() {
   return (
