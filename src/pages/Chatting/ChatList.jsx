@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BackNav from "../../components/Header/BackspaceHeader"
+import BackNav from "../../components/Header/BackspaceHeader";
 import profileImage from "../../assets/images/signup-profile.svg";
 import styled from "styled-components";
 
@@ -9,13 +9,13 @@ const ChatList = () => {
     {
       id: 1,
       username: "짱쌘민주",
-      message: "오 몸 좋으시네요! 저도 꽤 치는데..",
+      message: "몸 좋으시네요! 다음에 시간되시면 운동 같이 해요~",
       date: "2023.10.24"
     },
     {
       id: 2,
       username: "킹왕짱영우",
-      message: "내일 점심에 저도 같이 헬스 하고 싶습니다!",
+      message: "네 좋아요~ 그럼 내일밤8시에 보는걸로해용",
       date: "2023.10.24"
     },
     {
@@ -34,12 +34,12 @@ const ChatList = () => {
 
   return (
     <>
-    <BackNav />
+      <BackNav />
       <Container>
         <Main>
           <Title>채팅리스트</Title>
           <UserList>
-            {UserData.map((user) => (
+            {UserData.map((user, index) => (
               <List key={user.id}>
                 <ImageSection>
                   <Image
@@ -49,7 +49,8 @@ const ChatList = () => {
                   />
                 </ImageSection>
                 <ChatSection>
-                  <Link to={`/chatlist/${user.username}`}>
+                  {/* Link의 to 속성을 수정하여 각 ChatRoom 컴포넌트로 연결 */}
+                  <Link to={`/chatroom${index + 1}/${user.username}`}>
                     <UserName>{user.username}</UserName>
                     <Message>{user.message}</Message>
                   </Link>

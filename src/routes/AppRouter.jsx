@@ -2,7 +2,10 @@ import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import ChatList from "../pages/Chatting/ChatList";
-import ChatRoom from "../pages/Chatting/ChatRoom";
+import ChatRoom1 from "../pages/Chatting/ChatRoom1";
+import ChatRoom2 from "../pages/Chatting/ChatRoom2";
+import ChatRoom3 from "../pages/Chatting/ChatRoom3";
+import ChatRoom4 from "../pages/Chatting/ChatRoom4";
 import Upload from "../pages//Upload/Upload";
 import Calendar from "../pages/Calendar/Calendar";
 import Profile from "../pages/Profile/MyProfile";
@@ -54,11 +57,36 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
+
         <Route
-          path="/chatlist/:name"
+          path="/chatroom1/:username"
           element={
             <ProtectedRoute>
-              <ChatRoom />
+              <ChatRoom1 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatroom2/:username"
+          element={
+            <ProtectedRoute>
+              <ChatRoom2 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatroom3/:username"
+          element={
+            <ProtectedRoute>
+              <ChatRoom3 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatroom4/:username"
+          element={
+            <ProtectedRoute>
+              <ChatRoom4 />
             </ProtectedRoute>
           }
         />
