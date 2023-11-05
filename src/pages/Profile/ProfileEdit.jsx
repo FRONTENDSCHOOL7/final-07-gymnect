@@ -19,7 +19,7 @@ import Input from "../../components/common/Input/Input";
 export default function ProfileEdit() {
   const URL = "https://api.mandarin.weniv.co.kr/";
   const token = localStorage.getItem("token");
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const fileInputRef = useRef();
   const formData = new FormData();
@@ -27,12 +27,11 @@ export default function ProfileEdit() {
   const [username, setUsername] = useState("");
   const [accountname, setAccountname] = useState("");
   const [intro, setIntro] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(userInfo.profileImg);
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [accountnameErrorMsg, setAccountnameErrorMsg] = useState("");
   const [usernameValid, setUsernameValid] = useState(false);
   const [accountnameValid, setAccountnameValid] = useState(false);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
   useEffect(() => {
     const fetchMyInfo = async () => {
@@ -75,7 +74,6 @@ export default function ProfileEdit() {
   // accountname 유효성 검사
   const handleInputAccountname = async (e) => {
     const accountnameInp = e.target.value;
-    console.log(accountnameInp.length);
     const accountnameRegex = /^[a-zA-Z0-9._]+$/;
     const checkAccountname = await postAccountnameDuplicate(accountnameInp);
     if (accountnameInp === "") {
@@ -87,7 +85,7 @@ export default function ProfileEdit() {
     } else if (checkAccountname.message === "이미 가입된 계정ID 입니다.") {
       setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다.");
       setAccountnameValid(false);
-    } else if (accountnameInp.length < 2 || accountnameInp.length > 8) {
+    } else if (accountnameInp.length < 4 || accountnameInp.length > 16) {
       setAccountnameErrorMsg("*4~16자 이내여야 합니다.");
       setAccountnameValid(false);
     } else {

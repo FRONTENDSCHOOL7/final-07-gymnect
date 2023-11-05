@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import iconDot from "../../../assets/images/icon-dot.svg";
 import HeartIcon from "./HeartStyle";
 import iconMessage from "../../../assets/images/icon-reply.svg";
@@ -38,6 +38,7 @@ import {
 
 export default function Post({ data, commentCount }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const userInfo = useRecoilValue(userInfoAtom);
   const [isVisible, setIsVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,13 +58,39 @@ export default function Post({ data, commentCount }) {
     setPostLikeState(data && data.hearted);
   }, [data]);
 
+  const isProfilePage = location.pathname.startsWith(
+    `/profile/${data?.author.accountname}`
+  );
+  const isPostPage = location.pathname.startsWith(
+    `/post/${data?.author.accountname}/${data?.id}`
+  );
+
   const handleProfileClick = (e) => {
-    navigate(`/profile/${data?.author.accountname}`);
+    if (location.pathname.startsWith(isProfilePage)) {
+      console.log("이미 프로필 페이지에 있어서 navigate를 실행하지 않습니다.");
+    } else {
+      navigate(`/profile/${data?.author.accountname}`);
+    }
   };
 
   const handleFeedClick = (e) => {
-    navigate(`/post/${data?.author.accountname}/${data?.id}`);
+    if (location.pathname.startsWith(isPostPage)) {
+      console.log(
+        "이미 포스트 상세 페이지에 있어서 navigate를 실행하지 않습니다."
+      );
+    } else {
+      navigate(`/post/${data?.author.accountname}/${data?.id}`);
+    }
   };
+
+  // 현재 경로가 '/profile/:accountname'인지 판별하여 스타일 결정
+  const profileButtonStyle = isProfilePage
+    ? { pointerEvents: "none", cursor: "default" }
+    : {};
+
+  const postButtonStyle = isPostPage
+    ? { pointerEvents: "none", cursor: "default" }
+    : {};
 
   const postId = data?.id;
   /* 좋아요 기능 */
@@ -151,7 +178,9 @@ export default function Post({ data, commentCount }) {
     <>
       <PostArticle>
         <PostFlexWrap>
-          <ProfileButton onClick={handleProfileClick}>
+          <ProfileButton
+            onClick={handleProfileClick}
+            style={profileButtonStyle}>
             <PostProfileImg
               src={data && getImageSrc(data?.author.image)}
               alt="프로필사진"></PostProfileImg>
@@ -160,15 +189,18 @@ export default function Post({ data, commentCount }) {
               <AccountSpan>{data?.author.accountname}</AccountSpan>
             </PostNameWrap>
           </ProfileButton>
-          <Time>{data && arr[3]}</Time>
           <DotButton onClick={() => onShowModal("")}>
             <DotImg src={iconDot} alt="점 버튼"></DotImg>
           </DotButton>
         </PostFlexWrap>
         <Wrap>
-          <FeedButton onClick={handleFeedClick}>
+          <FeedButton onClick={handleFeedClick} style={postButtonStyle}>
             <HealthWrap>
-              <HealthData kind={data && arr[0]} data={data && arr[1]} />
+              <HealthData
+                kind={data && arr[0]}
+                data={data && arr[1]}
+                time={data && arr[3]}
+              />
             </HealthWrap>
             {imageCheck && (
               <PostUploadImg
@@ -182,7 +214,7 @@ export default function Post({ data, commentCount }) {
               <HeartIcon isLiked={postLikeState} />
               <HeartSpan>{postLikeCount}</HeartSpan>
             </HeartButton>
-            <MessageButton onClick={handleFeedClick}>
+            <MessageButton onClick={handleFeedClick} style={postButtonStyle}>
               <MessageImg src={iconMessage} alt="댓글 이동 사진"></MessageImg>
               <MessageSpan>{commentCount}</MessageSpan>
             </MessageButton>

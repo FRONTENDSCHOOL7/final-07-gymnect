@@ -1,7 +1,20 @@
 import React from "react";
-import styled from "styled-components";
 
-export default function HealthData({ kind, data }) {
+import {
+  HealthWrap,
+  HeaderWrap,
+  Wrap,
+  Logo,
+  HealthKind,
+  Time,
+  HealthCntWrap,
+  HealthCnt,
+  DataWrap,
+  DataKg,
+  DataCnt
+} from "./HealthDataStyle";
+
+export default function HealthData({ kind, data, time }) {
   if (kind === "근력 운동") {
     return (
       <>
@@ -9,15 +22,25 @@ export default function HealthData({ kind, data }) {
           const arr2 = item1.split("-");
           return (
             <HealthWrap key={`item1-${idx1}`}>
-              <HealthKind>{arr2[0]}</HealthKind>
+              <HeaderWrap>
+                <Logo />
+                <Wrap>
+                  <HealthKind>{arr2[0]}</HealthKind>
+                  <Time>{time}</Time>
+                </Wrap>
+              </HeaderWrap>
               {arr2.slice(1).map((item2, idx2) => {
                 return (
                   <HealthCntWrap key={`group-${idx1}-${idx2}`}>
-                    {item2.split(",").map((item3, idx3) => (
-                      <HealthCnt key={`item3-${idx1}-${idx2}-${idx3}`}>
-                        {item3}
-                      </HealthCnt>
-                    ))}
+                    {item2.split(",").map((item3, idx3) => {
+                      const arr = item3.split("x");
+                      return (
+                        <DataWrap>
+                          <DataKg>{arr[0]} kg</DataKg>
+                          <DataCnt>{arr[1]}회</DataCnt>
+                        </DataWrap>
+                      );
+                    })}
                   </HealthCntWrap>
                 );
               })}
@@ -35,7 +58,13 @@ export default function HealthData({ kind, data }) {
     return (
       <>
         <HealthWrap>
-          <HealthKind>{kind}</HealthKind>
+          <HeaderWrap>
+            <Logo />
+            <Wrap>
+              <HealthKind>{kind}</HealthKind>
+              <Time>{time}</Time>
+            </Wrap>
+          </HeaderWrap>
           <HealthCnt>{data}</HealthCnt>
         </HealthWrap>
       </>
@@ -43,24 +72,16 @@ export default function HealthData({ kind, data }) {
   } else {
     return (
       <>
-        <HealthKind>{kind}</HealthKind>
+        <HealthWrap>
+          <HeaderWrap>
+            <Logo />
+            <Wrap>
+              <HealthKind>{kind}</HealthKind>
+              <Time>{time}</Time>
+            </Wrap>
+          </HeaderWrap>
+        </HealthWrap>
       </>
     );
   }
 }
-
-export const HealthWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const HealthKind = styled.div`
-  font-size: 18px;
-  text-align: left;
-`;
-
-export const HealthCntWrap = styled.div``;
-
-export const HealthCnt = styled.div`
-  text-align: right;
-`;
