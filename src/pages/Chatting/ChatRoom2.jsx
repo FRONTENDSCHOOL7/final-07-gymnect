@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import ChatNav from "../../components/Header/ModalHeader";
+import ChatHeader from "../../components/Header/ChatHeader";
 import ChatFooter from "../../components/Footer/ChatFooter";
 import profileImage from "../../assets/images/signup-profile.svg";
 import Modal from "../../components/common/Modal/ReportModal";
@@ -56,33 +56,21 @@ const ChatRoom = () => {
   const handleShowAlert = () => {
     alert("신고되었습니다!");
     toggleModal();
-  }
+  };
 
   return (
     <>
-      <ChatNav toggleModal={toggleModal}/>
+      {/* <ChatNav toggleModal={toggleModal} /> */}
+      <ChatHeader />
       <Container>
         <Main message={message} ref={mainRef}>
-          <Chat className="chat-yours">
-            <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-            <From>안녕하세요~ 게시글 올리신거 봤어요!!</From>
-            <Time>오후12:39</Time>
-          </Chat>
-          <Chat className="chat-yours">
-            <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-            <From>무게를 상당히 많이 치시던데 대단하세요!😊</From>
-            <Time>오후12:41</Time>
-          </Chat>
           <Chat className="chat-mine">
             <Time>오후12:41</Time>
-            <To>아 아닙니닿ㅎ...</To>
-          </Chat>
-          <Chat className="chat-mine">
-            <Img src={profileImage} alt="강아지 사진" />
+            <To>내일 혹시 시간되시면 한강 러닝 하실래요?</To>
           </Chat>
           <Chat className="chat-yours">
             <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
-            <From>오 몸 좋으시네요! 저도 꽤 치는데...</From>
+            <From>네 좋아요~ 그럼 내일밤8시에 보는걸로해용</From>
             <Time>오후12:51</Time>
           </Chat>
           {messageList.map((messageItem, index) =>
