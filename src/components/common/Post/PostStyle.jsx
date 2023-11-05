@@ -30,12 +30,14 @@ export const PostNameWrap = styled.div`
 export const UserSpan = styled.span`
   font-size: 14px;
   font-weight: bold;
+  text-align: left;
 `;
 
 export const AccountSpan = styled.span`
   margin-top: 2px;
   font-size: 12px;
   font-weight: 400;
+  text-align: left;
   color: rgba(118, 118, 118, 1);
 `;
 
@@ -60,7 +62,7 @@ export const DotImg = styled.img`
 
 export const Wrap = styled.div`
   width: 358px;
-  padding-left: 30px;
+  padding: 0 16px;
 `;
 
 export const FeedButton = styled.button``;
@@ -70,7 +72,6 @@ export const HealthWrap = styled.ul`
   flex-direction: column;
   gap: 16px;
   margin-top: 22px;
-  margin-bottom: 11px;
   padding-bottom: 11px;
   font-size: 14px;
 `;

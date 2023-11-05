@@ -60,7 +60,7 @@ function Upload() {
       exerciseData = exerciseEntries
         .map((entry) => {
           return `${entry.name}-${entry.sets
-            .map((set) => `${set.weight}kg x ${set.reps}회`)
+            .map((set) => `${set.weight}x${set.reps}`)
             .join(", ")}`;
         })
         .join(";");
@@ -68,7 +68,7 @@ function Upload() {
     } else if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
     ) {
-      exerciseData = `${selectedValue}:${distanceInput}km`;
+      exerciseData = `${distanceInput}km`;
     } else {
       exerciseData = `${selectedValue}`;
     }

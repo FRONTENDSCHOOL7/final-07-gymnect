@@ -6,6 +6,8 @@ import { getUserProfile } from "../../../api/profile";
 import AnalysisModal from "../../common/Modal/AnalysisModal";
 import profileImage from "../../../assets/images/signup-profile.svg";
 import FollowButton from "../Button/FollowButton";
+import commentIcon from "../../../assets/images/icon-reply.svg";
+import shareIcon from "../../../assets/images/icon-share.svg";
 import {
   MyProfileUpContainer,
   Wrap,
@@ -17,7 +19,11 @@ import {
   UserSpan,
   AccountSpan,
   IntroSpan,
-  ButtonWrap
+  ButtonWrap,
+  CommentButton,
+  ShareButton,
+  CommentImg,
+  ShareImg
 } from "./MyProfileUpStyle";
 import Button from "../Button/ButtonContainer";
 
@@ -109,12 +115,18 @@ export default function MyProfileUp({ accountId }) {
             </>
           ) : (
             <>
+              <CommentButton>
+                <CommentImg src={commentIcon} />
+              </CommentButton>
               <FollowButton
                 data={profileInfo && profileInfo.profile.isfollow}
                 accountname={profileInfo && profileInfo.profile.accountname}
                 type="A"
                 setLender={setLender}
               />
+              <ShareButton>
+                <ShareImg src={shareIcon} />
+              </ShareButton>
             </>
           )}
         </ButtonWrap>

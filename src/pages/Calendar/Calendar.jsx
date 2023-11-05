@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import moment from "moment";
 import styled from "styled-components";
 import BackNav from "../../components/Header/BackspaceHeader";
+import { getUserPosts } from "../../api/post";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import Loading from "../../components/common/Loading/Loading";
+import { useNavigate } from "react-router-dom";
+
 function ScrollableCalendar() {
   const [months, setMonths] = useState([
     moment().subtract(1, "months").format("YYYY-MM"),
     moment().format("YYYY-MM"),
     moment().add(1, "months").format("YYYY-MM")
   ]);
+  const [myPosts, setMyPosts] = useState([]);
+  const [postDates, setPostDates] = useState([]);
+  const token = localStorage.getItem("token");
+  const userInfo = useRecoilValue(userInfoAtom);
+  const accountname = userInfo.account;
+  const navigate = useNavigate();
+  console.log("Account Name: ", accountname);
+
+  const goToPost = (postId) => {
+    navigate(`/post/accountname/${postId}`);
+  };
+
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
     if (scrollTop + clientHeight >= scrollHeight && months.length < 6) {
@@ -19,25 +37,66 @@ function ScrollableCalendar() {
       ]);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
+
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      try {
+        const data = await getUserPosts(token, accountname, Infinity, 0);
+        if (Array.isArray(data.post)) {
+          setMyPosts(data.post);
+          // 'updatedAt' 속성의 날짜를 'YYYY-MM-DD' 형식으로 변환하여 저장합니다.
+          const dates = data.post.map((post) =>
+            moment(post.updatedAt).format("YYYY-MM-DD")
+          );
+          setPostDates(dates);
+        } else {
+          console.error("API response is not an array:", data);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error("게시글을 가져오는데 실패했습니다:", error);
+        setIsLoading(false);
+      }
+    };
+    fetchMyPosts();
+  }, [userInfo, accountname, token]);
+
+  console.log(postDates);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <>
-      <BackNav />
-      <CalendarScrollContainer onScroll={handleScroll}>
-        {months.map((month) => (
-          <MonthCalendar key={month} month={month} />
-        ))}
-      </CalendarScrollContainer>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <BackNav />
+          <CalendarScrollContainer onScroll={handleScroll}>
+            {months.map((month) => (
+              <MonthCalendar
+                key={month}
+                month={month}
+                postDates={postDates}
+                myPosts={myPosts}
+                onDayClick={goToPost}
+              />
+            ))}
+          </CalendarScrollContainer>
+        </>
+      )}
     </>
   );
 }
 
-function MonthCalendar({ month }) {
+function MonthCalendar({ month, postDates, myPosts, onDayClick }) {
   const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const startDay = moment(month).startOf("month").day();
   const daysInMonth = moment(month).daysInMonth();
@@ -52,10 +111,21 @@ function MonthCalendar({ month }) {
 
   // DayCell 컴포넌트를 렌더링 할 때 현재 날짜와 비교하기
   for (let i = 1; i <= daysInMonth; i++) {
-    const dayDate = moment(`${month}-${i}`).format("YYYY-MM-DD");
+    const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format(
+      "YYYY-MM-DD"
+    );
     const isToday = dayDate === currentDate;
+    const isUploadDay = postDates.includes(dayDate);
+    const post = myPosts.find(
+      (p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate
+    );
     days.push(
-      <DayCell key={i} $isToday={isToday}>
+      <DayCell
+        key={i}
+        $isToday={isToday}
+        $isUploadDay={isUploadDay}
+        onClick={() => post && onDayClick(post.id)}
+        style={{ cursor: post ? "pointer" : "default" }}>
         {i}
       </DayCell>
     );
@@ -106,9 +176,16 @@ const DayCell = styled.div`
   justify-content: center;
   font-size: 16px;
   font-weight: 500;
-
-  background-color: ${(props) => (props.$isToday ? "#D9D9D9" : "transparent")};
   border-radius: 50%;
+  &:hover {
+    background-color: ${(props) =>
+      props.$isUploadDay ? "#006cd8" : "transparent"};
+    transition: 0.3s;
+  }
+  background-color: ${(props) => (props.$isToday ? "#D9D9D9" : "transparent")};
+  background-color: ${(props) =>
+    props.$isUploadDay ? "#1294F2" : "transparent"};
+  color: ${(props) => (props.$isUploadDay ? "#FFFFFF" : "#000000")};
 `;
 
 const WeekdayCell = styled(DayCell)`

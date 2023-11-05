@@ -19,7 +19,7 @@ import Input from "../../components/common/Input/Input";
 export default function ProfileEdit() {
   const URL = "https://api.mandarin.weniv.co.kr/";
   const token = localStorage.getItem("token");
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const fileInputRef = useRef();
   const formData = new FormData();
@@ -27,12 +27,11 @@ export default function ProfileEdit() {
   const [username, setUsername] = useState("");
   const [accountname, setAccountname] = useState("");
   const [intro, setIntro] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(userInfo.profileImg);
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [accountnameErrorMsg, setAccountnameErrorMsg] = useState("");
   const [usernameValid, setUsernameValid] = useState(false);
   const [accountnameValid, setAccountnameValid] = useState(false);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
   useEffect(() => {
     const fetchMyInfo = async () => {
@@ -61,6 +60,10 @@ export default function ProfileEdit() {
     const usernameInp = e.target.value;
     if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
+      setUsernameValid(false);
+    } else if (usernameInp.length < 2 || usernameInp.length > 8) {
+      setUsernameErrorMsg("*2~8자 이내여야 합니다.");
+      setUsernameValid(false);
     } else {
       setUsernameErrorMsg("");
       setUsernameValid(true);
@@ -81,6 +84,9 @@ export default function ProfileEdit() {
       setAccountnameValid(false);
     } else if (checkAccountname.message === "이미 가입된 계정ID 입니다.") {
       setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다.");
+      setAccountnameValid(false);
+    } else if (accountnameInp.length < 4 || accountnameInp.length > 16) {
+      setAccountnameErrorMsg("*4~16자 이내여야 합니다.");
       setAccountnameValid(false);
     } else {
       setAccountnameValid(true);
@@ -159,7 +165,7 @@ export default function ProfileEdit() {
 
           <Input
             label="사용자 이름"
-            placeholder="2~10자 이내여야 합니다."
+            placeholder="2~8자 이내여야 합니다."
             id="username"
             type="text"
             name="username"
