@@ -136,7 +136,8 @@ export const DataValue = styled.div`
 `;
 // 단위 표시 스타일링 (km, kcal, 걸음)
 export const DataUnit = styled.div`
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #777;
+  padding-left: 3px;
   // margin-top: 2px;
 `;
