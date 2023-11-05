@@ -51,6 +51,7 @@ const Signup = () => {
         const checkEmail = await postEmailDuplicate(e.target.value);
         if (checkEmail.message === "이미 가입된 이메일 주소 입니다.") {
           setEmailErrorMsg("*이미 가입된 이메일 주소 입니다");
+          setEmailValid(false); // 유효하지 않음을 표시
         } else if (checkEmail.message === "사용 가능한 이메일 입니다.") {
           setEmailValid(true);
           setEmailErrorMsg("");

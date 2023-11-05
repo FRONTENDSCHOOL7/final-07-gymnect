@@ -73,35 +73,42 @@ const ProfileSettingPage = () => {
 
   // username 유효성 검사
   const handleInputUsername = (e) => {
-    const username = e.target.value;
-    console.log(username);
-    if (username === "") {
+    const usernameInp = e.target.value;
+    if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
+      setUsernameValid(false);
+    } else if (usernameInp.length < 2 || usernameInp.length > 8) {
+      setUsernameErrorMsg("*2~8자 이내여야 합니다.");
+      setUsernameValid(false);
     } else {
-      setUsernameValid(true);
       setUsernameErrorMsg("");
-      setUsername(username);
+      setUsernameValid(true);
+      setUsername(usernameInp);
     }
   };
 
   // accountname 유효성 검사
   const handleInputAccountname = async (e) => {
-    const accountname = e.target.value;
+    const accountnameInp = e.target.value;
+    console.log(accountnameInp.length);
     const accountnameRegex = /^[a-zA-Z0-9._]+$/;
-    const checkAccountname = await postAccountnameDuplicate(accountname);
-    if (accountname === "") {
+    const checkAccountname = await postAccountnameDuplicate(accountnameInp);
+    if (accountnameInp === "") {
       setAccountnameErrorMsg("*입력해주세요");
       setAccountnameValid(false);
-    } else if (!accountnameRegex.test(accountname)) {
+    } else if (!accountnameRegex.test(accountnameInp)) {
       setAccountnameErrorMsg("*영문, 숫자, 특수문자 ., _ 만 입력해주세요");
       setAccountnameValid(false);
     } else if (checkAccountname.message === "이미 가입된 계정ID 입니다.") {
-      setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다 😥");
+      setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다.");
+      setAccountnameValid(false);
+    } else if (accountnameInp.length < 2 || accountnameInp.length > 8) {
+      setAccountnameErrorMsg("*4~16자 이내여야 합니다.");
       setAccountnameValid(false);
     } else {
       setAccountnameValid(true);
       setAccountnameErrorMsg("");
-      setAccountname(accountname);
+      setAccountname(accountnameInp);
     }
   };
 

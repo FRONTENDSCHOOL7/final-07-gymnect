@@ -11,6 +11,7 @@ import {
   Description,
   StatsContainer,
   DataContainer,
+  DataTop,
   DataTitle,
   DataValue,
   DataUnit
@@ -21,8 +22,10 @@ import ChartImg from "../../../assets/images/chart-analysis.png";
 const ExerciseData = ({ title, value, unit }) => {
   return (
     <DataContainer>
-      <DataValue>{value}</DataValue>
-      <DataUnit>{unit}</DataUnit>
+      <DataTop>
+        <DataValue>{value}</DataValue>
+        <DataUnit>{unit}</DataUnit>
+      </DataTop>
       <DataTitle>{title}</DataTitle>
     </DataContainer>
   );
@@ -41,7 +44,7 @@ export default function AnalysisModal({ isOpen, onClose, username }) {
         <StatsContainer>
           <ExerciseData title="볼륨" value="48725" unit="kg" />
           <ExerciseData title="거리" value="29.19" unit="km" />
-          <ExerciseData title="시간" value="08:25" unit="hour" />
+          <ExerciseData title="시간" value="08:25" unit="" />
           <ExerciseData title="소비 칼로리" value="3577" unit="kcal" />
         </StatsContainer>
         <ChartWrapper>
