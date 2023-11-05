@@ -187,6 +187,7 @@ export default function Post({ data, commentCount }) {
             <PostNameWrap>
               <UserSpan>{data?.author.username}</UserSpan>
               <AccountSpan>{data?.author.accountname}</AccountSpan>
+              <Time>{data && arr[3]}</Time>
             </PostNameWrap>
           </ProfileButton>
           <DotButton onClick={() => onShowModal("")}>
@@ -196,11 +197,7 @@ export default function Post({ data, commentCount }) {
         <Wrap>
           <FeedButton onClick={handleFeedClick} style={postButtonStyle}>
             <HealthWrap>
-              <HealthData
-                kind={data && arr[0]}
-                data={data && arr[1]}
-                time={data && arr[3]}
-              />
+              <HealthData kind={data && arr[0]} data={data && arr[1]} />
             </HealthWrap>
             {imageCheck && (
               <PostUploadImg

@@ -26,38 +26,51 @@ export default function FollowingPage() {
   console.log(followings);
 
   return (
-    <Container>
+    <>
       <BackNav />
-      {followings && followings.length > 0 ? (
-        followings.map((data) => (
-          <ListContainer key={data._id}>
-            <Link to={`/profile/${data.accountname}`}>
-              <FollowerProfile
-                image={data.image}
-                name={data.username}
-                intro={data.intro}
-              />
-            </Link>
-            <ButtonContainer>
-              <FollowButton
-                data={data.isfollow}
-                accountname={data.accountname}
-              />
-            </ButtonContainer>
-          </ListContainer>
-        ))
-      ) : (
-        <NoComment>팔로잉이 존재하지 않습니다.</NoComment>
-      )}
-    </Container>
+      <Container>
+        {followings && followings.length > 0 ? (
+          followings.map((data) => (
+            <ListContainer key={data._id}>
+              <Link to={`/profile/${data.accountname}`}>
+                <FollowerProfile
+                  image={data.image}
+                  name={data.username}
+                  intro={data.intro}
+                />
+              </Link>
+              <ButtonContainer>
+                <FollowButton
+                  data={data.isfollow}
+                  accountname={data.accountname}
+                />
+              </ButtonContainer>
+            </ListContainer>
+          ))
+        ) : (
+          <NoComment>팔로잉이 존재하지 않습니다.</NoComment>
+        )}
+      </Container>
+    </>
   );
 }
 
 const Container = styled.div`
-  width: 390px;
-  height: calc(100vh - 108px);
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - 48px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf; // 스크롤바 색상
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
 `;
 
 const ListContainer = styled.div`

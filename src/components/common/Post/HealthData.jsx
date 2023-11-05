@@ -3,10 +3,8 @@ import React from "react";
 import {
   HealthWrap,
   HeaderWrap,
-  Wrap,
   Logo,
   HealthKind,
-  Time,
   HealthCntWrap,
   HealthCnt,
   DataWrap,
@@ -14,7 +12,7 @@ import {
   DataCnt
 } from "./HealthDataStyle";
 
-export default function HealthData({ kind, data, time }) {
+export default function HealthData({ kind, data }) {
   if (kind === "근력 운동") {
     return (
       <>
@@ -24,10 +22,7 @@ export default function HealthData({ kind, data, time }) {
             <HealthWrap key={`item1-${idx1}`}>
               <HeaderWrap>
                 <Logo />
-                <Wrap>
-                  <HealthKind>{arr2[0]}</HealthKind>
-                  <Time>{time}</Time>
-                </Wrap>
+                <HealthKind>{arr2[0]}</HealthKind>
               </HeaderWrap>
               {arr2.slice(1).map((item2, idx2) => {
                 return (
@@ -60,10 +55,7 @@ export default function HealthData({ kind, data, time }) {
         <HealthWrap>
           <HeaderWrap>
             <Logo />
-            <Wrap>
-              <HealthKind>{kind}</HealthKind>
-              <Time>{time}</Time>
-            </Wrap>
+            <HealthKind>{kind}</HealthKind>
           </HeaderWrap>
           <HealthCnt>{data}</HealthCnt>
         </HealthWrap>
@@ -75,10 +67,7 @@ export default function HealthData({ kind, data, time }) {
         <HealthWrap>
           <HeaderWrap>
             <Logo />
-            <Wrap>
-              <HealthKind>{kind}</HealthKind>
-              <Time>{time}</Time>
-            </Wrap>
+            <HealthKind>{kind}</HealthKind>
           </HeaderWrap>
         </HealthWrap>
       </>
