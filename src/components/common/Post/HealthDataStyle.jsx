@@ -44,9 +44,9 @@ export const Logo = styled.div`
   }
 `;
 
-export const Wrap = styled.p`
-  display: flex;
-  justify-content: space-between;
+export const HealthKind = styled.p`
+  font-size: 16px;
+  text-align: left;
   width: 272px;
   font-family: "SBAggroB";
   color: #505050;
@@ -55,15 +55,6 @@ export const Wrap = styled.p`
   ${HealthWrap}:hover & {
     border-bottom: 0.5px solid #ffffff;
   }
-`;
-
-export const HealthKind = styled.p`
-  font-size: 16px;
-  text-align: left;
-`;
-
-export const Time = styled.p`
-  margin-top: 2px;
 `;
 
 export const HealthCntWrap = styled.div`

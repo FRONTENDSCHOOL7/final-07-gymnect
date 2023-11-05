@@ -100,7 +100,6 @@ export default function AppRouter() {
           path="/profile/:id/follower"
           element={
             <ProtectedRoute>
-              <Navbar />
               <Follower />
             </ProtectedRoute>
           }
@@ -109,7 +108,6 @@ export default function AppRouter() {
           path="/profile/:id/following"
           element={
             <ProtectedRoute>
-              <Navbar />
               <Following />
             </ProtectedRoute>
           }
@@ -118,7 +116,6 @@ export default function AppRouter() {
           path="/profile/:id/edit"
           element={
             <ProtectedRoute>
-              <Navbar />
               <ProfileEdit />
             </ProtectedRoute>
           }
