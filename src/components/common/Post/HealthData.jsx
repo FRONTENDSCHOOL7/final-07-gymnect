@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   HealthWrap,
   HeaderWrap,
@@ -30,7 +29,7 @@ export default function HealthData({ kind, data }) {
                     {item2.split(",").map((item3, idx3) => {
                       const arr = item3.split("x");
                       return (
-                        <DataWrap>
+                        <DataWrap key={`item2-${idx1}-${idx2}-${idx3}`}>
                           <DataKg>{arr[0]} kg</DataKg>
                           <DataCnt>{arr[1]}회</DataCnt>
                         </DataWrap>

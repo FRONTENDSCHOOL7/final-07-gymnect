@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { getFollowFeed } from "../../api/post";
 import HomeNav from "../../components/Header/HomeHeader";
 import NoFollowerHome from "./NoFollowerHome";
-import { getFollowFeed } from "../../api/post";
 import Post from "../../components/common/Post/Post";
 import styled from "styled-components";
 import Loading from "../../components/common/Loading/Loading";

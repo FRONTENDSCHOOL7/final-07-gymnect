@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
+import styled, { keyframes } from "styled-components";
 
 export default function Splash() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  // 3초 후에 버튼 보여주기
-  const timer = setTimeout(() => {
+    // 3초 후에 버튼 보여주기
+    const timer = setTimeout(() => {
       navigate("/login");
-  }, 3000);
+    }, 3000);
 
-  // 컴포넌트 언마운트 시 타이머 해제
-  return () => clearTimeout(timer);
+    // 컴포넌트 언마운트 시 타이머 해제
+    return () => clearTimeout(timer);
   });
 
   const ThunderIcon = () => (

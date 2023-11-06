@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfileEditNav from "../../components/Header/ProfileEditHeader";
 import { useRecoilState } from "recoil";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { getMyInfo, editProfile } from "../../api/profile";
 import { postAccountnameDuplicate, postUploadProfile } from "../../api/auth";
+import Input from "../../components/common/Input/Input";
+import ProfileEditNav from "../../components/Header/ProfileEditHeader";
 import {
   ImageSection,
   Label,
@@ -14,7 +15,6 @@ import {
   Container,
   ErrorMessage
 } from "./ProfileEditStyle";
-import Input from "../../components/common/Input/Input";
 
 export default function ProfileEdit() {
   const URL = "https://api.mandarin.weniv.co.kr/";

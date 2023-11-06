@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import { getPostDetail } from "../../api/post";
+import { postComment, getComment } from "../../api/comment";
+import BackNav from "../../components/Header/BackspaceHeader.jsx";
+import Comment from "../../components/common/Comment/FeedComment.jsx";
+import Post from "../../components/common/Post/Post";
+import profileImage from "../../assets/images/signup-profile.svg";
 import Modal from "../../components/common/Modal/Modal";
 import IconPostModal from "../../components/common/Modal/IconPostModal";
-import { getPostDetail } from "../../api/post";
 import {
   deleteUserComment,
   reportUserComment
 } from "../../components/common/Modal/ModalFunction";
-import BackNav from "../../components/Header/BackspaceHeader.jsx";
-import Comment from "../../components/common/Comment/FeedComment.jsx";
-import Post from "../../components/common/Post/Post";
-import { userInfoAtom } from "../../atoms/UserAtom";
 import {
   Container,
   TopContainer,
@@ -23,8 +25,6 @@ import {
   Button,
   NoComment
 } from "./PostCommentStyle.jsx";
-import { postComment, getComment } from "../../api/comment";
-import profileImage from "../../assets/images/signup-profile.svg";
 
 export default function PostComment() {
   const userInfo = useRecoilValue(userInfoAtom);

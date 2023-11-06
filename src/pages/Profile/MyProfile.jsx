@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
-import { useNavigate, useParams } from "react-router-dom";
+import { getUserPosts } from "../../api/post";
+import ModalNav from "../../components/Header/ModalHeader";
 import Post from "../../components/common/Post/Post";
 import MyProfileUp from "../../components/common/Profile/MyProfileUp";
-import ModalNav from "../../components/Header/ModalHeader";
-import { getUserPosts } from "../../api/post";
+import flexIconOn from "../../assets/images/icon-flex-on.svg";
+import flexIconOff from "../../assets/images/icon-flex-off.svg";
+import gridIconOn from "../../assets/images/icon-grid-on.svg";
+import gridIconOff from "../../assets/images/icon-grid-off.svg";
+import Modal from "../../components/common/Modal/PostModal";
 import {
   FlexIconImg,
   GridIconImg,
@@ -18,12 +22,6 @@ import {
   Container,
   PostContainer
 } from "./MyProfileStyle";
-import flexIconOn from "../../assets/images/icon-flex-on.svg";
-import flexIconOff from "../../assets/images/icon-flex-off.svg";
-import gridIconOn from "../../assets/images/icon-grid-on.svg";
-import gridIconOff from "../../assets/images/icon-grid-off.svg";
-// import layer from "../../assets/images/icon-img-layers.svg";
-import Modal from "../../components/common/Modal/PostModal";
 import Loading from "../../components/common/Loading/Loading";
 
 export default function MyProfile() {
@@ -106,11 +104,11 @@ export default function MyProfile() {
                   .filter((post) => {
                     return post && post.image;
                   })
-                  .map((post, index) => {
+                  .map((post) => {
                     console.log(post);
                     return (
                       <>
-                        <GridItem key={index}>
+                        <GridItem key={post.id}>
                           <Link
                             to={{
                               pathname: `/post/${id}/${post.id}`
@@ -124,9 +122,9 @@ export default function MyProfile() {
             </GridContainer>
           ) : (
             <PostContainer>
-              {myPosts.map((post, index) => (
+              {myPosts.map((post) => (
                 <Post
-                  key={index}
+                  key={post.id}
                   data={post}
                   commentCount={post.commentCount}
                 />

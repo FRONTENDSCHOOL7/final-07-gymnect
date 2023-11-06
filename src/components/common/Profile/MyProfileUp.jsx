@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../../atoms/UserAtom";
-import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../api/profile";
-import AnalysisModal from "../../common/Modal/AnalysisModal";
-import profileImage from "../../../assets/images/signup-profile.svg";
+import Button from "../Button/ButtonContainer";
 import FollowButton from "../Button/FollowButton";
+import profileImage from "../../../assets/images/signup-profile.svg";
 import commentIcon from "../../../assets/images/icon-reply.svg";
 import shareIcon from "../../../assets/images/icon-share.svg";
+import AnalysisModal from "../../common/Modal/AnalysisModal";
 import {
   MyProfileUpContainer,
   Wrap,
@@ -25,7 +26,6 @@ import {
   CommentImg,
   ShareImg
 } from "./MyProfileUpStyle";
-import Button from "../Button/ButtonContainer";
 
 export default function MyProfileUp({ accountId }) {
   const navigate = useNavigate();
@@ -62,7 +62,8 @@ export default function MyProfileUp({ accountId }) {
   const getImageSrc = (image) => {
     if (
       //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
-      image.includes("api.mandarin.weniv.co.kr")
+      image.includes("api.mandarin.weniv.co.kr") &&
+      !image.includes("undefined")
     ) {
       console.log("이미지가 존재합니다.");
       return image;

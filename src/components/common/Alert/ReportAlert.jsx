@@ -1,5 +1,11 @@
-import React from 'react';
-import { Container, Section, Message, Button, ButtonContainer } from './ReportAlertStyle'; 
+import React from "react";
+import {
+  Container,
+  Section,
+  Message,
+  Button,
+  ButtonContainer
+} from "./ReportAlertStyle";
 
 function ReportAlert({ handleShowAlert, closeAlert }) {
   return (

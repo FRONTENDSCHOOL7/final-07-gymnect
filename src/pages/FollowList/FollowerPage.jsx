@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getFollowerList } from "../../api/follow";
 import { Link, useParams } from "react-router-dom";
-
+import { getFollowerList } from "../../api/follow";
 import BackNav from "../../components/Header/BackspaceHeader";
-import FollowerProfile from "../../components/common/ProfileList";
+import FollowerProfile from "../../components/common/Profile/ProfileList";
 import FollowButton from "../../components/common/Button/FollowButton";
 import styled from "styled-components";
 

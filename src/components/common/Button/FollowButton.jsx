@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { postFollow, deleteFollow } from "../../../api/follow";
 import styled from "styled-components";
+import { postFollow, deleteFollow } from "../../../api/follow";
 
 export default function FollowButton({ data, accountname, type, setLender }) {
   const [isfollow, setIsfollow] = useState(data);

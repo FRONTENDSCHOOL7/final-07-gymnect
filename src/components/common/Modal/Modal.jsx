@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import Alert from "../Alert/Alert";
 import { Background, Section, Container } from "./PostModalStyle";
+import Alert from "../Alert/Alert";
 
 export default function Modal({ setIsModalOpen, children }) {
   const [tempFunc, setTempFunc] = useState(null);
@@ -39,7 +39,12 @@ export default function Modal({ setIsModalOpen, children }) {
     <>
       <Background onClick={handleClick} />
       <Section>
-        <Container ref={containerRef} style={{ height: containerHeight }} showAlert={showAlert}>{childrenWithProps}</Container>
+        <Container
+          ref={containerRef}
+          style={{ height: containerHeight }}
+          showAlert={showAlert}>
+          {childrenWithProps}
+        </Container>
       </Section>
       {showAlert && (
         <Alert
