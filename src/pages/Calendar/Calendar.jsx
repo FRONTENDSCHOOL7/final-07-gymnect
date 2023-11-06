@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import moment from "moment";
-import styled from "styled-components";
-import BackNav from "../../components/Header/BackspaceHeader";
-import { getUserPosts } from "../../api/post";
-import { userInfoAtom } from "../../atoms/UserAtom";
-import Loading from "../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import { getUserPosts } from "../../api/post";
+import moment from "moment";
+import BackNav from "../../components/Header/BackspaceHeader";
+import styled from "styled-components";
+import Loading from "../../components/common/Loading/Loading";
 
 function ScrollableCalendar() {
   const [months, setMonths] = useState([

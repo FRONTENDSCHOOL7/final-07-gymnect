@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import PhotoIcon from "../../assets/images/icon-img-btn.svg";
 
@@ -29,7 +29,7 @@ const ChatFooter = ({
   return (
     <Container>
       <ImageUpload>
-        <img src={PhotoIcon} />
+        <img src={PhotoIcon} alt="포토아이콘" />
         <input type="file" onChange={handleImageUpload} />
       </ImageUpload>
       <MessageInput

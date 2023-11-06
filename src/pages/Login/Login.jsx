@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
 import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
-
 import LoginModal from "../../components/common/Modal/Login/LoginModal";
+import styled, { keyframes } from "styled-components";
 
 export default function Login() {
   const navigate = useNavigate();

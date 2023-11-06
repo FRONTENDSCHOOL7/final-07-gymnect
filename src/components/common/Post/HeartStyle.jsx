@@ -1,5 +1,5 @@
-import { ReactComponent as HeartIconBase } from "../../../assets/images/icon-heart.svg";
 import styled from "styled-components";
+import { ReactComponent as HeartIconBase } from "../../../assets/images/icon-heart.svg";
 
 export default function HeartIcon({ isLiked }) {
   return <StyledHeartIcon $likedValue={isLiked ? 1 : 0} />;

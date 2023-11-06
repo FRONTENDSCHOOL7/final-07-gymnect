@@ -1,6 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { ReactComponent as HomeIcon } from "../../assets/images/icon-home.svg";

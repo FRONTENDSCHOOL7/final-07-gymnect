@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchNav from "../../../components/Header/SearchHeader";
 import { getUserSearch } from "../../../api/search";
+import SearchNav from "../../../components/Header/SearchHeader";
 import profileImage from "../../../assets/images/signup-profile.svg";
 import LoadingLogo from "../../../assets/images/home-loading-logo.svg";
 import {
@@ -16,6 +16,7 @@ import {
   UserName,
   NickName
 } from "./SearchStyle";
+
 const Search = () => {
   const [query, setQuery] = useState(""); //검색입력창의 값을 저장
   const [searchResults, setSearchResults] = useState([]); //api호출결과롤 받아온 회원 검색결과 저장
@@ -74,6 +75,7 @@ const Search = () => {
       return profileImage;
     }
   };
+
   return (
     <>
       <SearchNav value={query} onChange={(e) => setQuery(e.target.value)} />

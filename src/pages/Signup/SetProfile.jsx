@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import imageCompression from "browser-image-compression";
-import Input from "../../components/common/Input/Input";
-import Button from "../../components/common/Button/ButtonContainer";
 import {
   postAccountnameDuplicate,
   postUserSignup,
   postUploadProfile
 } from "../../api/auth";
+import Input from "../../components/common/Input/Input";
+import Button from "../../components/common/Button/ButtonContainer";
+import imageCompression from "browser-image-compression";
 import BasicProfileImg from "../../assets/images/signup-profile.svg";
 import {
   Container,

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import iconDot from "../../../assets/images/icon-dot.svg";
-import HeartIcon from "./HeartStyle";
-import iconMessage from "../../../assets/images/icon-reply.svg";
-import { deletePostData, reportUserPost } from "../Modal/ModalFunction";
-import Modal from "../Modal/Modal";
-import { userInfoAtom } from "../../../atoms/UserAtom";
-import IconPostModal from "../Modal/IconPostModal";
-import { postLike, deleteLike } from "../../../api/post";
 import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../../atoms/UserAtom";
+import { postLike, deleteLike } from "../../../api/post";
+import HeartIcon from "./HeartStyle";
 import HealthData from "./HealthData";
+import iconMessage from "../../../assets/images/icon-reply.svg";
+import iconDot from "../../../assets/images/icon-dot.svg";
 import profileImage from "../../../assets/images/signup-profile.svg";
+import Modal from "../Modal/Modal";
+import { deletePostData, reportUserPost } from "../Modal/ModalFunction";
+import IconPostModal from "../Modal/IconPostModal";
 import {
   PostArticle,
   PostProfileImg,
