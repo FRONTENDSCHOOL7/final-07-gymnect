@@ -90,7 +90,7 @@ const ChatRoom = () => {
             messageItem.type === "image" ? (
               <Chat className="chat-mine" key={index}>
                 <Time>
-                  {new Date(messageItem.timestamp).toLocsaleTimeString(
+                  {new Date(messageItem.timestamp).toLocaleTimeString(
                     undefined,
                     timeOptions
                   )}
