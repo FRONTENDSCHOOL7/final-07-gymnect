@@ -1,6 +1,6 @@
-import { postContentUpload } from "../../api/post";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postContentUpload } from "../../api/post";
 import UploadNav from "../../components/Header/UploadHeader";
 import Button from "../../components/common/Button/ButtonContainer";
 import {
