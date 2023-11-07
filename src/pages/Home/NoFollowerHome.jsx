@@ -1,8 +1,8 @@
 import React from "react";
-import LoadingLogo from "../../assets/images/home-loading-logo.svg";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button/ButtonContainer";
+import LoadingLogo from "../../assets/images/home-loading-logo.svg";
+import styled from "styled-components";
 
 const NoFollowerHome = () => {
   const Navigate = useNavigate();

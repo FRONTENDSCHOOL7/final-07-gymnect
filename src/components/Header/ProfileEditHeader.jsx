@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import BackButton from "../common/Button/BackButton";
 import Button from "../../components/common/Button/ButtonContainer";
+import BackButton from "../common/Button/BackButton";
 
 export default function ProfileEditNav({ onEditButtonClick }) {
   return (

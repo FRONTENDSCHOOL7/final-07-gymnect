@@ -1,11 +1,9 @@
-// 스플래시 마지막 스크린
-import React, { useState, useEffect } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import backLogo from "../../assets/images/title-gymnect-background.svg";
 import mainLogo from "../../assets/images/짐넥.svg";
-
 import LoginModal from "../../components/common/Modal/Login/LoginModal";
+import styled, { keyframes } from "styled-components";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -74,7 +72,6 @@ export const Container = styled.div`
   background-color: #006cd8;
   width: 100%;
   min-height: 100vh;
-
 `;
 
 export const TitleDiv = styled.div`

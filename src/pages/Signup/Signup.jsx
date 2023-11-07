@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postEmailDuplicate } from "../../api/auth";
+import Button from "../../components/common/Button/ButtonContainer";
+import Input from "../../components/common/Input/Input";
 import {
   Container,
   Title,
@@ -8,8 +10,6 @@ import {
   ErrorMessage,
   SuccessMessage
 } from "./SignupStyle";
-import Button from "../../components/common/Button/ButtonContainer";
-import Input from "../../components/common/Input/Input";
 
 const Signup = () => {
   const navigate = useNavigate();

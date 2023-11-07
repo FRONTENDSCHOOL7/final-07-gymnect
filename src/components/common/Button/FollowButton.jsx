@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { postFollow, deleteFollow } from "../../../api/follow";
+import { useRecoilValue } from "recoil";
+import { userInfoAtom } from "../../../atoms/UserAtom";
 import styled from "styled-components";
+import { postFollow, deleteFollow } from "../../../api/follow";
 
 export default function FollowButton({ data, accountname, type, setLender }) {
   const [isfollow, setIsfollow] = useState(data);
+  const userInfo = useRecoilValue(userInfoAtom);
 
   useEffect(() => {
     setIsfollow(data);
@@ -22,6 +25,11 @@ export default function FollowButton({ data, accountname, type, setLender }) {
       console.error("Error while trying to follow/unfollow:", error);
     }
   };
+
+  if (userInfo.account === accountname) {
+    // 같다면 아무것도 렌더링하지 않습니다.
+    return null;
+  }
 
   return (
     <StyledButton $type={type} $follow={isfollow} onClick={handleClick}>
