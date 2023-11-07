@@ -1,0 +1,112 @@
+import React, { useState, useRef, useEffect } from "react";
+import ChatHeader from "../../components/Header/ChatHeader";
+import ChatFooter from "../../components/Footer/ChatFooter";
+import profileImage from "../../assets/images/signup-profile.svg";
+import Modal from "../../components/common/Modal/ReportModal";
+import {
+  Container,
+  Main,
+  Chat,
+  Image,
+  From,
+  To,
+  Time,
+  Img
+} from "./ChatRoomStyle";
+
+const ChatRoom = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  const mainRef = useRef(null); // DOM 요소에 대한 참조를 생성
+  /*메시지 전송*/
+  const handleSend = () => {
+    if (message.trim()) {
+      //공백만 있는 문자열은 무시
+      const timestamp = Date.now();
+      setMessageList([...messageList, { content: message, timestamp }]);
+      setMessage(""); // 메시지 전송 후 입력 필드를 초기화
+    }
+  };
+  /*사진 업로드*/
+  const handleImageMessage = (imageData) => {
+    const timestamp = Date.now();
+    setMessageList([
+      ...messageList,
+      { content: imageData, timestamp, type: "image" }
+    ]);
+  };
+
+  useEffect(() => {
+    // messageList의 길이가 변경될 때(새로운 메시지가 추가될 때) 아래쪽으로 스크롤
+    const mainElement = mainRef.current;
+    if (mainElement) {
+      mainElement.scrollTop = mainElement.scrollHeight;
+    }
+  }, [messageList]);
+
+  const timeOptions = { hour: "2-digit", minute: "2-digit" }; //시간,분 만 표시
+
+  // 모달
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const handleShowAlert = () => {
+    alert("신고되었습니다!");
+    toggleModal();
+  };
+
+  return (
+    <>
+      <ChatHeader toggleModal={toggleModal} />
+      <Container>
+        <Main message={message} ref={mainRef}>
+          <Chat className="chat-mine">
+            <Time>오후12:41</Time>
+            <To>내일 혹시 시간되시면 한강 러닝 하실래요?</To>
+          </Chat>
+          <Chat className="chat-yours">
+            <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
+            <From>네 좋아요~ 그럼 내일밤8시에 보는걸로해용</From>
+            <Time>오후12:51</Time>
+          </Chat>
+          {messageList.map((messageItem, index) =>
+            messageItem.type === "image" ? (
+              <Chat className="chat-mine" key={index}>
+                <Time>
+                  {new Date(messageItem.timestamp).toLocaleTimeString(
+                    undefined,
+                    timeOptions
+                  )}
+                </Time>
+                <Img src={messageItem.content} alt="Uploaded image" />
+              </Chat>
+            ) : (
+              <Chat className="chat-mine" key={index}>
+                <Time>
+                  {new Date(messageItem.timestamp).toLocaleTimeString(
+                    undefined,
+                    timeOptions
+                  )}
+                </Time>
+                <To>{messageItem.content}</To>
+              </Chat>
+            )
+          )}
+        </Main>
+        <ChatFooter
+          message={message}
+          setMessage={setMessage}
+          handleSend={handleSend}
+          handleImageMessage={handleImageMessage}
+        />
+      </Container>
+      {isModalVisible && (
+        <Modal handleShowAlert={handleShowAlert} toggleModal={toggleModal} />
+      )}
+    </>
+  );
+};
+export default ChatRoom;

@@ -6,10 +6,19 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.5.1",
+    "browser-image-compression": "^2.0.2",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-calendar": "^4.6.1",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
+    "styled-components": "^6.1.0",
+    "styled-reset": "^4.5.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -37,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "caniuse-lite": "^1.0.30001554"
   }
 }
