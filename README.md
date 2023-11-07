@@ -647,6 +647,33 @@ moment 라이브러리를 활용하여 각 날짜에 대해 "YYYY-MM-DD" 포맷�
 ## 🪐 **12. 트러블 슈팅**
 
 <details>
+	<summary><b>이미지 예외처리</b></summary>
+현상: 서버에서 사용자의 프로필 이미지를 불러올시에 이미지가 없는 사용자에게 기본 프로필 이미지가 렌더링 되지 않는 오류
+원인: 이미지의 URL을 확인할 때, 서버가 반환하는 문자열에 올바르지 않은 키워드가 입력되어 있어서 이미지가 있는것으로 판단하고 기본이미지를 렌더링 하지 않음
+
+```jsx
+/*이미지가 있으면 보여주고 없으면 기본이미지 보여줌*/
+const getImageSrc = (index) => {
+  if (
+    //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
+    searchResults &&
+    searchResults[index].image.includes("api.mandarin.weniv.co.kr") &&
+    !searchResults[index].image.includes("undefined")
+  ) {
+    console.log("이미지가 존재합니다.");
+    return searchResults[index].image;
+  } else {
+    console.log("!!이미지가 존재하지 않습니다.");
+    return profileImage;
+  }
+};
+```
+
+**해결 방법**: 서버 응답을 검증할 때, 이미지 URL이"[api.mandarin.weniv.co.kr](http://api.mandarin.weniv.co.kr/)"를 포함하고 "undefined"를 포함하고 있지않다면 기본 이미지 URL로 대체하도록 로직을 추가
+
+</details>
+
+<details>
 	<summary><b>게시글 업로드 시 예외처리 버그</b></summary>
 현상 : 업로드 시 운동 종류를 선택하는 토글에서 근력운동이 아닌 다른 운동을 선택할 시에도
 운동 이름을 입력해주세요 라는 Alert창이 뜸
