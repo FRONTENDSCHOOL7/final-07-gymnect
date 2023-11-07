@@ -111,7 +111,7 @@ PW: !123123a
 
 #### **prettier**
 
-```json
+```
 module.exports = {
   semi: true,  // 코드를 종료할 때 세미콜론을 사용
   printWidth: 80,  // 한 줄에 최대 80 개의 문자를 허용
