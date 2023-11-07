@@ -1,9 +1,9 @@
 <div align='center'>
-    <h1><b>🏠 짐넥 🐈</b></h1>
+    <h1><b>🏋️‍♀️ 짐넥(GYM-NECT) 🏋️‍♀️</b></h1>
 		<img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/97059373/ac48335e-d0a9-4549-af0d-ea2679d3f3c2" alt="배포용 썸네일 이미지"/>
     <br/>
 		<br/>
-		<h3><b>🏋️‍♂️💪 운동을 기록하고 서로 공유하는 운동 아카이빙 SNS 플랫폼, 짐넥(Gym-Nect)</b></h3>
+		<h3><b>🏋️‍♀️💪 운동을 기록하고 서로 공유하는 운동 아카이빙 SNS 플랫폼, 짐넥(Gym-Nect)</b></h3>
 		<br/>
 
 ![React](https://badgen.net/badge/React/v18.2.0/cyan?)
@@ -20,22 +20,36 @@
 
 > 🗝️ **짐넥 배포 링크 및 테스트 계정**
 
-👉 [짐넥 시작하기](https://main--bangkkuseok.netlify.app/)
+👉 [짐넥 시작하기]()
 
 ```md
-ID: rami@gmail.com
+ID: gym@nect.com
 PW: !123123a
 ```
 
-<br />
+## ⭐ **0. 목차**
+
+1. [서비스 소개](#서비스-소개)
+2. [짐넥 팀원 소개](#짐넥-팀원-소개)
+3. [역할 분담](#역할-분담)
+4. [개발 일정](#개발-일정)
+5. [개발 환경 및 기술 스택](#개발-환경-및-기술-스택)
+6. [프로젝트 폴더 구조](#프로젝트-폴더-구조)
+7. [Git Branch 전략 - Github Flow](#git-branch-전략---github-flow)
+8. [짐넥에서는 이렇게 협업해요](#짐넥에서는-이렇게-협업해요)
+9. [주요 기능 소개](#주요-기능-소개)
+10. [상세 담당 업무](#상세-담당-업무)
+11. [핵심 코드](#핵심-코드)
+12. [트러블 슈팅](#트러블-슈팅)
+13. [리팩토링할 부분](#리팩토링할-부분)
+    <br />
 
 ## 📢 **1. 서비스 소개**
 
-짐넥(GymNect)은 GYM + CONNET 줄임말로 운동을 좋아하는 모든 이들을 위한 온라인 플랫폼입니다!
-
-취미로 운동을 즐기는 사람들을 위해 운동 종류와 관계없이 다양한 사람들의 소통을 위해 만들게 되었습니다.
-
-자신의 운동을 기록하고 공유함으로써 꾸준함을 유지하고, 다른 종목의 운동에도 거부감 없이 쉽게 접근 할 수 있습니다.
+짐넥(GymNect)은 GYM + CONNET의 합성어로, 단순히 운동을 기록하는것을 넘어, 사람들을 서로 연결하고 삶과 운동을 연결하는 것을 목표로 하는 온라인 플랫폼입니다!
+우리는 운동 기록을 쉽게 저장하고 관리할 수 있는 기능을 제공함으로써, 운동의 진전을 추적하고, 개인적인 성취를 달성할 수 있도록 돕습니다.
+또한, 사용자들이 자신의 운동 경험과 성과를 친구들과 공유함으로써, 서로를 동기부여하고, 건강한 경쟁을 통해 즐거움을 나눌 수 있는 커뮤니티를 조성하였습니다.
+여러분의 삶에 활력을 더하고, 매일의 운동이 삶의 가치 있는 부분이 될 수 있도록 짐넥이 함께합니다.
 
 <br />
 <br />
@@ -70,7 +84,7 @@ PW: !123123a
 
 ## 📅 **4. 개발 일정**
 
-🐥 2023.06.01 - 2023.06.30
+🐥 2023.10.12 - 2023.11.09
 
 <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/97059373/a6eaf1b3-494c-413a-a85a-7bc2333ea602" />
 
@@ -83,7 +97,7 @@ PW: !123123a
 
 ## ⚙️ **5. 개발 환경 및 기술 스택**
 
-<img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/97059373/8c2612a7-989b-41ed-9a85-3c51824e9062" />
+<img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/97059373/50a27b9c-dfe3-4131-9b3c-2dfcc3f2312a" />
 
 <br/>
 
@@ -216,12 +230,15 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 
 ### **코드리뷰**
 
-- 스크럼 : 매일 오전 9시와 오후 5시에 진행하여 역할을 분담하고, 각 팀원들의 진행 상황과 겪고 있는 문제를 공유하며, 해결 방안에 대한 논의하였습니다.
-- 깃 플로우 전략 : 깃플로우 전략을 기능구현 페이지에 맞춰 활용함으로써 이슈 및 브랜치를 효율적으로 관리하여 충돌을 대비했습니다. 분담 된 이슈에 대해 각각 컨벤션에 맞춰 브랜치명과 커밋을 작성 함으로써 진행 상황에 대한 빠른 이해를 도왔습니다.
+- **스크럼** : 매일 오전 9시와 오후 5시에 진행하여 역할을 분담하고, 각 팀원들의 진행 상황과 겪고 있는 문제를 공유하며, 해결 방안에 대한 논의하였습니다.
+
+- **깃 플로우 전략** : 깃플로우 전략을 기능구현 페이지에 맞춰 활용함으로써 이슈 및 브랜치를 효율적으로 관리하여 충돌을 대비했습니다. 분담 된 이슈에 대해 각각 컨벤션에 맞춰 브랜치명과 커밋을 작성 함으로써 진행 상황에 대한 빠른 이해를 도왔습니다.
   일일 작업을 마치면 DEVELOP으로 MERGE하고 PULL하여 작업이 정상적으로 작동되는지 확인합니다.
   각자 PULL한뒤에 발생되는 오류가 있다면 회의를 통해 수정 및 재작업(브랜치 재생성)을 합니다.
-- 노션 : 하루 2회 이상 진행 되었던 스크럼 내용을 기록하고, 각 팀원들의 TodoList를 작성하여 체크함으로써 일정에 맞춰 작업진행이 원활하게 진행 됐습니다.
-- 디스코드 라이브 : 화면공유를 통해 구현하고자 하는 기능에 대한 정확한 이해 및 의견을 나눴으며, 문제 발생 시 실시간으로 함께 해결하는 과정의 도구로 유용하게 사용 됐습니다.
+
+- **노션** : 하루 2회 이상 진행 되었던 스크럼 내용을 기록하고, 각 팀원들의 TodoList를 작성하여 체크함으로써 일정에 맞춰 작업진행이 원활하게 진행 됐습니다.
+
+- **디스코드 라이브** : 화면공유를 통해 구현하고자 하는 기능에 대한 정확한 이해 및 의견을 나눴으며, 문제 발생 시 실시간으로 함께 해결하는 과정의 도구로 유용하게 사용 됐습니다.
 
 <!-- Top Button -->
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
@@ -230,7 +247,7 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 
 ## 🪐 **9. 주요 기능 소개**
 
-## 1) 홈
+### 1) 홈
 
 | 스플래쉬 화면                                                                                                                                                     | 로그인 화면                                                                                                                                                      | 회원가입 화면                                                                                                                                                      |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -240,7 +257,7 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/138556019/82df10de-32ad-46c5-9e06-2294e576e80c" alt="프로필 설정 화면" width="288" height="608"> | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/138556019/5f233b3c-f5a8-4af7-94c3-5ef75637a40f" alt="검색 화면" width="288" height="608"> | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/138556019/be387de9-5492-4118-abc4-481eb095062f" alt="홈 피드 화면" width="288" height="608"> |
 
-## 2) 채팅 & 404 & 운동 관리 & 로딩 화면
+### 2) 채팅 & 404 & 운동 관리 & 로딩 화면
 
 | 채팅방 화면                                                                                                                                                      | 404 페이지                                                                                                                                                      | 운동분석 화면                                                                                                                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -250,7 +267,7 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/63556795/6459f7a5-cd5f-4981-982e-583d1bcb0270" alt="캘린더 화면" width="288" height="608"> | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/63556795/0fa1cc1b-c939-47e4-be03-ed216a0bdc47" alt="로딩 화면" width="288" height="608"> |
 
-## 3) 게시글
+### 3) 게시글
 
 | 상세 페이지 화면                                                                                                                                                      | 작성 페이지 화면                                                                                                                                                      | 삭제 페이지 화면                                                                                                                                                     |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -264,7 +281,7 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/138556019/db6a7c0f-2e07-4315-b5c3-2291f5da28b1" alt="댓글 달기 화면" width="288" height="608"> | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/138556019/75ae8903-81fe-41ea-822f-5f6e017501fd" alt="댓글 삭제 화면" width="288" height="608"> | <img src="https://github.com/FRONTENDSCHOOL7/final-07-gymnect/assets/63556795/3dafdbd4-3577-4f95-bb08-5fe5527fa0ff" alt="댓글 신고 화면" width="288" height="608"> |
 
-## 4) 프로필
+### 4) 프로필
 
 | 마이 프로필 화면                                                                                                                                                     | 상대방 프로필 화면                                                                                                                                                     | 프로필 수정 화면                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -286,153 +303,166 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
   - 버그 관리
   - 요구사항 문서 작성
 
-### **🖤 나영**
+### **🖤 민주**
 
-**🎨 디자인**
+**💻 화면 개발**
 
-- 전반적 UI 디자인 전체
-- 발표 자료 제작
+- 공통 버튼 컴포넌트
+- 공통 인풋 컴포넌트
+- 공통 Post 컴포넌트 제작
+- Splash
+  - keyframes를 이용해 전구가 켜지는듯한 애니메이션을 넣음
+- 회원가입
+- 프로필
+- 상세 게시물
 
-<br/>
+**⚙️ 기능 개발**
+
+- 회원가입
+  - 실시간으로 아이디, 비밀번호, 유효성 검사
+- 회원가입 프로필 설정
+  - 이름, UserId 유효성 검사
+  - 이미지 안넣을시 기본 이미지로 대체 기능 구현
+- 프로필
+  - recoil를 이용한 로그아웃 기능 구현
+  - 프로필 수정 기능
+  - useParams를 사용해 UserId에 따라 마이프로필 / 아더프로필 화면 렌더링
+  - 이미지 있는 게시물들만 가져와 grid 형태로 렌더링 / 이미지 클릭시 해당 게시물로 이동
+  - 누락된 이미지를 예외 처리 후 기본 이미지로 렌더링
+- 상세 게시글
+  - Post 컴포넌트
+    - 좋아요 갯수가 실시간으로 렌더링
+    - 댓글 갯수가 실시간으로 렌더링
+    - 팔로우, 팔로잉 숫자가 실시간으로 렌더링
+    - 게시글 데이터를 가져와 화면에 렌더링
+    - 게시물 프로필 클릭 시 해당 프로필로 이동 / 이미 프로필로 이동했을시 클릭 못하도록 기능 구현
+    - 게시물 정보창 클릭 시 상세 게시물로 이동 / 이미 상세 게시물로 이동했을시 클릭 못하도록 기능 구현
+    - 한정된 데이터 공간에 넣은 압축된 데이터를 정제 후 원하는 대로 데이터 출력
+    - 누락된 이미지를 예외 처리 후 기본 이미지로 렌더링
+- 팔로잉
+  - 팔로잉 버튼 컴포넌트 제작
+    - 본인 계정과 일치할 경우 팔로워, 팔로잉 버튼 생략
+  - 실시간 팔로잉, 팔로워 반영
+
+### **🖤 영우**
+
+**📜 프로젝트 구상**
+
+- 프로젝트 전반적인 컨셉과 아이디어 구상
+- 프로젝트 이름 구상
 
 **🖥️ 화면 개발**
 
-- 탭 메뉴, 게시글 카드, 상품 카드, 인풋, 이미지 업로드 공통 컴포넌트 제작
-- Splash, 메인, 피드, 게시글 상세, 게시글 등록 및 수정, 404 페이지 퍼블리싱
-
-<br/>
-
-**⚡ 기능 개발**
-
-- 공통 컴포넌트
-  - PostCard, ProductCard
-  - RoundedInput, RoundedButtomInput
-  - Tabs
-  - ImageUpload
-- 게시글 등록 페이지
-  - step을 나누어 단계별 행동을 유도하여 사용자 경험 개선
-  - 이미지에 판매하는 상품을 태그할 수 있는 기능 구현
-- 게시글 상세 페이지
-  - 게시글 삭제, 신고 기능 구현
-  - 댓글 작성, 삭제, 신고 기능 구현
-- 게시글 수정 페이지
-  - 게시글 수정 기능 구현
-- 피드 페이지
-  - 무한 스크롤 기능 구현
-  - 게시글 좋아요 기능 구현
-- 메인 페이지
-  - three.js를 사용한 3D 인터랙션 요소 추가
-- 로딩 페이지
-  - 회원가입 후 로그인 페이지로 이동하는 로딩페이지
-
-### **🖤 지원**
-
-**🖥️ 화면 개발**
-
-- 헤더, 네브바, Confirm, 프로필 카드 공통 컴포넌트 제작
-- 홈 페이지, 검색 페이지
-
-<br/>
+- 로그인 화면
+- 검색 화면
+- 채팅 화면
+- 로딩 화면
+- 홈화면 팔로워 있을때
+- 운동분석 모달창
 
 **⚡ 기능 개발**
 
-- 홈페이지
-  - 피드
-    - 모든 데이터 중 방꾸석 데이터만 필터링하여 피드 로드
-    - 로딩 속도를 개선하기 위해 전체 데이터를 모두 불러온 후 필터링하는 것이 아닌 useInfiniteQuery를 사용하여 데이터를 100개씩 불러올 때마다 필터링
-  - 캐러셀 기능 구현
-    - 팔로우한 계정의 피드 중 좋아요가 많은 순으로 5개 정렬
-    - 팔로우한 계정이 없다면 mock 데이터 표시
-  - SpaceTabs 기능 구현
-    - 스크롤 없이 옆으로 스크롤할 수 있는 스와이프 기능 구현
-- 검색 페이지
-  - API의 Username을 필터링 하여 검색 기능 구현
-  - 로딩 중 Skeleton UI를 보여줘 사용자 경험 개선
-  - 검색이 끝난 후 검색 리스트를 보여주기 위해 useDebounce Hooks를 만들어 사용자 경험 개선
-  - 최근 검색 기록을 LocalStorage에 저장하여 최근 검색 표시
-  - 검색 결과 더보기 기능 구현
+- 로그인 기능
+  - 서버에 로그인 요청을 보내고 응답에 따라 사용자 인터페이스를 업데이트
+  - 사용자의 로그인 정보를 Recoil 상태에 저장하고, 로컬 스토리지에 토큰을 저장한 후 홈 경로로 리다이렉트
+  - 정규 표현식을 사용하여 입력값이 올바른 형식인지 확인하는 유효성검사 후 실패시 에러메시지 출력
+  - 로그인 데이터가 일치하지 않으면 떨리는 애니매이션효과 구현
+- 홈화면 피드
+  - API 함수를 호출하여 팔로우하는 사람들의 게시물 데이터를 피드화면에 보여주고 만약 없다면 NoFollowerHome컴포넌트 보여줌
+- 리액트 라우터 보호기능
+  - 로그아웃 된 상태에서 주소창 입력으로 내부로 못 들어가도록 ProtectedRoute구현 (리코일 atom을 이용하여 로그아웃 상태인지 검사 후 라우터 주소 반환)
+- 채팅 기능
+  - 메시지를 리스트에 넣어 화면에 띄우고 새로운 메시지가 추가될때마다 아래쪽으로 스크롤되는 기능 추가
+  - 사진업로드 기능 및 현재시간 출력하는 기능 추가
+  - 채팅리스트에서 useParams훅을 이용하여 채팅상대 이름 가져와서 헤더에 출력
+- 검색 기능
+  - 검색어가 변경될때마다 API 함수를 호출하여 검색결과 가져옴
+  - 프로필이미지 없는 사용자의 이미지 예외 처리 후 기본이미지 렌더링
+- 로딩기능
+  - useEffect훅을 사용하여 서버에서 데이터를 받아오는동안 로딩화면 렌더링
 
-### **🖤 미현**
+### **🖤 가람**
 
-**📜 프로젝트 총괄 및 문서화**
+**📜 프로젝트 문서화 및 데이터 가공**
 
 - 커뮤니케이션
-  - 프로젝트 기간 동안 총 22회의 회의를 열어 진행 상황과 목표를 지속적으로 공유함으로써 팀워크를 강화
-- 프로젝트 관리
-  - 브랜치 관리
-  - Netlify를 이용한 프로젝트 배포
+  - 프로젝트 기간 동안 일 2회 이상 회의의 진행 상황과 목표를 지속적으로 공유하여 노션에 작성
 - 프로젝트 진행을 위한 작업
+  - 기능구현 확인을 위한 데이터 가공 및 수집
+  - GitHub 리드미 작성 및 사용 UI gif 생성
   - GitHub 이슈 템플릿, PR 템플릿 등록
-  - 프로젝트 초기 세팅 작업 - 폴더 트리 구성 - ESLint & Prettier 설정 및 적용 - 글로벌 스타일 적용
-  - 라우터 설계 및 구축
-- 문서화
-  - [회의록](https://www.notion.so/0e9163f19b8f4c848e91835ef21feb18?pvs=21) 작성
-  - [커밋 메시지 컨벤션](https://www.notion.so/Git-Commit-Message-Convention-99900c030c5d4dbd9247cbbf9994e12f?pvs=21) 및 [코드 컨벤션](https://www.notion.so/Code-Convention-0f8a44c4a90744e48537886dccb30561?pvs=21) 정리
-  - 깃허브 리드미 / 위키 작성
-- 지식 공유
-  - 노션에 [스터디 정보 공유](https://www.notion.so/fe4f095e488344ebb91bd901eb27676c?pvs=21) 페이지를 만들어 팀원 간 이슈 해결 및 공부한 부분 공유하는 문화 전파
-
-<br/>
 
 **🖥️ 화면 개발**
 
-- 캐러셀, 기본 버튼 및 소셜 버튼, Toast, 공통 레이아웃 컴포넌트 제작
-- 프로필 및 수정 페이지, 팔로우/팔로잉 페이지, 상품 모달 및 수정 페이지 퍼블리싱
-
-<br/>
+- 게시글 삭제, 신고하기, 로그아웃 등의 알럿 & 모달 공통 컴포넌트 제작
+  - DeleteAlert, LogoutAlert, ReportAlert
+  - AnalysisModal, DeleteEditModal, PostModal
+- Splash 후 로그인 모달 애니메이션
+  - LoginModal
+- 회원가입 후 프로필 설정
+- 프로필 수정
+- 404 페이지 퍼블리싱
+- 게시물 나열 방식(기본-그리드 상호 변경)
+- 운동분석 모달창
 
 **⚡ 기능 개발**
 
-- 프로필 관련 기능 구현
-  - 로그인시 생성되는 토큰 값을 가지고 프로필 정보 로드
-  - 페이지 url에 따라 유저 프로필과 내 프로필 분리하여 로드
-  - 프로필 수정 기능 구현 - 프로필을 수정할 때 accountname 변경에 따른 프로필 정보를 불러오기 위해 캐시된 이전 데이터를 삭제해주는 react query의 QueryClient removeQueries 메서드 사용
-- 로그아웃 기능 구현
-  - 로컬 스토리지에 저장된 토큰 및 최근 검색 기록 삭제
-- 상품 관련 기능 구현
-  - 상품 추가 기능 구현 - 상품 추가시 useInputs Hooks을 통해 validate 체크와 입력 값을 저장
-  - 상품 삭제 기능 구현
-- 팔로우 기능 구현
-  - 팔로우, 팔로잉 리스트에 무한 스크롤링 적용
-  - 팔로우, 언팔로우를 서버에 요청하고 화면에 바로 적용하기 위해 이전 쿼리를 유효하지 않은 상태로 만들어 리패치 하기 위한 react query의 QueryClient invalidQueries 메서드 사용
-- Toast 메시지 구현
-  - react-toastify 라이브러리를 추가하여 삭제, 신고시 toast 메시지 적용
-
-<br/>
+- 로딩 페이지
+  - 회원가입 후 로그인 모달이 올라오는 로딩페이지
+- 팔로워 목록 및 팔로워 취소&팔로우
+  - 팔로워 목록을 getFollowerList로 서버에 요청하여 리스트 출력
+  - 팔로우, 언팔로우를 서버에 요청하고 postFollow를 화면에 바로 적용
 
 **♻️ 컴포넌트 리팩토링 및 중복 제거**
 
 - 컴포넌트 리팩토링 및 중복 제거
-  - 회원가입시 사용되는 프로필 설정과 프로필 수정에서 사용되는 Form이 공통적으로 사용되어 [SetUserProfileForm 컴포넌트로 분리](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/pull/79#issue-1763262669)
-  - BottomSheet 컴포넌트의 재사용성을 위해 [컴포넌트 리팩토링](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/pull/60#issue-1762148761)
-  - 무한 스크롤링을 위한 Observer API 적용 코드를 [useObserver Hooks](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/commit/f20184e1ca6d45d64c22d3759b3ddc4a8e030bf3#diff-da3b68ddf380656f1e921fab250e05fef03fd5e46c30c4cddb7d74bcd804a483)로 만들어 사용
+  - 로그인시 사용되는 화면과 스플래시 후 올라오는 로그인 모달창에서 사용되는 Form이 공통적으로 사용되어 LoginForm 컴포넌트로 분리
 
-### **🖤 보은**
+### **🖤 연정**
 
-**🖥️ 화면 개발**
+🎨 **디자인 담당**
 
-- 공통 컴포넌트 UI
-  - Input
-  - BottomSheet의 BasicModal과 ListModal
-  - 갤러리
-- 메인, 로그인, 회원가입, 채팅(채팅 리스트, 채팅룸) 페이지 UI
+- 전체적인 UI 디자인
+- 로고 디자인 및 이미지 제작
 
-<br/>
+🖥️ **화면 개발**
 
-**⚡ 기능 개발**
+- 공통 헤더 네브바
+- 공통 푸터 네브바
+- 공통 BasicLayout 레이아웃
+- 팔로잉 없을 때 홈 화면
+- 채팅방 목록
+- 캘린더
+- 팔로잉, 팔로워 목록
+- 게시글 등록 페이지
+- 백그라운드 배경
+- 삭제 / 신고 모달창
 
-- 메인 페이지
-  - 이메일로 로그인 / 회원가입을 누르면 해당 페이지로 이동하는 기능 구현
-- 로그인 페이지
-  - 이메일 + 비밀번호를 입력하고 가입된 이메일인지 검사를 진행하는 기능 구현
-- 회원가입 페이지
-  - 이메일 + 비밀번호를 입력하고 유효성 검사를 진행하는 기능 구현
-  - 프로필 설정에서 이름, 아이디, 소개, 프로필 사진을 입력하고 유효성 검사를 진행하는 기능 구현
-- 채팅 페이지(Mock data 이용)
-  - 채팅 리스트 : 나에게 메시지를 보낸 사람의 프로필 사진, 이름, 채팅 한 줄 요약과 보낸 날짜가 뜨고 클릭하면 채팅룸으로 이동하는 기능 구현
-  - 채팅 룸 : 이미지 또는 텍스트 메시지를 보낼 수 있고, 채팅이 컨테이너 요소를 벗어나게 되면 최신 채팅이 위로 뜨도록 기능 구현
-- Authenticated 페이지
-  - url에서 주소를 직접 입력했을 경우, 로그인 상태일때와 로그아웃 상태일때 각각 url 접근을 방지하였다.
+⚡**기능**
+
+- 라우터 초기 셋팅
+- 게시물 등록
+  - 여러 운동을 선택할 수 있게 토글 기능 추가 및 선택한 운동마다 작성할 수 있는 인풋창이 다르게 설정
+  - 토글 Open, Close에 따라 인풋창 높이 자동 조절
+  - api 전송 한계로 인해 한 공간에 저장하여 보낼 수 있게, 데이터를 연산자로 구분하여 한줄로 전송
+  - 이미지 추가 및 삭제 가능
+- 캘린더
+  - 최대 6개월까지 렌더링되도록 제한된 무한 스크롤 기능
+  - 현재 날짜에 회색 원, 게시글 작성 목록 데이터를 가져와 업로드날짜만 추출하여 게시글을 작성한 날에만 파란 원이 채워지게 구현
+  - 게시글을 작성한 날에만 마우스가 호버되며 클릭시 작성된 게시글 상세 페이지로 이동
+- 게시글 삭제 / 신고
+  - userId를 통해 유저를 구별하여 타인의 경우 신고 기능, 본인일 경우 삭제 기능 구현
+- 댓글 작성 / 신고 / 삭제
+  - 시간 계산 기능을 통해 작성 시간에 따라 지나간 시간을 계산해서 표시
+  - userid를 통해 댓글 작성 input 창에 작성자의 프로필 사진을 렌더링
+  - 댓글 목록에서 누락된 이미지를 예외 처리 후 기본 이미지로 렌더링
+  - userId를 통해 유저를 구별하여 타인의 경우 신고 기능, 본인일 경우 삭제 기능 구현
+- 공통 헤더 네브바 컴포넌트
+  - **`BackspaceHeader`**, **`HomeHeader`**, **`ModalHeader`**, **`ProfileEditHeader`**, **`SearchHeader`**, **`UploadHeader`**
+- 공통 푸터 네브바 컴포넌트
+  - **`Navbar`**
+- 공통 레이아웃 컴포넌트
+  - **`BasicLayout`**
 
 <!-- Top Button -->
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
@@ -442,211 +472,170 @@ Remove:	파일을 삭제하는 작업만 수행한 경우
 ## 🪐 **11. 핵심 코드**
 
 <details>
-    <summary><b>11-(1) 주어진 API에서 데이터 필터링하기</b></summary>
+    <summary><b>주어진 API에서 데이터 필터링하기</b></summary>
 
-- 주어진 api를 그대로 사용해서는 모든 데이터 중 방꾸석의 데이터만 불러올 수 없었습니다. 따라서 content의 “space”, “keyword”를 추가하여 이들이 포함된 데이터만 필터링하여 모든 데이터를 보여주었습니다.
+운동 종류를 선택하는 시스템을 구축했고, 여기서 사용자가 근력 운동을 선택하면, 해당 운동의 이름과 사용하는 무게, 그리고 반복 횟수를 입력할 수 있습니다. 만약 걷기, 달리기, 등산, 자전거 타기와 같은 유산소 운동을 선택하면, 사용자는 이동 거리를 킬로미터 단위로 입력할 수 있습니다. 다른 운동을 선택한 경우에는 운동의 종류만 표시됩니다.
 
-```json
-content: '{"space":"침실","detail":"쉬폰 패브릭으로 침실의 분위기를 바꿀 수도 있답니다!"}’
-itemName: '{"name":"노란색 스탠드","keyword”:"조명"}’
-```
-
-<br/>
-
-- 또한 약 6000개의 모든 데이터를 불러온 후 필터링하면 화면을 보여주기까지의 속도가 매우 느려지기 때문에 useInfiniteQuery를 사용하여 limit를 100으로 설정하여 데이터를 100개씩 불러와 필터링하는 방식으로 구현하여 로딩 속도를 개선했습니다. <br>
-  [✨ feat: 홈페이지 전체 목록 로딩 속도 줄이기](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/commit/15e880b003785dd84e3aaf7cbb6e407c44be34c5)
+저장 공간의 한계로 인해, 우리는 데이터를 '&&&&'로 구분하여 한 공간에 저장하도록 설정했습니다. 이 구분자를 기준으로 데이터를 분류하고, 이를 통해 사용자가 원하는 정보를 정확하게 출력할 수 있도록 했습니다.
 
 ```jsx
-const {
-  data: homePostData,
-  isLoading: homeIsLoading,
-  fetchNextPage: homeFetchNextPage
-} = useInfiniteQuery(
-  "homePostData",
-  ({ skip = count.current }) => getAllPost({ limit: 100, skip }),
-  {
-    getNextPageParam: (lastPage) => {
-      return lastPage.nextPage + 1;
-    },
-    onSuccess: (newData) => {
-      const pageParam = newData.pageParams.length - 1;
-      setAllPosts([...newData.pages[pageParam].data]);
-      if (newData.pages[pageParam].isLast) {
-        setIsLast(true);
-      }
+//데이터 저장
+  const createApiData = () => {
+    let contentData = postContent;
+    let imageString = uploadedImages.join(", ");
+    let exerciseData = "";
 
-      const allFiltered = allPosts.filter((post) =>
-        post.content?.includes('"space"')
-      );
-      setFilteredAllPosts((prevData) => [...prevData, ...allFiltered]);
+    if (selectedValue === "근력 운동") {
+      exerciseData = exerciseEntries
+        .map((entry) => {
+          return `${entry.name}-${entry.sets
+            .map((set) => `${set.weight}x${set.reps}`)
+            .join(", ")}`;
+        })
+        .join(";");
+      exerciseData = `${exerciseData}`;
+    } else if (
+      ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue)
+    ) {
+      exerciseData = `${distanceInput}km`;
+    } else {
+      exerciseData = `${selectedValue}`;
     }
-  }
-);
 
-useEffect(() => {
-  if (!isLast) {
-    homeFetchNextPage();
-    count.current += 100;
-  }
-}, [homePostData, homeIsLoading, isLast, homeFetchNextPage]);
+    let timeData = `${hour}시간 ${minute}분`;
+
+    contentData = `${selectedValue}&&&&${exerciseData}&&&&${contentData}&&&&${timeData}`;
 ```
 
-</details>
-
-<details>
-	<summary><b>11-(2) STEP을 사용한 게시글 업로드 과정</b></summary>
-
-`PostUploadPage` 컴포넌트는 `useState` 훅을 활용하여 ‘사진 선택’, ‘상품태그 추가’, ‘게시글 작성’과 같은 업로드 단계를 관리합니다. 현재 `step`에 따라 해당하는 레이아웃을 렌더링하여 사용자가 단계별로 한 페이지에 한 가지 행동만 하도록 유도하여 사용자 경험을 개선했습니다.
-
 ```jsx
-export default function PostUploadPage() {
-//게시글 업로드 단계 : 사진 선택 / 상품태그 추가 / 게시글 작성
-const [step, setStep] = useState('사진 선택');
-const resetSelectedItems = useResetRecoilState(selectedProductsAtom);
-const resetMouseLoc = useResetRecoilState(mouseLocAtom);
-const resetBubbleLoc = useResetRecoilState(bubbleLocAtom);
-....
-
-const StepLayout = {
-    '사진 선택': (
-      <PostImgUpload setImg={setPostImg} setIsBtnActive={setIsBtnActive} postedImg={postedImg} />
-    ),
-    '상품태그 추가': <PostProductTag postedImg={postedImg} setIsBtnActive={setIsBtnActive} />,
-    '게시글 작성': (
-      <PostTextWrite
-        postedImg={postedImg}
-        setIsBtnActive={setIsBtnActive}
-        setContent={setContent}
-      />
-    ),
-  };
-
+//데이터 정제
+if (kind === "근력 운동") {
   return (
-    <BasicLayout type='imageSelect'>
-      <>
-        {step === '사진 선택' && StepLayout[step]}
-        {step === '상품태그 추가' && postedImg && StepLayout[step]}
-        {step === '게시글 작성' && postedImg && StepLayout[step]}
-      </>
-    </BasicLayout>
-  );
-}
-```
-
-</details>
-
-<details>
-	<summary><b>11-(3) 이미지 위의 원하는 위치에 상품 태그하기</b></summary>
-
-1. 태깅 단계: `tagStep` 상태 변수는 ‘클릭 유도’, ‘상품목록 확인’, ‘상품태그 추가’와 같은 태깅 프로세스의 다양한 단계를 관리합니다.
-
-2. 마우스와 말풍선 위치: atom을 사용하여 `mouseLoc`와 `bubbleLoc` 상태 변수를 관리합니다. `mouseLoc`는 이미지 위의 태그 위치, `bubbleLoc`는 태그와 연결된 말풍선 위치를 나타냅니다.
-3. 이미지 클릭 처리: `handleClickImg` 함수는 태깅 단계에 대한 로직을 처리하고, 이미지에 대한 태그 위치를 계산합니다. 태그 위치에 따라 `bubbleLoc` 상태 값을 조정하여 말풍선이 이미지 위에 올바르게 배치되도록 합니다.
-4. 선택된 상품과 사용자 상품: 해당 컴포넌트는 `selectedProductsAtom`과 `userProductsAtom` 값에 따라 바뀌는 모달에 뜰 목록을 Recoil의 selector를 사용하여 `canSelectProductsSelector` 선택할 수 있는 상품을 가져옵니다.
-
-```jsx
-
-// PostProductTag.jsx
-
-export default function PostProductTag({ postedImg, setIsBtnActive }) {
-  //태그추가 단계 : 클릭 유도 / 상품목록 확인 / 태그와 버블 / 상품태그 추가
-  const [tagStep, setTagStep] = useState('클릭 유도');
-  //마우스, 말풍선 위칫값
-  const [mouseLoc, setMouseLoc] = useRecoilState(mouseLocAtom);
-  const setBubbleLoc = useSetRecoilState(bubbleLocAtom);
-  //선택된 데이터
-  const selectedItems = useRecoilValue(selectedProductsAtom);
-  const userItems = useRecoilValue(userProductsAtom)
-
-  //이미지 위 클릭하면
-  const handleClickImg = (e) => {
-    //1.'클릭 유도'일때
-    if ((tagStep === '클릭 유도' || tagStep === '상품태그 추가') && e.target === e.currentTarget) {
-      // 마우스 위치 지정
-      const x = Math.floor((e.nativeEvent.offsetX / e.currentTarget.offsetWidth) * 100);
-      const y = Math.floor((e.nativeEvent.offsetY / e.currentTarget.offsetWidth) * 100);
-      setMouseLoc({
-        x: x < 6 ? 6 : x > 94 ? 94 : x,
-        y: y < 5 ? 5 : y > 95 ? 95 : y,
-      });
-		...
-  };
-
-  //마우스 위치에 따른 말풍선 위치
-  useEffect(() => {
-    ...
-    setBubbleLoc({
-      x: mouseLoc.x < 33 ? 33 : mouseLoc.x > 67 ? 67 : mouseLoc.x,
-      y: mouseLoc.y > 28 ? mouseLoc.y - 7 : mouseLoc.y + 27,
-      bubbleUp: mouseLoc.y > 28,
-      edgeLeft: eLeft,
-    });
-  }, [mouseLoc, setBubbleLoc]);
-
-...
-
-return (
     <>
-			...
-      </PostProductTagWrapper>
-      {tagStep === '상품목록 확인' && (
-        <BottomSheet isShow={isShow} onClick={handleClickModalOpen}>
-            <ModalProductList
-              setIsShow={setIsShow}
-              setTagStep={setTagStep}
-              setIsBubbleShow={setIsBubbleShow}
-            />
-        </BottomSheet>
-      )}
+      {data.split(";").map((item1, idx1) => {
+        const arr2 = item1.split("-");
+        return (
+          <HealthWrap key={`item1-${idx1}`}>
+            <HeaderWrap>
+              <Logo />
+              <HealthKind>{arr2[0]}</HealthKind>
+            </HeaderWrap>
+            {arr2.slice(1).map((item2, idx2) => {
+              return (
+                <HealthCntWrap key={`group-${idx1}-${idx2}`}>
+                  {item2.split(",").map((item3, idx3) => {
+                    const arr = item3.split("x");
+                    return (
+                      <DataWrap key={`item2-${idx1}-${idx2}-${idx3}`}>
+                        <DataKg>{arr[0]} kg</DataKg>
+                        <DataCnt>{arr[1]}회</DataCnt>
+                      </DataWrap>
+                    );
+                  })}
+                </HealthCntWrap>
+              );
+            })}
+          </HealthWrap>
+        );
+      })}
+    </>
+  );
+} else if (
+  kind === "걷기" ||
+  kind === "달리기" ||
+  kind === "등산" ||
+  kind === "자전거 타기"
+) {
+  return (
+    <>
+      <HealthWrap>
+        <HeaderWrap>
+          <Logo />
+          <HealthKind>{kind}</HealthKind>
+        </HeaderWrap>
+        <HealthCnt>{data}</HealthCnt>
+      </HealthWrap>
+    </>
+  );
+} else {
+  return (
+    <>
+      <HealthWrap>
+        <HeaderWrap>
+          <Logo />
+          <HealthKind>{kind}</HealthKind>
+        </HeaderWrap>
+      </HealthWrap>
     </>
   );
 }
 ```
 
+</details>
+
+<details>
+    <summary><b>캘린더 제한된 무한 스크롤 기능</b></summary>
+
 ```jsx
-// atoms/post.js
+const [months, setMonths] = useState([
+  moment().subtract(1, "months").format("YYYY-MM"),
+  moment().format("YYYY-MM"),
+  moment().add(1, "months").format("YYYY-MM")
+]);
 
-import { atom, selector } from "recoil";
-
-export const userProductsAtom = atom({
-  key: "userProductsAtom",
-  default: []
-});
-
-export const selectedProductsAtom = atom({
-  key: "selectedProductsAtom",
-  default: []
-});
-
-export const canSelectProductSelector = selector({
-  key: "canSelectProductsSelector",
-  get: ({ get }) => {
-    const list = get(userProductsAtom);
-    const filter = get(selectedProductsAtom).map((product) => product.id);
-    return list.filter((product) => !filter.includes(product.id));
+const handleScroll = (e) => {
+  const { scrollTop, clientHeight, scrollHeight } = e.target;
+  if (scrollTop + clientHeight >= scrollHeight && months.length < 6) {
+    setMonths((prevMonths) => [
+      ...prevMonths,
+      moment(prevMonths[prevMonths.length - 1])
+        .add(1, "months")
+        .format("YYYY-MM")
+    ]);
   }
-});
+};
 ```
 
-</details>
+위의 코드는 사용자가 달력을 스크롤할 때 새로운 달들을 동적으로 불러오는 코드 입니다.
+전형적인 무한 스크롤 방식을 사용하되, 최대 6개월까지만 달력을 확장할 수 있게 제한적으로 구현하였습니다. 사용자가 스크롤을 통해 달력의 맨 아래에 도달하면, 다음 달의 정보를 불러오는데, 이때 'months' 배열에 새로운 월이 추가됩니다. 'months' 배열의 길이가 6에 도달하면, 더 이상 새로운 월을 추가하지 않습니다.
+이렇게 제한을 둔 이유는 무한 스크롤의 경우 실제 데이터의 양을 스크롤 막대가 정확히 반영하지 않고, 사용자가 처음 위치로 돌아오기 어렵다는 문제를 해결하기 위해 제한을 두었습니다.
+사용자가 스크롤 인터페이스의 끝에 도달했는지를 감지하고, 만약 'months' 배열이 아직 6개월에 도달하지 않았다면, moment 라이브러리를 이용해 마지막 월에 한 달을 추가하여 배열에 삽입합니다. 이렇게 추가된 새로운 월은 "YYYY-MM" 포맷으로 표시됩니다.
 
 </details>
 
 <details>
-	<summary><b>11-(4) 커스텀 훅</b></summary>
-	
-`useInputs.js`
-- input에 입력해야하는 값에 따라 입력 값을 저장하는 함수, 포커스를 잃었을 때 validate를 체크하여 에러 메시지를 설정하는 함수가 필요했습니다.
-- 따라서 useInputs 커스텀 훅을 만들어 중복으로 작성될 코드를 방지하였습니다.
+    <summary><b>현재 날짜 표시 및 작성 게시글이 있을 시 이동 기능</b></summary>
 
-`useObserver.js`
+```jsx
+const currentDate = moment().format("YYYY-MM-DD");
 
-- Intersection observer는 브라우저의 뷰포트와 타겟으로 설정한 요소를 관찰하여 뷰포트에서 요소의 포함 여부를 구별하는 기능을 제공합니다.
-- 비동기적으로 실행되기 때문에 scroll과 같은 이벤트 기반의 요소 관찰에서 발생하는 렌더링 성능이나 이벤트 연속 호출 같은 문제 없이 사용이 가능합니다.
+for (let i = 1; i <= daysInMonth; i++) {
+  const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format(
+    "YYYY-MM-DD"
+  );
+  const isToday = dayDate === currentDate;
+  const isUploadDay = postDates.includes(dayDate);
+  const post = myPosts.find(
+    (p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate
+  );
+  days.push(
+    <DayCell
+      key={i}
+      $isToday={isToday}
+      $isUploadDay={isUploadDay}
+      onClick={() => post && onDayClick(post.id)}
+      style={{ cursor: post ? "pointer" : "default" }}>
+      {i}
+    </DayCell>
+  );
+}
+```
 
-`useDebounce.js`
+moment 라이브러리를 활용하여 각 날짜에 대해 "YYYY-MM-DD" 포맷으로 날짜 문자열을 생성한 후, 해당 날짜가 오늘 날짜와 일치하는지 비교합니다.
 
-유저를 검색하기 위해 input에 텍스트를 입력할 때마다 검색 결과가 바뀌면 사용자 입장에서 보기 불편하고 비효율적일 수 있습니다. 따라서 연속된 이벤트가 발생할 때 일정 시간동안 마지막 이벤트만 처리하도록 하는 useDebounce 커스텀 훅을 생성하여 입력값이 일정 시간동안 변화가 없을 때에만 검색 요청을 처리하도록 하였습니다.
+게시글 목록 API로부터 받아온 게시물 데이터에서 업로드 시간을 추출하여, 각 게시물이 업로드된 날짜를 포함하는 배열을 확인합니다. 이를 통해 생성된 날짜 문자열이 이 배열 안에 존재하는지 검사하여, 해당 날짜에 업로드된 게시물이 있는지 확인하였습니다.
+
+각 날짜에 맞는 DayCell 컴포넌트를 생성하면서, 그 날짜가 오늘인지와 게시물이 업로드된 날짜인지를 속성으로 전달합니다. 만약 특정 날짜에 게시물이 존재한다면, 해당 DayCell 컴포넌트를 클릭할 때 onDayClick 콜백 함수를 호출하도록 설정하여 클릭시 해당 게시물이 표시된 페이지로 이동시키게 설정하였습니다.
 
 </details>
 
@@ -658,52 +647,41 @@ export const canSelectProductSelector = selector({
 ## 🪐 **12. 트러블 슈팅**
 
 <details>
-	<summary><b>11-(1) 주어진 API에 따른 다른 서비스 유저 예외처리</b></summary>
+	<summary><b>게시글 업로드 시 예외처리 버그</b></summary>
+현상 : 업로드 시 운동 종류를 선택하는 토글에서 근력운동이 아닌 다른 운동을 선택할 시에도
+운동 이름을 입력해주세요 라는 Alert창이 뜸
+원인 : emptyExerciseNames를 체크할 때 근력 운동을 클릭하면 exerciseEntries에 값이 담겨서 아래 코드를 실행했을 때 false가 나오니까 Alert이 뜨지 않고
+다른 운동들의 경우에는 따로 운동 이름을 입력하지 않으니까 항상 emptyExerciseNames가 true라서 Alert이 뜸
 
-[♻️ refactor: 다른 서비스 사용자 경우 게시글 및 상품 예외 처리](https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/pull/144)
+```jsx
+const emptyExerciseNames = exerciseEntries.some(
+  (entry) => !entry.name || entry.name.trim().length === 0
+);
+```
 
-주어진 서비스 api를 다른 서비스와 공유하고 있어, 다른 이용자도 검색되고 팔로우되는 문제가 발생하여, 해당 유저의 프로필에 들어가게될 경우 해당 게시글에는 에러가 발생했습니다. 이를 해결해주기 위해 게시글에 space값이 없을 경우, 상품에 keyword가 없는 경우에 대한 예외처리를 진행했습니다. 또한 서비스마다 이미지를 받는 형식에 차이가 있어 대부분의 경우를 고려한 예외처리를 하고, 이미지에 오류가 있을 경우 기본이미지로 대체하였습니다.
-
-<img src="https://file.notion.so/f/s/6d849dbb-5306-4dfd-9709-27e6865ff1c2/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-29_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.31.37.png?id=6065e777-323c-4bc1-83e8-1827916f3e8c&table=block&spaceId=e572bfe6-27d2-436e-a2b9-a4a55043fe00&expirationTimestamp=1688083200000&signature=nYsWbUyqMzWDiDK4swUVtEQen2t0aJyENcvsouqP3RI&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-06-29+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+12.31.37.png" />
-<img src="https://file.notion.so/f/s/ff8a70a5-68fb-41b2-9fd3-dabce4eef55d/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-06-29_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.32.26.png?id=0b37e1a5-a106-46da-b4f9-c5aab1d7be33&table=block&spaceId=e572bfe6-27d2-436e-a2b9-a4a55043fe00&expirationTimestamp=1688083200000&signature=BTUEXYOklIseC_nimU6KxRLHpJJdytQkknKIl7lbb3A&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2023-06-29+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+12.32.26.png" />
+해결 방법 : 다른 운동들의 경우는 운동 이름을 따로 입력할 필요가 없으니 해당 Alert이 뜨는 조건문을 아예 if (selectedValue === "근력 운동") 부분으로 이동
 
 </details>
 
 <details>
-	<summary><b>11-(2) QueryClient Invalide Query 적용하기.</b></summary>
+	<summary><b>조건부 렌더링</b></summary>
+현상 : Post 컴포넌트에 props를 통해 전달된 데이터를 콘솔에서 확인 시 undefined로 출력되며, 브라우저에 빨간색 에러 메시지가 표시됨.
 
-- 기존에 팔로우 요청을 보내면, 팔로우 요청은 성공하지만 기존 데이터가 그대로 캐시되어있어 새로고침을 해야만 팔로우 리스트를 다시 불러와 반영되는 문제가 발생했습니다
+원인 : Post 컴포넌트는 props로부터 데이터를 받기 전에 해당 데이터를 렌더링하려고 시도했으며, 이 때 props 데이터가 undefined 상태였기 때문에 에러가 발생함.
 
-```jsx
-// 기존 코드
-// 팔로우
-const postFollowMutation = useMutation(postFollow, {
-  onSuccess: () => {
-    queryClient.invalidateQueries("followers");
-  },
-  onError: () => {
-    console.error("팔로우 실패");
-  }
-});
-```
+조치 : 데이터가 undefined 상태가 아닐 때만 값을 렌더링하도록 조건부 렌더링을 적용함. 특정 조건 하에 데이터를 출력하기 위해 JavaScript의 논리 연산자 &&와 조건부 연산자 ? :를 사용함.
 
-  <img src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/db688f75-6a3a-48b2-964f-04ac457059a2" />
-
-- 🪄 해결 방법: react query의 Query Client에서 invalidateQueries()를 사용하여 기존에 조회했던 쿼리를 무효화시키고 데이터를 새로 조회해올 수 있다.
+구현 : 다음과 같이 코드를 수정하여 props로 받은 데이터의 유효성을 검증함
 
 ```jsx
-// 팔로우
-const postFollowMutation = useMutation(postFollow, {
-  onSuccess: () => {
-    queryClient.invalidateQueries("followers");
-  },
-  onError: () => {
-    console.error("팔로우 실패");
-  }
-});
+// 논리 연산자 `&&`를 사용하여 `data`가 유효할 때만 `data.account`를 렌더링함
+{data && data.account}
+
+// 조건부 연산자 `? :`를 사용하여 `data`의 존재 여부에 따라 `data.account`를 렌더링함
+{data ? data.account}
 ```
 
-<img width="250" src="https://github.com/FRONTENDSCHOOL5/final-14-BangKKuseok/assets/51310674/f696c189-eabe-4cb5-9e9e-2969bd9d4360" />
+결과 : 위의 변경으로 props의 데이터가 로드되지 않은 상태에서의 접근을 방지하고, undefined에 대한 안전한 처리를 통해 에러 없이 데이터를 올바르게 출력할 수 있게 되었음.
 
 </details>
 
@@ -714,30 +692,31 @@ const postFollowMutation = useMutation(postFollow, {
 
 ## 🪐 **13. 리팩토링할 부분**
 
-- Portal을 활용한 Modal 리팩토링
-- 웹 접근성 높이기
-- 이미지 압축 및 예외처리
-- 완전 반응형 적용하기
-- 스크롤 위치 기억시키기
-- 날씨 API를 사용하여 청소하기 좋은 날 추천
-- 채팅기능 구현
+- **코드정리 및 주석 개선**
+  - 주석을 통해 코드의 목적과 기능 설명
+  - 사용되지 않는 코드 및 파일 제거
+- **에러 처리 강화**
+  - 프론트엔드에서의 사용자 입력 검증 강화(유효성 검사 강화)
+  - 백엔드 통신 실패 시 사용자에게 명확한 피드백 제공
+- **성능 최적화**
+  - 이미지 레이지 로딩을 이용하여 이미지와 같은 정적 자원의 지연 로딩 최소화
+  - 이미지 압축적용
+- **스타일 및 UI/UX개선**
+  - 사용자 경험을 위한 인터랙티브한 반응형 애니메이션 전반적으로 적용
+  - 모바일 화면에 국한되지 않는 pc화면용 UI구현
+- **기능 및 서비스 추가**
+  - 사용자가 올린 운동 데이터를 정제하여 모달창으로 보여주는 분석기능 구현
+  - 사용자의 데이터를 분석하여 칼로리 계산하는 기능 추가
+- **프로필 수정 화면**
+  - 전에 데이터를 저장하여 입력하지 않은 input창에 정보가 남아있게 기능 수정
+- **검색 디바운스 기능 추가**
+  - 성능 향상을 위해 일정 시간이 지난 후, 검색이 되도록 수정
+- **피드에서 최상위로 이동하는 버튼 추가**
 
-<!-- Top Button -->
-<p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
+- **상대방 프로필에서 프로필 주소 복사 기능 추가**
 
-<br />
-
-## 🪐 **14. 느낀점**
-
-### 🧸 강민주
-
-### 🍙 임연정
-
-### 🥰 오가람
-
-### 🍊권영우
-
-<!-- Top Button -->
-<p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
+- **게시물 이미지 여러장 업로드 기능 추가 && 게시물 이미지 여러장 렌더링 기능 추가**
+  <!-- Top Button -->
+  <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
 
 <br />
