@@ -60,7 +60,7 @@ const ChatRoom = () => {
 
   return (
     <>
-      <ChatHeader />
+      <ChatHeader toggleModal={toggleModal} />
       <Container>
         <Main message={message} ref={mainRef}>
           <Chat className="chat-yours">

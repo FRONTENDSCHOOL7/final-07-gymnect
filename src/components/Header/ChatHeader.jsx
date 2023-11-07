@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import BackButton from "../common/Button/BackButton";
+import { ReactComponent as MoreIcon } from "../../assets/images/icon-more.svg";
 
-const ChatHeader = () => {
+const ChatHeader = ({ toggleModal }) => {
   const { username } = useParams();
   return (
     <Container>
       <BackButton />
       <ChatUserName>{username}</ChatUserName>
+      <button onClick={toggleModal}>
+        <MoreIcon />
+      </button>
     </Container>
   );
 };

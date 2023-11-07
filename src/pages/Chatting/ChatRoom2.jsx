@@ -60,8 +60,7 @@ const ChatRoom = () => {
 
   return (
     <>
-      {/* <ChatNav toggleModal={toggleModal} /> */}
-      <ChatHeader />
+      <ChatHeader toggleModal={toggleModal} />
       <Container>
         <Main message={message} ref={mainRef}>
           <Chat className="chat-mine">
