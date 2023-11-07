@@ -47,8 +47,6 @@ const NavContainer = styled.nav`
   display: flex;
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;

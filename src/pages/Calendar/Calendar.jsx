@@ -177,15 +177,17 @@ const DayCell = styled.div`
   font-size: 16px;
   font-weight: 500;
   border-radius: 50%;
+  background-color: ${(props) => 
+    props.$isToday && !props.$isUploadDay ? "#D9D9D9" : props.$isUploadDay ? "#1294F2" : "transparent"};
+  color: ${(props) => (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#FFFFFF" : "#000000"};
+  cursor: ${(props) => (props.$isUploadDay ? "pointer" : "default")};
   &:hover {
-    background-color: ${(props) =>
-      props.$isUploadDay ? "#006cd8" : "transparent"};
-    transition: 0.3s;
+    background-color: ${(props) => 
+      (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#006cd8" : undefined};
+    color: ${(props) => 
+      (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#FFFFFF" : undefined};
+      transition: 0.3s;
   }
-  background-color: ${(props) => (props.$isToday ? "#D9D9D9" : "transparent")};
-  background-color: ${(props) =>
-    props.$isUploadDay ? "#1294F2" : "transparent"};
-  color: ${(props) => (props.$isUploadDay ? "#FFFFFF" : "#000000")};
 `;
 
 const WeekdayCell = styled(DayCell)`
