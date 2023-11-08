@@ -26,7 +26,7 @@ export const deleteFollow = async (accountname) => {
 export const getFollowingList = async (accountname) => {
   try {
     const response = await authInstance.get(
-      `/profile/${accountname}/following/?limit=Number&skip=Number`
+      `/profile/${accountname}/following/`
     );
     return response.data;
   } catch (error) {
@@ -38,7 +38,7 @@ export const getFollowingList = async (accountname) => {
 export const getFollowerList = async (accountname) => {
   try {
     const response = await authInstance.get(
-      `/profile/${accountname}/follower/?limit=Number&skip=Number`
+      `/profile/${accountname}/follower/`
     );
     return response.data;
   } catch (error) {

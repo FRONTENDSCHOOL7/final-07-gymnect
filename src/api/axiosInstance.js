@@ -19,7 +19,7 @@ export const imgInstance = axios.create({
 });
 
 /* auth 인스턴스 */
-export const authInstance = axios.create({
+const authInstance = axios.create({
   baseURL: URL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,3 +44,5 @@ authInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export { authInstance };
