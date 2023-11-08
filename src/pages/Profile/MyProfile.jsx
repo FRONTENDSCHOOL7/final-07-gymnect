@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { getUserPosts } from "../../api/post";
@@ -31,6 +31,7 @@ export default function MyProfile() {
   const setLogin = useSetRecoilState(loginAtom);
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
+  const resetUserInfo = useResetRecoilState(userInfoAtom);
   const token = localStorage.getItem("token");
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true); //데이터가 로딩중인지 나타냄
@@ -48,8 +49,10 @@ export default function MyProfile() {
   };
 
   const handleLogout = () => {
+    resetUserInfo();
     setLogin(false); // Recoil 상태 변경
-    localStorage.removeItem("token"); // 만약 토큰을 로컬 스토리지에 저장했다면 삭제합니다.
+    localStorage.removeItem("token");
+
     navigate("/login"); // 로그인 페이지로 리다이렉트
   };
 

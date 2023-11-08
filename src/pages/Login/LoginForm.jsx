@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
+import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { postUserLogin } from "../../api/auth";
 import Input from "../../components/common/Input/Input";
@@ -29,6 +30,18 @@ export default function Login() {
   const [pwErrorMsg, setPwErrorMsg] = useState(""); //비밀번호 오류 메시지
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const setLogin = useSetRecoilState(loginAtom);
+  const isUserAuthenticated = useRecoilValue(loginAtom); //로그인상태 저장
+  const [redirectNow, setRedirectNow] = useState(false);
+  const [redirectNowCheck, setRedirectNowCheck] = useState(true);
+
+  if (isUserAuthenticated) {
+    setTimeout(() => setRedirectNow(true), 500);
+    if (redirectNow && redirectNowCheck) {
+      window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
+      setRedirectNowCheck(false);
+      navigate("/home");
+    }
+  }
 
   /*이메일 유효성 검사*/
   const handleEmail = (e) => {
