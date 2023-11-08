@@ -198,6 +198,13 @@ function Upload() {
     return !isNaN(value) && !isNaN(parseFloat(value));
   };
 
+  const handleTimeChange = (value, setter) => {
+    const numericValue = value.replace(/^0+|[^0-9]/g, '');
+    if (numericValue.length <= 2) {
+      setter(numericValue);
+    }
+  };
+
   // 운동이름과 세트 추가
   const [exerciseEntries, setExerciseEntries] = useState([
     { name: "", sets: [{ weight: "", reps: "" }] }
@@ -243,12 +250,28 @@ function Upload() {
   // weight, reps 값 변경
   const handleSetChange = (exerciseIndex, setIndex, field, value) => {
     const newEntries = [...exerciseEntries];
-    newEntries[exerciseIndex].sets[setIndex][field] = value;
+    let numericValue = value.replace(/^0+|[^0-9]/g, ''); // 입력값에서 숫자가 아닌 문자를 제거하고, 앞에 오는 0을 제거
+
+  if (field === 'weight' && numericValue.length > 3) {
+    numericValue = numericValue.slice(0, 3);
+  }
+  
+  if (field === 'reps' && numericValue.length > 2) {
+    numericValue = numericValue.slice(0, 2);
+  }
+    newEntries[exerciseIndex].sets[setIndex][field] = numericValue;
     setExerciseEntries(newEntries);
   };
 
   // km 저장
   const [distanceInput, setDistanceInput] = useState("");
+  
+  const handleDistanceChange = (value) => {
+    const numericValue = value.replace(/^0+|[^0-9]/g, '');
+    if (numericValue.length <= 2) {
+      setDistanceInput(numericValue);
+    }
+  };
 
   // 게시물 작성
   const [postContent, setPostContent] = useState("");
@@ -328,6 +351,7 @@ function Upload() {
                     </LabelExerciseName>
                     <Input
                       id="exerciseName"
+                      maxLength="14"
                       value={exercise.name}
                       onChange={(e) =>
                         handleExerciseNameChange(exerciseIndex, e.target.value)
@@ -347,6 +371,7 @@ function Upload() {
                       <SetInputContainer>
                         <SetInput
                           id="kgInput"
+                          type="text"
                           value={set.weight}
                           onChange={(e) =>
                             handleSetChange(
@@ -362,6 +387,7 @@ function Upload() {
                       <SetInputContainer>
                         <SetInput
                           id="NumInput"
+                          type="text"
                           value={set.reps}
                           onChange={(e) =>
                             handleSetChange(
@@ -411,9 +437,9 @@ function Upload() {
             <KmContainer>
               <KmInput
                 id="distanceInput"
-                type="number"
+                type="text"
                 value={distanceInput}
-                onChange={(e) => setDistanceInput(e.target.value)}
+                onChange={(e) => handleDistanceChange(e.target.value)}
               />
               <label htmlFor="distanceInput">km</label>
             </KmContainer>
@@ -421,20 +447,18 @@ function Upload() {
           <TimeInputContainer $isOpen={isOpen}>
             <TimeField
               id="timeInput"
-              type="number"
+              type="text"
               value={hour}
-              onChange={(e) => setHour(e.target.value)}
-              min="0"
-              max="23"
+              onChange={(e) => handleTimeChange(e.target.value, setHour)}
+              maxLength="2"
             />
             <label htmlFor="timeInput">시간</label>
             <TimeField
               id="MinuteInput"
-              type="number"
+              type="text"
               value={minute}
-              onChange={(e) => setMinute(e.target.value)}
-              min="0"
-              max="59"
+              onChange={(e) => handleTimeChange(e.target.value, setMinute)}
+              maxLength="2"
             />
             <label htmlFor="MinuteInput">분</label>
           </TimeInputContainer>
