@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { useRecoilValue } from "recoil";
@@ -32,12 +31,14 @@ export default function Login() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const setLogin = useSetRecoilState(loginAtom);
   const isUserAuthenticated = useRecoilValue(loginAtom); //로그인상태 저장
-  const location = useLocation();
   const [redirectNow, setRedirectNow] = useState(false);
+  const [a, setA] = useState(true);
+
   if (isUserAuthenticated) {
     setTimeout(() => setRedirectNow(true), 500);
-    if (redirectNow) {
+    if (redirectNow && a) {
       window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
+      setA(false);
       navigate("/home");
     }
   }

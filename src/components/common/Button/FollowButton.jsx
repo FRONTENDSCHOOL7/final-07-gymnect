@@ -11,7 +11,6 @@ export default function FollowButton({ data, accountname, type, setRender }) {
   useEffect(() => {
     console.log(accountname, data);
     setIsfollow(data);
-    // setRender((pre) => !pre);
   }, [data]);
 
   const handleClick = async () => {
