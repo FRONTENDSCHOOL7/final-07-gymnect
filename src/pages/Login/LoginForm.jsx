@@ -32,13 +32,13 @@ export default function Login() {
   const setLogin = useSetRecoilState(loginAtom);
   const isUserAuthenticated = useRecoilValue(loginAtom); //로그인상태 저장
   const [redirectNow, setRedirectNow] = useState(false);
-  const [a, setA] = useState(true);
+  const [redirectNowCheck, setRedirectNowCheck] = useState(true);
 
   if (isUserAuthenticated) {
     setTimeout(() => setRedirectNow(true), 500);
-    if (redirectNow && a) {
+    if (redirectNow && redirectNowCheck) {
       window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
-      setA(false);
+      setRedirectNowCheck(false);
       navigate("/home");
     }
   }
