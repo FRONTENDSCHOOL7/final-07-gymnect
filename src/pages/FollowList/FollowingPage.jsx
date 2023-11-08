@@ -9,7 +9,6 @@ import styled from "styled-components";
 export default function FollowingPage() {
   const [followings, setFollowings] = useState([]);
   const { id } = useParams();
-  const [render, setRender] = useState(false);
 
   useEffect(() => {
     const fetchMyFollowingList = async () => {
@@ -22,8 +21,6 @@ export default function FollowingPage() {
     };
     fetchMyFollowingList();
   }, [id]);
-
-  useEffect(() => {}, [render]);
 
   console.log(followings);
 
@@ -45,7 +42,6 @@ export default function FollowingPage() {
                 <FollowButton
                   data={data.isfollow}
                   accountname={data.accountname}
-                  setRender={setRender}
                 />
               </ButtonContainer>
             </ListContainer>
