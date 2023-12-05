@@ -28,7 +28,7 @@ const Navbar = () => {
       </StyledNavLink>
       <StyledNavLink to={"/calendar"}>
         <CalenderIcon />
-        캘린더
+        운동 기록
       </StyledNavLink>
       <StyledNavLink to={`/profile/${myaccount}`}>
         <ProfileIcon />
