@@ -7,43 +7,36 @@ import { getUserPosts } from "../../api/post";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import Loading from "../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import rightArrow from "../../assets/images/right-arrow.svg";
+import leftArrow from "../../assets/images/left-arrow.svg";
 
-function ScrollableCalendar() {
-  const [months, setMonths] = useState([
-    moment().subtract(1, "months").format("YYYY-MM"),
-    moment().format("YYYY-MM"),
-    moment().add(1, "months").format("YYYY-MM")
-  ]);
+function ButtonCalendar() {
+  const [months, setMonths] = useState([moment().format("YYYY-MM")]);
   const [myPosts, setMyPosts] = useState([]);
   const [postDates, setPostDates] = useState([]);
   const token = localStorage.getItem("token");
   const userInfo = useRecoilValue(userInfoAtom);
   const accountname = userInfo.account;
   const navigate = useNavigate();
-  console.log("Account Name: ", accountname);
+  const [isLoading, setIsLoading] = useState(true);
 
   const goToPost = (postId) => {
     navigate(`/post/accountname/${postId}`);
   };
 
-  const handleScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target;
-    if (scrollTop + clientHeight >= scrollHeight && months.length < 6) {
-      setMonths((prevMonths) => [
-        ...prevMonths,
-        moment(prevMonths[prevMonths.length - 1])
-          .add(1, "months")
-          .format("YYYY-MM")
-      ]);
-    }
+  const handlePrevMonth = () => {
+    setMonths((prevMonths) => [
+      moment(prevMonths[0]).subtract(1, "months").format("YYYY-MM"),
+      ...prevMonths.slice(0, -1),
+    ]);
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  });
+  const handleNextMonth = () => {
+    setMonths((prevMonths) => [
+      ...prevMonths.slice(1),
+      moment(prevMonths[prevMonths.length - 1]).add(1, "months").format("YYYY-MM"),
+    ]);
+  };
 
   useEffect(() => {
     const fetchMyPosts = async () => {
@@ -51,7 +44,6 @@ function ScrollableCalendar() {
         const data = await getUserPosts(token, accountname, Infinity, 0);
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
-          // 'updatedAt' 속성의 날짜를 'YYYY-MM-DD' 형식으로 변환하여 저장합니다.
           const dates = data.post.map((post) =>
             moment(post.updatedAt).format("YYYY-MM-DD")
           );
@@ -61,16 +53,56 @@ function ScrollableCalendar() {
         }
         setIsLoading(false);
       } catch (error) {
-        console.error("게시글을 가져오는데 실패했습니다:", error);
+        console.error("Error fetching posts:", error);
         setIsLoading(false);
       }
     };
     fetchMyPosts();
   }, [userInfo, accountname, token]);
 
-  console.log(postDates);
+  const renderCalendar = (month) => {
+    const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const startDay = moment(month).startOf("month").day();
+    const daysInMonth = moment(month).daysInMonth();
+    const currentDate = moment().format("YYYY-MM-DD");
 
-  const [isLoading, setIsLoading] = useState(true);
+    let days = [];
+    for (let i = 0; i < startDay; i++) {
+      days.push(<DayCell key={`empty-start-${i}`} empty />);
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format("YYYY-MM-DD");
+      const isToday = dayDate === currentDate;
+      const isUploadDay = postDates.includes(dayDate);
+      const post = myPosts.find((p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate);
+
+      days.push(
+        <DayCell
+          key={i}
+          $isToday={isToday}
+          $isUploadDay={isUploadDay}
+          onClick={() => post && goToPost(post.id)}
+          style={{ cursor: post ? "pointer" : "default" }}>
+          {i}
+        </DayCell>
+      );
+    }
+
+    return (
+      <MonthContainer>
+        <MonthTitleWithButtons>
+          <LeftBtn onClick={handlePrevMonth} />
+          <MonthTitle>{moment(month).format("YYYY년 MM월")}</MonthTitle>
+          <RightBtn onClick={handleNextMonth} />
+        </MonthTitleWithButtons>
+        {daysInWeek.map((day) => (
+          <WeekdayCell key={day}>{day}</WeekdayCell>
+        ))}
+        {days}
+      </MonthContainer>
+    );
+  };
 
   return (
     <>
@@ -79,83 +111,16 @@ function ScrollableCalendar() {
       ) : (
         <>
           <BackNav />
-          <CalendarScrollContainer onScroll={handleScroll}>
-            {months.map((month) => (
-              <MonthCalendar
-                key={month}
-                month={month}
-                postDates={postDates}
-                myPosts={myPosts}
-                onDayClick={goToPost}
-              />
-            ))}
+          <CalendarScrollContainer>
+            {months.map((month) => renderCalendar(month))}
           </CalendarScrollContainer>
         </>
       )}
     </>
-  );
-}
-
-function MonthCalendar({ month, postDates, myPosts, onDayClick }) {
-  const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const startDay = moment(month).startOf("month").day();
-  const daysInMonth = moment(month).daysInMonth();
-
-  let days = [];
-  for (let i = 0; i < startDay; i++) {
-    days.push(<DayCell key={`empty-start-${i}`} empty />);
-  }
-
-  // 현재 날짜 확인
-  const currentDate = moment().format("YYYY-MM-DD");
-
-  // DayCell 컴포넌트를 렌더링 할 때 현재 날짜와 비교하기
-  for (let i = 1; i <= daysInMonth; i++) {
-    const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format(
-      "YYYY-MM-DD"
-    );
-    const isToday = dayDate === currentDate;
-    const isUploadDay = postDates.includes(dayDate);
-    const post = myPosts.find(
-      (p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate
-    );
-    days.push(
-      <DayCell
-        key={i}
-        $isToday={isToday}
-        $isUploadDay={isUploadDay}
-        onClick={() => post && onDayClick(post.id)}
-        style={{ cursor: post ? "pointer" : "default" }}>
-        {i}
-      </DayCell>
-    );
-  }
-
-  return (
-    <MonthContainer>
-      <MonthTitle>{moment(month).format("YYYY년 MM월")}</MonthTitle>
-      {daysInWeek.map((day) => (
-        <WeekdayCell key={day}>{day}</WeekdayCell>
-      ))}
-      {days}
-    </MonthContainer>
-  );
-}
+  )};
 
 const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 7px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #bfbfbf; // 스크롤바 색상
-    border-radius: 50px;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: #888; // 여기에 원하는 hover 시의 색상을 지정하세요
-  }
 `;
 
 const MonthContainer = styled.div`
@@ -167,6 +132,36 @@ const MonthContainer = styled.div`
   align-items: center;
   margin: 33px;
 `;
+
+const MonthTitleWithButtons = styled.div`
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const LeftBtn = styled.button`
+  background-image: url(${leftArrow});
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+`;
+
+const RightBtn = styled.button`
+  background-image: url(${rightArrow});
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+`
 
 const DayCell = styled.div`
   width: 40px;
@@ -198,10 +193,9 @@ const WeekdayCell = styled(DayCell)`
 const MonthTitle = styled.h2`
   grid-column: span 7;
   text-align: center;
-  margin-bottom: 15px;
   font-size: 18px;
   font-weight: bold;
   color: #767676;
 `;
 
-export default ScrollableCalendar;
+export default ButtonCalendar;
