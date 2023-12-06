@@ -24,21 +24,24 @@ const Search = () => {
 
   /*검색어가 변경될 때마다 api를 호출하여 검색 결과를 가져옴*/
   useEffect(() => {
-    if (query) {
-      //검색어 있다면
-      const fetchData = async () => {
-        try {
-          const results = await getUserSearch(query);
-          setSearchResults(results);
-        } catch (error) {
-          console.error("Failed to fetch search results:", error);
-        }
-      };
-      fetchData();
-    } else {
-      //검색어 없다면
-      setSearchResults([]); //만약 검색어가 없으면 결과를 초기화함
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (query) {
+        //검색어 있다면
+        const fetchData = async () => {
+          try {
+            const results = await getUserSearch(query);
+            setSearchResults(results);
+          } catch (error) {
+            console.error("Failed to fetch search results:", error);
+          }
+        };
+        fetchData();
+      } else {
+        //검색어 없다면
+        setSearchResults([]); //만약 검색어가 없으면 결과를 초기화함
+      }
+    }, 400); // 0.5초 지연
+    return () => clearTimeout(delayDebounceFn); // 클린업 함수
   }, [query]);
 
   /*프로필 클릭*/
