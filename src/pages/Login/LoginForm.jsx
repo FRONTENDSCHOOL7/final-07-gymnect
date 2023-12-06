@@ -130,7 +130,7 @@ export default function Login() {
             value={email}
             onChange={handleEmail}
             required
-            shake={errorMsg !== ""} //
+            $shake={errorMsg !== ""} //
           />
           {emailErrorMsg && <ErrorMessage>{emailErrorMsg}</ErrorMessage>}
           <Input
@@ -142,7 +142,7 @@ export default function Login() {
             value={pw}
             onChange={handlePw}
             required
-            shake={errorMsg !== ""}
+            $shake={errorMsg !== ""}
           />
           {pwErrorMsg && <ErrorMessage>{pwErrorMsg}</ErrorMessage>}
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
