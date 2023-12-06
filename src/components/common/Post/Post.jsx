@@ -48,7 +48,6 @@ export default function Post({ data, commentCount }) {
   const arr = data?.content.split("&&&&");
   const token = localStorage.getItem("token");
   const account = userInfo.account;
-  const [liked, setLiked] = useState(false);
   const [postLikeState, setPostLikeState] = useState(data && data.hearted);
   const [postLikeCount, setPostLikeCount] = useState(data && data.heartCount);
   const [isDelete, setIsDelete] = useState(false);
@@ -109,12 +108,12 @@ export default function Post({ data, commentCount }) {
 
   /* 좋아요 토글 */
   const handleToggleLike = async (e) => {
-    if (liked) {
+    if (postLikeState) {
       await fetchDisLike();
-      setLiked(false);
+      setPostLikeState(false);
     } else {
       await fetchLike();
-      setLiked(true);
+      setPostLikeState(true);
     }
   };
 
