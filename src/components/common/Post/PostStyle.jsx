@@ -76,15 +76,6 @@ export const HealthWrap = styled.ul`
   font-size: 14px;
 `;
 
-export const HealthList = styled.li`
-  font-weight: bold;
-  & > span {
-    display: inline-block;
-    text-align: center;
-    font-weight: 400;
-  }
-`;
-
 export const PostContent = styled.p`
   margin: 16px 0;
   font-size: 14px;

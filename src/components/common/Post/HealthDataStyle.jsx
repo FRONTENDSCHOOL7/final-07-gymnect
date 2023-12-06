@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logoIcon from "../../../assets/images/아령.svg";
 
-export const HealthWrap = styled.div`
+export const HealthWrap = styled.li`
   display: flex;
   flex-direction: column;
   padding: 10px 15px 10px 8px;
