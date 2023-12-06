@@ -22,6 +22,7 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]); //api호출결과롤 받아온 회원 검색결과 저장
   const navigate = useNavigate();
 
+  /*검색어가 변경될 때마다 api를 호출하여 검색 결과를 가져옴*/
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (query) {
