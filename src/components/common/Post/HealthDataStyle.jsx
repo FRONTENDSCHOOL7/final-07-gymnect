@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import whiteLogoIcon from "../../../assets/images/하얀아령.svg";
 import logoIcon from "../../../assets/images/아령.svg";
 
 export const HealthWrap = styled.div`
@@ -7,14 +6,6 @@ export const HealthWrap = styled.div`
   flex-direction: column;
   padding: 10px 15px 10px 8px;
   border-radius: 10px;
-  transition: 0.3s;
-  &:hover {
-    background-color: #006cd8;
-    transition: 0.3s;
-    * {
-      color: white;
-    }
-  }
 `;
 
 export const HeaderWrap = styled.div`
@@ -28,9 +19,6 @@ export const HeaderWrap = styled.div`
     background-color: #b7b7b7;
     border-radius: 50%;
   }
-  ${HealthWrap}:hover &:after {
-    background-color: #ffffff;
-  }
 `;
 
 export const Logo = styled.div`
@@ -38,10 +26,6 @@ export const Logo = styled.div`
   height: 23px;
   background-image: url(${logoIcon});
   background-size: cover;
-
-  ${HealthWrap}:hover & {
-    background-image: url(${whiteLogoIcon});
-  }
 `;
 
 export const HealthKind = styled.p`
@@ -52,9 +36,6 @@ export const HealthKind = styled.p`
   color: #505050;
   margin-left: 9.3px;
   border-bottom: 0.5px solid #b7b7b7;
-  ${HealthWrap}:hover & {
-    border-bottom: 0.5px solid #ffffff;
-  }
 `;
 
 export const HealthCntWrap = styled.div`
