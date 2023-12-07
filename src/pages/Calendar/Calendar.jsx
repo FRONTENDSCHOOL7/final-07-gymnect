@@ -45,7 +45,7 @@ function ButtonCalendar() {
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
           const dates = data.post.map((post) =>
-            moment(post.updatedAt).format("YYYY-MM-DD")
+            moment.utc(post.createdAt).local().format("YYYY-MM-DD")
           );
           setPostDates(dates);
         } else {
@@ -64,7 +64,7 @@ function ButtonCalendar() {
     const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const startDay = moment(month).startOf("month").day();
     const daysInMonth = moment(month).daysInMonth();
-    const currentDate = moment().format("YYYY-MM-DD");
+    // const currentDate = moment().format("YYYY-MM-DD");
 
     let days = [];
     for (let i = 0; i < startDay; i++) {
@@ -73,9 +73,13 @@ function ButtonCalendar() {
 
     for (let i = 1; i <= daysInMonth; i++) {
       const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format("YYYY-MM-DD");
-      const isToday = dayDate === currentDate;
+      const isToday = dayDate === moment().format("YYYY-MM-DD");
       const isUploadDay = postDates.includes(dayDate);
-      const post = myPosts.find((p) => moment(p.updatedAt).format("YYYY-MM-DD") === dayDate);
+      const post = myPosts.find((p) =>
+      moment.utc(p.createdAt).local().format("YYYY-MM-DD") === dayDate
+    );
+
+      console.log(`Post for ${dayDate}: `, post);
 
       days.push(
         <DayCell
