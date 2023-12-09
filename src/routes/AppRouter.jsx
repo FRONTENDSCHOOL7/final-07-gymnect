@@ -8,6 +8,7 @@ import ChatRoom3 from "../pages/Chatting/ChatRoom3";
 import ChatRoom4 from "../pages/Chatting/ChatRoom4";
 import Upload from "../pages//Upload/Upload";
 import Calendar from "../pages/Calendar/Calendar";
+import PostList from "../pages/Calendar/PostList";
 import Profile from "../pages/Profile/MyProfile";
 import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
@@ -112,6 +113,15 @@ export default function AppRouter() {
             <ProtectedRoute>
               <Navbar />
               <Calendar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/postlist"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <PostList />
             </ProtectedRoute>
           }
         />

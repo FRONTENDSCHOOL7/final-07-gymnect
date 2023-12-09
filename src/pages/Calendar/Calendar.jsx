@@ -4,6 +4,7 @@ import moment from "moment";
 import styled from "styled-components";
 import BackNav from "../../components/Header/BackspaceHeader";
 import { getUserPosts } from "../../api/post";
+import { getMyPost } from "../../api/post";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import Loading from "../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
@@ -13,30 +14,11 @@ import leftArrow from "../../assets/images/left-arrow.svg";
 function ButtonCalendar() {
   const [months, setMonths] = useState([moment().format("YYYY-MM")]);
   const [myPosts, setMyPosts] = useState([]);
-  const [postDates, setPostDates] = useState([]);
   const token = localStorage.getItem("token");
   const userInfo = useRecoilValue(userInfoAtom);
   const accountname = userInfo.account;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-
-  const goToPost = (postId) => {
-    navigate(`/post/accountname/${postId}`);
-  };
-
-  const handlePrevMonth = () => {
-    setMonths((prevMonths) => [
-      moment(prevMonths[0]).subtract(1, "months").format("YYYY-MM"),
-      ...prevMonths.slice(0, -1),
-    ]);
-  };
-
-  const handleNextMonth = () => {
-    setMonths((prevMonths) => [
-      ...prevMonths.slice(1),
-      moment(prevMonths[prevMonths.length - 1]).add(1, "months").format("YYYY-MM"),
-    ]);
-  };
 
   useEffect(() => {
     const fetchMyPosts = async () => {
@@ -44,10 +26,6 @@ function ButtonCalendar() {
         const data = await getUserPosts(token, accountname, Infinity, 0);
         if (Array.isArray(data.post)) {
           setMyPosts(data.post);
-          const dates = data.post.map((post) =>
-            moment.utc(post.createdAt).local().format("YYYY-MM-DD")
-          );
-          setPostDates(dates);
         } else {
           console.error("API response is not an array:", data);
         }
@@ -60,11 +38,22 @@ function ButtonCalendar() {
     fetchMyPosts();
   }, [userInfo, accountname, token]);
 
+  const handleDayClick = (dayDate) => {
+    const postsForDay = myPosts.filter(post =>
+      moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
+    );
+  
+    if (postsForDay.length === 1) {
+      navigate(`/post/accountname/${postsForDay[0].id}`);
+    } else if (postsForDay.length > 1) {
+      navigate('/postlist', { state: { date: dayDate, accountname: accountname } });
+    }
+  };
+
   const renderCalendar = (month) => {
     const daysInWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const startDay = moment(month).startOf("month").day();
     const daysInMonth = moment(month).daysInMonth();
-    // const currentDate = moment().format("YYYY-MM-DD");
 
     let days = [];
     for (let i = 0; i < startDay; i++) {
@@ -74,20 +63,18 @@ function ButtonCalendar() {
     for (let i = 1; i <= daysInMonth; i++) {
       const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format("YYYY-MM-DD");
       const isToday = dayDate === moment().format("YYYY-MM-DD");
-      const isUploadDay = postDates.includes(dayDate);
-      const post = myPosts.find((p) =>
-      moment.utc(p.createdAt).local().format("YYYY-MM-DD") === dayDate
-    );
 
-      console.log(`Post for ${dayDate}: `, post);
+      const isUploadDay = myPosts.some(post =>
+        moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
+      );
 
       days.push(
         <DayCell
           key={i}
           $isToday={isToday}
           $isUploadDay={isUploadDay}
-          onClick={() => post && goToPost(post.id)}
-          style={{ cursor: post ? "pointer" : "default" }}>
+          onClick={() => handleDayClick(dayDate)}
+          style={{ cursor: isUploadDay ? "pointer" : "default" }}>
           {i}
         </DayCell>
       );
@@ -96,9 +83,15 @@ function ButtonCalendar() {
     return (
       <MonthContainer>
         <MonthTitleWithButtons>
-          <LeftBtn onClick={handlePrevMonth} />
+          <LeftBtn onClick={() => setMonths(prev => [
+            moment(prev[0]).subtract(1, "months").format("YYYY-MM"),
+            ...prev.slice(0, -1),
+          ])} />
           <MonthTitle>{moment(month).format("YYYY년 MM월")}</MonthTitle>
-          <RightBtn onClick={handleNextMonth} />
+          <RightBtn onClick={() => setMonths(prev => [
+            ...prev.slice(1),
+            moment(prev[prev.length - 1]).add(1, "months").format("YYYY-MM"),
+          ])} />
         </MonthTitleWithButtons>
         {daysInWeek.map((day) => (
           <WeekdayCell key={day}>{day}</WeekdayCell>
@@ -121,7 +114,8 @@ function ButtonCalendar() {
         </>
       )}
     </>
-  )};
+  );
+}
 
 const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
