@@ -5,6 +5,7 @@ import Post from "../../components/common/Post/Post";
 import Loading from "../../components/common/Loading/Loading";
 import { getUserPosts } from "../../api/post";
 import moment from "moment";
+import BackNav from '../../components/Header/BackspaceHeader';
 
 const PostList = () => {
     const [myPosts, setMyPosts] = useState([]);
@@ -25,6 +26,7 @@ const PostList = () => {
           } else {
             console.error("API response is not an array:", data);
           }
+          setIsLoading(false);
         } catch (error) {
           console.log("게시글을 가져오는데 실패했습니다:", error);
         } finally {
@@ -39,24 +41,31 @@ const PostList = () => {
     }
   
     return (
-      <Container>
-        <h1>게시글 목록 - {date}</h1>
-        <PostContainer>
-          {myPosts.map((post, index) => (
-            <Post
-              key={index}
-              data={post}
-              commentCount={post.commentCount}
-            />
-          ))}
-        </PostContainer>
-      </Container>
+      <>
+        <BackNav />
+        <Container>
+          <PostContainer>
+            {myPosts.map((post, index) => (
+              <Post
+                key={index}
+                data={post}
+                commentCount={post.commentCount}
+              />
+            ))}
+          </PostContainer>
+        </Container>
+      </>
     );
   };
 
 export default PostList;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 20px;
   max-height: calc(100vh - 108px);
   overflow-y: scroll;
   &::-webkit-scrollbar {
