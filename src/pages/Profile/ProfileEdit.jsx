@@ -113,14 +113,14 @@ export default function ProfileEdit() {
     }
   };
 
-  /* 에러 메시지 초기화 */
-  useEffect(() => {
-    setUsernameErrorMsg("");
-  }, [username]);
+  // /* 에러 메시지 초기화 */
+  // useEffect(() => {
+  //   setUsernameErrorMsg("");
+  // }, [username]);
 
-  useEffect(() => {
-    setAccountnameErrorMsg("");
-  }, [accountname]);
+  // useEffect(() => {
+  //   setAccountnameErrorMsg("");
+  // }, [accountname]);
 
   useEffect(() => {
     if (userInfo) {
@@ -156,8 +156,6 @@ export default function ProfileEdit() {
       console.error("프로필 수정 중 오류 발생:", error);
     }
   };
-
-  console.log(usernameValid, accountnameValid);
 
   return (
     <>

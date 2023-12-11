@@ -115,14 +115,14 @@ const ProfileSettingPage = () => {
     }
   };
 
-  /* 에러 메시지 초기화 */
-  useEffect(() => {
-    setUsernameErrorMsg("");
-  }, [username]);
+  // /* 에러 메시지 초기화 */
+  // useEffect(() => {
+  //   setUsernameErrorMsg("");
+  // }, [username]);
 
-  useEffect(() => {
-    setAccountnameErrorMsg("");
-  }, [accountname]);
+  // useEffect(() => {
+  //   setAccountnameErrorMsg("");
+  // }, [accountname]);
 
   const handleProfileSignup = async (e) => {
     e.preventDefault();
@@ -200,12 +200,7 @@ const ProfileSettingPage = () => {
             required
           />
         </Section>
-        <Button
-          width="322px"
-          type="submit"
-          disabled={!handleActivateButton()}
-          // handleClick={handleProfileSignup}
-        >
+        <Button width="322px" type="submit" disabled={!handleActivateButton()}>
           짐넥 시작하기
         </Button>
       </form>
