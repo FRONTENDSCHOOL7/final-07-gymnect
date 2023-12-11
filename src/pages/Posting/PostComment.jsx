@@ -38,6 +38,7 @@ export default function PostComment() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isDeleteComment, setIsDeleteComment] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
@@ -97,10 +98,16 @@ export default function PostComment() {
       return;
     }
 
-    const response = await postComment(token, postId, inputComment);
-    console.log("Post Comment Response:", response);
-    setInputComment("");
-    fetchCommentList();
+    if (isSubmitting) {
+      return;
+    } else {
+      setIsSubmitting(true);
+      const response = await postComment(token, postId, inputComment);
+      console.log("Post Comment Response:", response);
+      setInputComment("");
+      fetchCommentList();
+      setIsSubmitting(false);
+    }
   };
 
   /* 사진 검사 */
