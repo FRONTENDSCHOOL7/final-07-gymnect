@@ -28,6 +28,7 @@ const ProfileSettingPage = () => {
   const location = useLocation();
   const userEmail = location.state.email;
   const userPassword = location.state.password;
+
   const [username, setUsername] = useState("");
   const [accountname, setAccountname] = useState("");
   const [intro, setIntro] = useState("");
@@ -76,9 +77,11 @@ const ProfileSettingPage = () => {
     const usernameInp = e.target.value;
     if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
+      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else if (usernameInp.length < 2 || usernameInp.length > 8) {
       setUsernameErrorMsg("*2~8자 이내여야 합니다.");
+      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else {
       setUsernameErrorMsg("");
@@ -112,14 +115,14 @@ const ProfileSettingPage = () => {
     }
   };
 
-  /* 에러 메시지 초기화 */
-  useEffect(() => {
-    setUsernameErrorMsg("");
-  }, [username]);
+  // /* 에러 메시지 초기화 */
+  // useEffect(() => {
+  //   setUsernameErrorMsg("");
+  // }, [username]);
 
-  useEffect(() => {
-    setAccountnameErrorMsg("");
-  }, [accountname]);
+  // useEffect(() => {
+  //   setAccountnameErrorMsg("");
+  // }, [accountname]);
 
   const handleProfileSignup = async (e) => {
     e.preventDefault();
@@ -166,7 +169,7 @@ const ProfileSettingPage = () => {
         <Section>
           <Input
             label="사용자 이름"
-            placeholder="2~10자 이내여야 합니다."
+            placeholder="2~8자 이내여야 합니다."
             id="username"
             type="text"
             name="username"
@@ -197,12 +200,7 @@ const ProfileSettingPage = () => {
             required
           />
         </Section>
-        <Button
-          width="322px"
-          type="submit"
-          disabled={!handleActivateButton()}
-          // handleClick={handleProfileSignup}
-        >
+        <Button width="322px" type="submit" disabled={!handleActivateButton()}>
           짐넥 시작하기
         </Button>
       </form>

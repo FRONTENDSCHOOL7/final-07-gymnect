@@ -30,8 +30,8 @@ export default function ProfileEdit() {
   const [image, setImage] = useState(userInfo.profileImg);
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [accountnameErrorMsg, setAccountnameErrorMsg] = useState("");
-  const [usernameValid, setUsernameValid] = useState(false);
-  const [accountnameValid, setAccountnameValid] = useState(false);
+  const [usernameValid, setUsernameValid] = useState(true);
+  const [accountnameValid, setAccountnameValid] = useState(true);
 
   useEffect(() => {
     const fetchMyInfo = async () => {
@@ -58,22 +58,27 @@ export default function ProfileEdit() {
   // username 유효성 검사
   const handleInputUsername = (e) => {
     const usernameInp = e.target.value;
+    setUsername(usernameInp);
+
     if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
+      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else if (usernameInp.length < 2 || usernameInp.length > 8) {
       setUsernameErrorMsg("*2~8자 이내여야 합니다.");
+      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else {
       setUsernameErrorMsg("");
       setUsernameValid(true);
-      setUsername(usernameInp);
     }
   };
 
   // accountname 유효성 검사
   const handleInputAccountname = async (e) => {
     const accountnameInp = e.target.value;
+    setAccountname(accountnameInp);
+
     const accountnameRegex = /^[a-zA-Z0-9._]+$/;
     const checkAccountname = await postAccountnameDuplicate(accountnameInp);
     if (accountnameInp === "") {
@@ -82,7 +87,10 @@ export default function ProfileEdit() {
     } else if (!accountnameRegex.test(accountnameInp)) {
       setAccountnameErrorMsg("*영문, 숫자, 특수문자 ., _ 만 입력해주세요");
       setAccountnameValid(false);
-    } else if (checkAccountname.message === "이미 가입된 계정ID 입니다.") {
+    } else if (
+      checkAccountname.message === "이미 가입된 계정ID 입니다." &&
+      accountnameInp !== userInfo.account
+    ) {
       setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다.");
       setAccountnameValid(false);
     } else if (accountnameInp.length < 4 || accountnameInp.length > 16) {
@@ -91,7 +99,6 @@ export default function ProfileEdit() {
     } else {
       setAccountnameValid(true);
       setAccountnameErrorMsg("");
-      setAccountname(accountnameInp);
     }
   };
 
@@ -106,14 +113,22 @@ export default function ProfileEdit() {
     }
   };
 
-  /* 에러 메시지 초기화 */
-  useEffect(() => {
-    setUsernameErrorMsg();
-  }, [username]);
+  // /* 에러 메시지 초기화 */
+  // useEffect(() => {
+  //   setUsernameErrorMsg("");
+  // }, [username]);
+
+  // useEffect(() => {
+  //   setAccountnameErrorMsg("");
+  // }, [accountname]);
 
   useEffect(() => {
-    setAccountnameErrorMsg();
-  }, [accountname]);
+    if (userInfo) {
+      setUsername(userInfo.username || "");
+      setAccountname(userInfo.account || "");
+      setIntro(userInfo.intro || "");
+    }
+  }, [userInfo]);
 
   /* 프로필 수정 */
   const handleProfileEdit = async (e) => {
@@ -169,6 +184,7 @@ export default function ProfileEdit() {
             id="username"
             type="text"
             name="username"
+            value={username}
             onChange={handleInputUsername}
             required
           />
@@ -179,6 +195,7 @@ export default function ProfileEdit() {
             id="accountname"
             type="text"
             name="accountname"
+            value={accountname}
             onChange={handleInputAccountname}
             required
           />
