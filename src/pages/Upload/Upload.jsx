@@ -164,6 +164,8 @@ function Upload() {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const saveData = async () => {
     console.log("Data saved:", {
       selectedValue,
@@ -173,7 +175,13 @@ function Upload() {
       postContent,
       uploadedImages
     });
-    await saveDataToAPI();
+    if (isSubmitting) {
+      return;
+    } else {
+      setIsSubmitting(true);
+      await saveDataToAPI();
+      setIsSubmitting(false);
+    }
   };
 
   // 운동 선택 toggle
@@ -199,7 +207,7 @@ function Upload() {
   };
 
   const handleTimeChange = (value, setter) => {
-    const numericValue = value.replace(/^0+|[^0-9]/g, '');
+    const numericValue = value.replace(/^0+|[^0-9]/g, "");
     if (numericValue.length <= 2) {
       setter(numericValue);
     }
@@ -250,24 +258,24 @@ function Upload() {
   // weight, reps 값 변경
   const handleSetChange = (exerciseIndex, setIndex, field, value) => {
     const newEntries = [...exerciseEntries];
-    let numericValue = value.replace(/^0+|[^0-9]/g, ''); // 입력값에서 숫자가 아닌 문자를 제거하고, 앞에 오는 0을 제거
+    let numericValue = value.replace(/^0+|[^0-9]/g, ""); // 입력값에서 숫자가 아닌 문자를 제거하고, 앞에 오는 0을 제거
 
-  if (field === 'weight' && numericValue.length > 3) {
-    numericValue = numericValue.slice(0, 3);
-  }
-  
-  if (field === 'reps' && numericValue.length > 2) {
-    numericValue = numericValue.slice(0, 2);
-  }
+    if (field === "weight" && numericValue.length > 3) {
+      numericValue = numericValue.slice(0, 3);
+    }
+
+    if (field === "reps" && numericValue.length > 2) {
+      numericValue = numericValue.slice(0, 2);
+    }
     newEntries[exerciseIndex].sets[setIndex][field] = numericValue;
     setExerciseEntries(newEntries);
   };
 
   // km 저장
   const [distanceInput, setDistanceInput] = useState("");
-  
+
   const handleDistanceChange = (value) => {
-    const numericValue = value.replace(/^0+|[^0-9]/g, '');
+    const numericValue = value.replace(/^0+|[^0-9]/g, "");
     if (numericValue.length <= 2) {
       setDistanceInput(numericValue);
     }
