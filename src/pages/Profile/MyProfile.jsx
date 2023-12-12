@@ -82,6 +82,8 @@ export default function MyProfile() {
     );
   }
 
+  console.log(myPosts);
+
   return (
     <>
       <ModalNav toggleModal={toggleModal} />
