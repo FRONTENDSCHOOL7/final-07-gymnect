@@ -7,9 +7,9 @@ const ModalNav = ({ toggleModal }) => {
   return (
     <Container>
       <BackButton />
-      <button onClick={toggleModal}>
+      <ButtonContainer onClick={toggleModal}>
         <MoreIcon />
-      </button>
+      </ButtonContainer>
     </Container>
   );
 };
@@ -26,4 +26,11 @@ const Container = styled.header`
   z-index: 999;
   background-color: #006cd8;
   padding: 0 12px;
+`;
+
+const ButtonContainer = styled.button`
+  padding: 15px 0 15px 50px; /* 패딩값 적용 */
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
