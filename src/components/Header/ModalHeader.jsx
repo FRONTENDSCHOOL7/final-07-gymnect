@@ -25,11 +25,11 @@ const Container = styled.header`
   height: 48px;
   z-index: 999;
   background-color: #006cd8;
-  padding: 0 12px;
+  padding: 0 0 0 12px;
 `;
 
 const ButtonContainer = styled.button`
-  padding: 15px 0 15px 50px; /* 패딩값 적용 */
+  padding: 12px; /* 패딩값 적용 */
   background: none;
   border: none;
   cursor: pointer;
