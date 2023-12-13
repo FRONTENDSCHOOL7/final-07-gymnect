@@ -27,7 +27,7 @@ const Container = styled.header`
   height: 48px;
   z-index: 999;
   background-color: #006cd8;
-  padding: 0 12px;
+  padding: 0 0 0 12px;
 `;
 
 const Logo = styled.img`
@@ -43,6 +43,6 @@ const Button = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 15px 0 15px 50px; /* 여백 크기 조절 */
+  padding: 12px; /* 여백 크기 조절 */
 
 `;
