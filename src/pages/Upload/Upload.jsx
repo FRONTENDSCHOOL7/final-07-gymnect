@@ -34,7 +34,6 @@ import {
 
 // 셀렉트창 운동종류 데이터
 const ExerciseData = [
-  { id: null, value: "운동 종류" },
   { id: 1, value: "근력 운동" },
   { id: 2, value: "걷기" },
   { id: 3, value: "달리기" },
