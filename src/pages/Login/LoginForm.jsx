@@ -16,7 +16,12 @@ import {
   LinkContainer,
   ErrorMessage,
   LoginSection,
-  SnsButton
+  SnsButton,
+  ToggleSwitch,
+  ToggleSlider,
+  CheckBox,
+  ToggleFlex,
+  ToggleText
 } from "./LoginFormStyle";
 
 export default function Login() {
@@ -33,6 +38,7 @@ export default function Login() {
   const isUserAuthenticated = useRecoilValue(loginAtom); //로그인상태 저장
   const [redirectNow, setRedirectNow] = useState(false);
   const [redirectNowCheck, setRedirectNowCheck] = useState(true);
+  const [isOn, setIsOn] = useState(false);
 
   if (isUserAuthenticated) {
     setTimeout(() => setRedirectNow(true), 500);
@@ -116,6 +122,21 @@ export default function Login() {
     return emailValid && pwValid;
   };
 
+  const toggleHandler = () => {
+    setIsOn(!isOn);
+    if (!isOn) {
+      setEmail("gym@nect.com");
+      setPw("!123123a");
+      setEmailValid(true);
+      setPwValid(true);
+    } else {
+      setEmail("");
+      setPw("");
+      setEmailValid(false);
+      setPwValid(false);
+    }
+  };
+
   return (
     <Container>
       <Title>로그인</Title>
@@ -147,8 +168,18 @@ export default function Login() {
           {pwErrorMsg && <ErrorMessage>{pwErrorMsg}</ErrorMessage>}
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
-
         <LoginSection>
+          <ToggleFlex>
+            <ToggleSwitch>
+              <CheckBox
+                type="checkbox"
+                checked={isOn}
+                onClick={toggleHandler}
+              />
+              <ToggleSlider />
+            </ToggleSwitch>
+            <ToggleText>테스트 계정으로 로그인하기</ToggleText>
+          </ToggleFlex>
           <Button
             width="322px"
             type="submit"

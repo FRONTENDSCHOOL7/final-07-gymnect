@@ -20,7 +20,7 @@ export const Form = styled.form`
   align-items: center;
 `;
 export const Section = styled.div`
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 `;
 
 export const ErrorMessage = styled.p`
@@ -75,5 +75,71 @@ export const LoginSection = styled.section`
   .facebook-login {
     margin-bottom: 2rem;
     border: 0.1rem solid #2d9cdb;
+  }
+`;
+
+export const ToggleFlex = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+`;
+
+export const ToggleText = styled.p`
+  font-size: 12px;
+  color: #767676;
+`;
+
+export const ToggleSwitch = styled.label`
+  position: relative;
+  display: inline-block;
+  width: 37px;
+  height: 21px;
+`;
+
+export const ToggleSlider = styled.span`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+`;
+
+export const CheckBox = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:checked + ${ToggleSlider} {
+    background-color: #006cd8;
+  }
+
+  &:focus + ${ToggleSlider} {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  &:checked + ${ToggleSlider}:before {
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
   }
 `;
