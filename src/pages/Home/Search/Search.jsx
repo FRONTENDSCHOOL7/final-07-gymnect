@@ -40,7 +40,7 @@ const Search = () => {
         //검색어 없다면
         setSearchResults([]); //만약 검색어가 없으면 결과를 초기화함
       }
-    }, 400); // 0.5초 지연
+    }, 400); // 0.4초 지연
     return () => clearTimeout(delayDebounceFn); // 클린업 함수
   }, [query]);
 

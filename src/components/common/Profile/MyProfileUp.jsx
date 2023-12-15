@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import { getUserProfile } from "../../../api/profile";
+import { getUserPosts } from "../../../api/post";
 import Button from "../Button/ButtonContainer";
 import FollowButton from "../Button/FollowButton";
 import profileImage from "../../../assets/images/signup-profile.svg";
@@ -31,6 +32,7 @@ export default function MyProfileUp({ accountId }) {
   const navigate = useNavigate();
   const userInfo = useRecoilValue(userInfoAtom);
   const [profileInfo, setProfileInfo] = useState("");
+  const [postData, setPostData] = useState([]); //게시물 데이터 상태
   const token = localStorage.getItem("token");
   const [showModal, setShowModal] = useState(false);
   const account = userInfo.account;
@@ -71,6 +73,50 @@ export default function MyProfileUp({ accountId }) {
       console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
+  };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // API 호출
+        const data = await getUserPosts(token, accountId, Infinity, 0);
+        if (Array.isArray(data.post)) {
+          const exerciseData = extractExerciseData(data.post); //데이터 가공
+          setPostData(exerciseData); // 가공된 데이터 저장
+          console.log("exerciseData : ", exerciseData);
+        } else {
+          console.error("API response is not an array:", data);
+        }
+      } catch (error) {
+        console.error("게시글을 가져오는데 실패했습니다.", error);
+      }
+    };
+    fetchPosts();
+  }, [accountId, token]);
+
+  const extractExerciseData = (postData) => {
+    return postData.map((post) => {
+      const parts = post.content.split("&&&&");
+      if (parts[0] === "근력 운동") {
+        const weightPattern = /\d+x\d+/g; // 무게 데이터 추출을 위한 정규표현식
+        let weightSum = 0; //근력 운동 총 무게를 합산한 데이터
+        let match;
+        while ((match = weightPattern.exec(parts[1])) !== null) {
+          const [sets, reps] = match[0].split("x").map(Number);
+          weightSum += sets * reps; // 두 숫자를 곱하여 sum에 더함
+        }
+
+        const time = parts[3]; // 시간 데이터
+        return { weightSum, time };
+      } else if (["달리기", "걷기", "등산", "자전거 타기"].includes(parts[0])) {
+        const distance = parts[1]; // 거리 데이터
+        const time = parts[3]; // 시간 데이터
+        return { distance, time };
+      } else {
+        const time = parts[3]; // 시간 데이터
+        return { time };
+      }
+    });
   };
 
   return (
@@ -137,6 +183,7 @@ export default function MyProfileUp({ accountId }) {
           isOpen={handleOpenModal}
           onClose={handleCloseModal}
           username={profileInfo.profile.username}
+          exerciseData={postData} //가공된 데이터 전달
         />
       )}
     </>
