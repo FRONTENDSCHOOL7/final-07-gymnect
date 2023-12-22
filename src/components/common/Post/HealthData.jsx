@@ -12,6 +12,7 @@ import {
 } from "./HealthDataStyle";
 
 export default function HealthData({ kind, data }) {
+  let sum = 0; // sum 변수 초기화
   if (kind === "근력 운동") {
     return (
       <>
@@ -28,6 +29,7 @@ export default function HealthData({ kind, data }) {
                   <HealthCntWrap key={`group-${idx1}-${idx2}`}>
                     {item2.split(",").map((item3, idx3) => {
                       const arr = item3.split("x");
+                      sum += parseFloat(arr[0]); // kg 값을 sum에 더하기
                       return (
                         <DataWrap key={`item2-${idx1}-${idx2}-${idx3}`}>
                           <DataKg>{arr[0]} kg</DataKg>
