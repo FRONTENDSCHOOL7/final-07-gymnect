@@ -2,22 +2,24 @@ import { authInstance } from "./axiosInstance";
 
 /* content 업로드 */
 export const postContentUpload = async (content, imageString, token) => {
-  const apiUrl = 'https://api.mandarin.weniv.co.kr/post';
+  const apiUrl = "https://api.mandarin.weniv.co.kr/post";
 
   const postData = {
-    'post': {
-      'content': content,
-      'image': imageString
+    post: {
+      content: content,
+      image: imageString
     }
   };
 
   const headers = {
-    'Authorization': `Bearer ${token}`,
-    'Content-type': 'application/json'
+    Authorization: `Bearer ${token}`,
+    "Content-type": "application/json"
   };
 
   try {
-    const response = await authInstance.post(apiUrl, postData, { headers: headers });
+    const response = await authInstance.post(apiUrl, postData, {
+      headers: headers
+    });
     if (response.status === 200 || response.status === 201) {
       console.log("게시물이 성공적으로 업로드 되었습니다.");
       return response.data;
@@ -34,12 +36,9 @@ export const postContentUpload = async (content, imageString, token) => {
 /* 팔로우 게시물 */
 export const getFollowFeed = async (limit, skip, token) => {
   try {
-    const response = await authInstance.get(`/post/feed`, {
-      params: {
-        limit,
-        skip
-      }
-    });
+    const response = await authInstance.get(
+      `/post/feed/?limit=${limit}&skip=${skip}`
+    );
     const { posts } = response.data;
     return posts;
   } catch (error) {
