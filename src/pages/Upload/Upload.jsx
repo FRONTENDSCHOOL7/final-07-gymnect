@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postContentUpload } from "../../api/post";
+import React, { useRef, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { postContentUpload, putEditPost, getPostDetail } from "../../api/post";
 import UploadNav from "../../components/Header/UploadHeader";
 import Button from "../../components/common/Button/ButtonContainer";
 import {
@@ -49,6 +49,69 @@ const ExerciseData = [
 
 function Upload() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingPostId, setEditingPostId] = useState(null);
+
+  // 게시글 수정 모드에서 기존 데이터 로딩
+  const loadPostData = async (postId) => {
+    try {
+      const data = await getPostDetail(postId);
+      if (data && data.post.content) {
+        const contentParts = data.post.content.split("&&&&");
+        if (contentParts.length === 4) {
+          const [selectedKind, exerciseData, postText, timeData] = contentParts;
+  
+          // 운동 종류 설정
+          setSelectedValue(selectedKind);
+  
+          // 게시글 내용 설정
+          setPostContent(postText);
+  
+          // 시간 데이터 설정
+          const [hours, minutes] = timeData.split('시간 ');
+          setHour(hours);
+          setMinute(minutes.replace('분', ''));
+  
+          // 운동 데이터 설정
+          if (selectedKind === "근력 운동") {
+            const exercises = exerciseData.split(';').map(exercise => {
+              const [name, setsData] = exercise.split('-');
+              const sets = setsData.split(',').map(set => {
+                const [weight, reps] = set.split('x');
+                return { weight, reps };
+              });
+              return { name, sets };
+            });
+            setExerciseEntries(exercises);
+          } else if (["걷기", "달리기", "등산", "자전거 타기"].includes(selectedKind)) {
+            setDistanceInput(exerciseData.replace('km', ''));
+          }
+        }
+      }
+  
+      // 이미지 설정
+      setUploadedImages(data.post.images || [])
+      console.log(data.post.content);
+    } catch (error) {
+      console.error("Error loading post data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (location.state?.editingPost) {
+        setIsEditMode(true);
+        setEditingPostId(location.state.editingPost.id);
+        await loadPostData(location.state.editingPost.id);
+      }
+    };
+  
+    fetchData();
+  }, [location.state]);
+
+
+
   //데이터 저장
   const createApiData = () => {
     let contentData = postContent;
@@ -146,20 +209,37 @@ function Upload() {
       const content = apiData.post.content;
       const imageString = apiData.post.image;
 
-      const response = await postContentUpload(content, imageString, token);
+      console.log("API 호출 전 데이터:", apiData, "Token:", token, "Post ID:", editingPostId);
+    
+      if (isEditMode && editingPostId) {
+        // 수정 모드일 때
+    console.log("putEditPost 호출 시작");
+    const response = await putEditPost(token, apiData.post, editingPostId);
 
-      if (response) {
-        console.log("성공적으로 API를 저장했습니다!");
-        alert("게시글을 성공적으로 올렸습니다!");
-        navigate("/home");
-      } else {
-        console.error("Error while saving data to the API:", response.data);
+    console.log("서버 응답:", response);
+    
+    if (response) {
+      const updatedData = await getPostDetail(editingPostId);
+      console.log("게시글이 성공적으로 수정되었습니다.");
+      alert("게시글이 성공적으로 수정되었습니다.");
+      navigate("/home");
+    } else {
+      console.error("Error while updating data to the API:", response.data);
+    }
+  } else {
+        // 새 게시글 생성 모드일 때
+        const response = await postContentUpload(content, imageString, token);
+    
+        if (response) {
+          console.log("성공적으로 API를 저장했습니다!");
+          alert("게시글을 성공적으로 올렸습니다!");
+          navigate("/home");
+        } else {
+          console.error("Error while saving data to the API:", response.data);
+        }
       }
     } catch (error) {
-      console.error(
-        "API call error:",
-        error.response ? error.response.data : error
-      );
+      console.error("API call error:", error.response ? error.response.data : error);
     }
   };
 
