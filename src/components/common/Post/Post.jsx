@@ -92,6 +92,7 @@ export default function Post({ data, commentCount }) {
     : {};
 
   const postId = data?.id;
+
   /* 좋아요 기능 */
   const fetchLike = async () => {
     const response = await postLike(token, postId);
@@ -128,6 +129,10 @@ export default function Post({ data, commentCount }) {
   }
 
   // 모달
+  const handleEditClick = () => {
+    navigate('/post/upload', { state: { editingPost: data } }); // 'data'는 수정할 게시글의 데이터
+  };
+
   useEffect(() => {
     if (isDelete) {
       navigate(`/profile/${data?.author.accountname}`);
@@ -139,18 +144,13 @@ export default function Post({ data, commentCount }) {
     if (!isModalOpen) {
       setIsModalOpen(true);
       if (data.author.accountname === account) {
-        setModalText(["삭제"]);
+        setModalText(["수정", "삭제"]);
         setModalFunc([
-          () => {
-            deletePostData(token, postId, setIsDelete);
-            setIsVisible(false);
-          },
-          () =>
-            navigate(`uploadedit`, {
-              state: {
-                data: post
-              }
-            })
+          () => handleEditClick(), // '수정'을 클릭했을 때 handleEditClick 호출
+        () => {
+          deletePostData(token, postId, setIsDelete);
+          setIsVisible(false);
+        }
         ]);
       } else {
         setModalText(["신고"]);

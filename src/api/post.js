@@ -72,10 +72,12 @@ export const getPostDetail = async (postId) => {
 /* 게시글 수정 */
 export const putEditPost = async (token, post, postId) => {
   try {
-    const response = await authInstance.put(`/post/${postId}`);
+    const response = await authInstance.put(`/post/${postId}`, post);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("putEditPost error:", error);
+    console.error("Server response:", error.response ? error.response.data : "No response data");
+    return null;
   }
 };
 
