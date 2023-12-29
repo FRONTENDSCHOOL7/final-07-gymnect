@@ -13,37 +13,42 @@ export default function Home() {
   const observer = useRef();
   const [skip, setSkip] = useState(0);
   const [page, setPage] = useState(0);
+  const [loadingMorePosts, setLoadingMorePosts] = useState(false);
 
   const fetchFeed = async () => {
+    setLoadingMorePosts(true);
     try {
       const data = await getFollowFeed(7, skip, userToken);
       setPosts((prevPosts) => [...prevPosts, ...data]);
-      setSkip(skip + data.length);
-      setIsLoading(false);
+      setSkip((prevSkip) => prevSkip + data.length);
     } catch (error) {
       console.error("Error fetching follow feed:", error);
-      setIsLoading(false);
     }
+    setIsLoading(false);
+    setLoadingMorePosts(false);
   };
 
   useEffect(() => {
-    const onIntersect = (entries) => {
-      const target = entries[0];
-      if (target.isIntersecting) {
-        setPage((p) => p + 1);
+    if (!loadingMorePosts) {
+      const onIntersect = async (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading) {
+          setPage((p) => p + 1);
+          await fetchFeed();
+        }
+      };
+
+      const io = new IntersectionObserver(onIntersect, { threshold: 0.1 });
+      if (observer.current) {
+        io.observe(observer.current);
       }
-    };
 
-    const io = new IntersectionObserver(onIntersect, { threshold: 1 });
-    if (observer?.current) {
-      io.observe(observer.current);
+      return () => io && io.disconnect();
     }
-
-    return () => io && io.disconnect();
-  }, [observer, isLoading]);
+  }, [observer, isLoading, loadingMorePosts]);
 
   useEffect(() => {
-    fetchFeed();
+    fetchFeed(); // 초기 데이터 불러오기
   }, []);
 
   if (isLoading) {
@@ -67,7 +72,7 @@ export default function Home() {
             <NoFollowerHome />
           )}
         </PostContainer>
-        <div ref={observer} />
+        <div ref={observer} style={{ height: '50px', width: '100%' }} />
       </Container>
     </>
   );
