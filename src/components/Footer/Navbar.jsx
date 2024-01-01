@@ -51,6 +51,7 @@ const NavContainer = styled.nav`
   align-items: center;
   cursor: pointer;
   font-size: 10px;
+  background-color: #FFFFFF;
 `;
 
 const StyledNavLink = styled(NavLink)`
