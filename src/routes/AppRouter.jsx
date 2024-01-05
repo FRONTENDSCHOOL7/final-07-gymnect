@@ -19,6 +19,7 @@ import Search from "../pages/Home/Search/Search";
 import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
+import PostEdit from "../pages/Upload/PostEdit";
 import PostComment from "../pages/Posting/PostComment";
 import ProtectedRoute from "./ProtectedRoute";
 import Error from "../pages/Error/Error";
@@ -104,6 +105,14 @@ export default function AppRouter() {
           element={
             <ProtectedRoute>
               <Upload />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/post/postedit/:postId"
+          element={
+            <ProtectedRoute>
+              <PostEdit />
             </ProtectedRoute>
           }
         />

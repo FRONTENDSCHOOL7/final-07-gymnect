@@ -69,13 +69,21 @@ export const getPostDetail = async (postId) => {
 };
 
 /* 게시글 수정 */
-export const putEditPost = async (token, post, postId) => {
+export const putEditPost = async (postId, post) => {
   try {
-    const response = await authInstance.put(`/post/${postId}`, post);
+    const response = await authInstance.put(`/post/${postId}`, {
+      post: {
+        content: post.content,
+        image: post.image
+      }
+    });
     return response.data;
   } catch (error) {
     console.error("putEditPost error:", error);
-    console.error("Server response:", error.response ? error.response.data : "No response data");
+    console.error(
+      "Server response:",
+      error.response ? error.response.data : "No response data"
+    );
     return null;
   }
 };
