@@ -1,6 +1,8 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postContentUpload } from "../../api/post";
+import React, { useRef, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userInfoAtom } from "../../atoms/UserAtom";
+import { putEditPost, getPostDetail } from "../../api/post";
 import UploadNav from "../../components/Header/UploadHeader";
 import Button from "../../components/common/Button/ButtonContainer";
 import {
@@ -47,17 +49,74 @@ const ExerciseData = [
   { id: 11, value: "기타 운동" }
 ];
 
-function Upload() {
+export default function PostEdit() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [userInfo] = useRecoilState(userInfoAtom);
+  const [editingPostId, setEditingPostId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("운동 종류");
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
   const [postContent, setPostContent] = useState("");
-  const [distanceInput, setDistanceInput] = useState("");
   const inputRef = useRef(null);
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [distanceInput, setDistanceInput] = useState("");
+
+  // 게시글 수정 모드에서 기존 데이터 로딩
+  const loadPostData = async (postId) => {
+    try {
+      const data = await getPostDetail(postId);
+      if (data && data.post.content) {
+        const contentParts = data.post.content.split("&&&&");
+        if (contentParts.length === 4) {
+          const [selectedKind, exerciseData, postText, timeData] = contentParts;
+
+          // 운동 종류 설정
+          setSelectedValue(selectedKind);
+
+          // 게시글 내용 설정
+          setPostContent(postText);
+
+          // 시간 데이터 설정
+          const [hours, minutes] = timeData.split("시간 ");
+          setHour(hours);
+          setMinute(minutes.replace("분", ""));
+
+          // 운동 데이터 설정
+          if (selectedKind === "근력 운동") {
+            const exercises = exerciseData.split(";").map((exercise) => {
+              const [name, setsData] = exercise.split("-");
+              const sets = setsData.split(",").map((set) => {
+                const [weight, reps] = set.split("x");
+                return { weight, reps };
+              });
+              return { name, sets };
+            });
+            setExerciseEntries(exercises);
+          } else if (
+            ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedKind)
+          ) {
+            setDistanceInput(exerciseData.replace("km", ""));
+          }
+        }
+      }
+
+      // 이미지 설정
+      setUploadedImages(data.post.images || []);
+    } catch (error) {
+      console.error("Error loading post data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const postId = location.state?.editingPost?.id;
+    if (postId) {
+      setEditingPostId(postId);
+      loadPostData(postId);
+    }
+  }, [location.state]);
 
   //데이터 저장
   const createApiData = () => {
@@ -152,23 +211,18 @@ function Upload() {
 
     try {
       const apiData = createApiData();
-      const token = localStorage.getItem("token");
-      const content = apiData.post.content;
-      const imageString = apiData.post.image;
-      // 새 게시글 생성 모드일 때
-      const response = await postContentUpload(content, imageString, token);
+
+      const response = await putEditPost(editingPostId, apiData.post);
 
       if (response) {
-        alert("게시글을 성공적으로 올렸습니다!");
-        navigate("/home");
+        const updatedData = await getPostDetail(editingPostId);
+        alert("게시글이 성공적으로 수정되었습니다.");
+        navigate(`/profile/${userInfo.account}`);
       } else {
-        console.error("Error while saving data to the API:", response.data);
+        console.error("Error while updating data to the API:", response.data);
       }
     } catch (error) {
-      console.error(
-        "API call error:",
-        error.response ? error.response.data : error
-      );
+      console.error("API call error:", error);
     }
   };
 
@@ -478,5 +532,3 @@ function Upload() {
     </>
   );
 }
-
-export default Upload;

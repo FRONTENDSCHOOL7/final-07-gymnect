@@ -128,11 +128,6 @@ export default function Post({ data, commentCount }) {
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  // 모달
-  const handleEditClick = () => {
-    navigate('/post/upload', { state: { editingPost: data } }); // 'data'는 수정할 게시글의 데이터
-  };
-
   useEffect(() => {
     if (isDelete) {
       navigate(`/profile/${data?.author.accountname}`);
@@ -146,11 +141,15 @@ export default function Post({ data, commentCount }) {
       if (data.author.accountname === account) {
         setModalText(["수정", "삭제"]);
         setModalFunc([
-          () => handleEditClick(), // '수정'을 클릭했을 때 handleEditClick 호출
-        () => {
-          deletePostData(token, postId, setIsDelete);
-          setIsVisible(false);
-        }
+          () => {
+            navigate(`/post/postedit/${postId}`, {
+              state: { editingPost: data }
+            });
+          }, // '수정'을 클릭했을 때 handleEditClick 호출
+          () => {
+            deletePostData(token, postId, setIsDelete);
+            setIsVisible(false);
+          }
         ]);
       } else {
         setModalText(["신고"]);

@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 import {
   Section,
   Container,
   Message,
   ButtonContainer,
   CancelButton,
-  DeleteButton,
-} from './AlertStyle';
+  DeleteButton
+} from "./AlertStyle";
 
 const Alert = ({ message, Func, cancel, closeModal }) => {
   const handleClickCancel = () => {
-    console.log('no');
     cancel(false);
     closeModal(false);
   };
 
   const handleClickYes = () => {
-    console.log('yes');
     if (Func) Func();
     cancel(false);
   };

@@ -42,7 +42,7 @@ export default function Modal({ setIsModalOpen, children }) {
         <Container
           ref={containerRef}
           style={{ height: containerHeight }}
-          showAlert={showAlert}>
+          $showAlert={showAlert}>
           {childrenWithProps}
         </Container>
       </Section>
