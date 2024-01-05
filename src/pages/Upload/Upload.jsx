@@ -62,7 +62,7 @@ function Upload() {
   //데이터 저장
   const createApiData = () => {
     let contentData = postContent;
-    let imageString = uploadedImages.join(", ");
+    let imageString = uploadedImages.join(",");
     let exerciseData = "";
 
     if (selectedValue === "근력 운동") {
@@ -70,7 +70,7 @@ function Upload() {
         .map((entry) => {
           return `${entry.name}-${entry.sets
             .map((set) => `${set.weight}x${set.reps}`)
-            .join(", ")}`;
+            .join(",")}`;
         })
         .join(";");
       exerciseData = `${exerciseData}`;
