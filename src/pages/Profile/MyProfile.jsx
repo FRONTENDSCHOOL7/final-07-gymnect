@@ -161,7 +161,7 @@ export default function MyProfile() {
             </PostContainer>
           )}
         </MainWrap>
-        <div ref={observer} style={{ height: '50px', width: '100%' }} />
+        <div ref={observer} style={{ height: "50px", width: "100%" }} />
       </Container>
       {isModalVisible && (
         <Modal handleLogout={handleLogout} toggleModal={toggleModal} />
