@@ -10,7 +10,7 @@ export default function HomeNav() {
       <h1 className="a11y-hidden">짐넥 피드</h1>
       <Logo className="" src={GymNectIcon} alt="짐넥 아이콘" />
       <Link to="/search">
-        <img src={SearchIcon} alt="검색하기 아이콘" />
+        <SearchImg src={SearchIcon} alt="검색하기 아이콘" />
       </Link>
     </Container>
   );
@@ -25,10 +25,14 @@ const Container = styled.header`
   height: 48px;
   z-index: 999;
   background-color: #006cd8;
-  padding: 0 12px;
+  padding: 0 0 0 12px;
 `;
 
 const Logo = styled.img`
   width: 37px;
   height: 26px;
+`;
+
+const SearchImg = styled.img`
+  padding: 12px;
 `;
