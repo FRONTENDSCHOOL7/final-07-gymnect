@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getUserPosts } from "../../../api/post";
+import { getUserPosts } from "../../api/post";
 import {
-  Overlay,
-  ModalWrapper,
   CloseButton,
   P,
   PrimaryText,
@@ -16,8 +14,8 @@ import {
   DataTitle,
   DataValue,
   DataUnit
-} from "./AnalysisModalStyle";
-import { ReactComponent as IconExit } from "../../../assets/images/icon-exit.svg";
+} from "./ExerciseAnalysisStyle";
+import { ReactComponent as IconExit } from "../../assets/images/icon-exit.svg";
 import moment from "moment"; // moment 라이브러리 추가
 //운동분석 차트 라이브러리 추가
 import { Bar } from "react-chartjs-2";
@@ -51,9 +49,8 @@ const AnalysisData = ({ title, value, unit }) => {
   );
 };
 
-export default function AnalysisModal({
+export default function ExerciseAnalysis({
   isOpen,
-  onClose,
   username,
   accountId,
   token
@@ -239,12 +236,12 @@ export default function AnalysisModal({
   const endOfWeek = moment().endOf("week").format("MM월 DD일");
 
   return isOpen ? (
-    <Overlay>
-      <ModalWrapper>
-        <CloseButton onClick={onClose}>
+    <>
+      <>
+        <CloseButton>
           <IconExit />
         </CloseButton>
-        <PrimaryText>GYM-NECT</PrimaryText>
+
         <P>이번 주 운동분석</P>
         <SecondaryText>
           {startOfWeek} ~ {endOfWeek}
@@ -271,7 +268,7 @@ export default function AnalysisModal({
         <Description>
           {username} 님의 이번 주 총 운동시간은 {hours}시간 {minutes}분 입니다!
         </Description>
-      </ModalWrapper>
-    </Overlay>
+      </>
+    </>
   ) : null;
 }

@@ -13,29 +13,6 @@ export const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-export const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  z-index: 9999;
-`;
-
-export const ModalWrapper = styled.div`
-  width: 350px;
-  height: 620px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 3px 8px 3px rgba(0, 0, 0, 0.1);
-  position: relative;
-`;
-
 export const P = styled.p`
   color: #000;
   font-size: 20px;
@@ -75,16 +52,16 @@ export const Chart = styled.div`
 `;
 
 export const Description = styled.div`
-  width: 322px;
+  //width: 322px;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
   margin-bottom: 20px;
   line-height: normal;
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
+  //transform: translateX(-50%);
 `;
 // 운동 데이터의 부모 컨테이너 스타일링
 export const StatsContainer = styled.div`
