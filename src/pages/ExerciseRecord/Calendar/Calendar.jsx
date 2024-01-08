@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import moment from "moment";
 import styled from "styled-components";
-import BackNav from "../../components/Header/BackspaceHeader";
-import { getUserPosts } from "../../api/post";
-import { getMyPost } from "../../api/post";
-import { userInfoAtom } from "../../atoms/UserAtom";
-import Loading from "../../components/common/Loading/Loading";
+import BackNav from "../../../components/Header/BackspaceHeader";
+import { getUserPosts } from "../../../api/post";
+import { getMyPost } from "../../../api/post";
+import { userInfoAtom } from "../../../atoms/UserAtom";
+import Loading from "../../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import rightArrow from "../../assets/images/right-arrow.svg";
-import leftArrow from "../../assets/images/left-arrow.svg";
+import rightArrow from "../../../assets/images/right-arrow.svg";
+import leftArrow from "../../../assets/images/left-arrow.svg";
+//import AnalysisModal from "../../../components/common/Modal/AnalysisModal";
+import ExerciseAnalysis from "../ExerciseAnalysis";
 
 function ButtonCalendar() {
   const [months, setMonths] = useState([moment().format("YYYY-MM")]);
@@ -39,14 +41,17 @@ function ButtonCalendar() {
   }, [userInfo, accountname, token]);
 
   const handleDayClick = (dayDate) => {
-    const postsForDay = myPosts.filter(post =>
-      moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
+    const postsForDay = myPosts.filter(
+      (post) =>
+        moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
     );
-  
+
     if (postsForDay.length === 1) {
       navigate(`/post/accountname/${postsForDay[0].id}`);
     } else if (postsForDay.length > 1) {
-      navigate('/postlist', { state: { date: dayDate, accountname: accountname } });
+      navigate("/postlist", {
+        state: { date: dayDate, accountname: accountname }
+      });
     }
   };
 
@@ -61,11 +66,14 @@ function ButtonCalendar() {
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format("YYYY-MM-DD");
+      const dayDate = moment(`${month}-${String(i).padStart(2, "0")}`).format(
+        "YYYY-MM-DD"
+      );
       const isToday = dayDate === moment().format("YYYY-MM-DD");
 
-      const isUploadDay = myPosts.some(post =>
-        moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
+      const isUploadDay = myPosts.some(
+        (post) =>
+          moment.utc(post.createdAt).local().format("YYYY-MM-DD") === dayDate
       );
 
       days.push(
@@ -83,15 +91,25 @@ function ButtonCalendar() {
     return (
       <MonthContainer>
         <MonthTitleWithButtons>
-          <LeftBtn onClick={() => setMonths(prev => [
-            moment(prev[0]).subtract(1, "months").format("YYYY-MM"),
-            ...prev.slice(0, -1),
-          ])} />
+          <LeftBtn
+            onClick={() =>
+              setMonths((prev) => [
+                moment(prev[0]).subtract(1, "months").format("YYYY-MM"),
+                ...prev.slice(0, -1)
+              ])
+            }
+          />
           <MonthTitle>{moment(month).format("YYYY년 MM월")}</MonthTitle>
-          <RightBtn onClick={() => setMonths(prev => [
-            ...prev.slice(1),
-            moment(prev[prev.length - 1]).add(1, "months").format("YYYY-MM"),
-          ])} />
+          <RightBtn
+            onClick={() =>
+              setMonths((prev) => [
+                ...prev.slice(1),
+                moment(prev[prev.length - 1])
+                  .add(1, "months")
+                  .format("YYYY-MM")
+              ])
+            }
+          />
         </MonthTitleWithButtons>
         {daysInWeek.map((day) => (
           <WeekdayCell key={day}>{day}</WeekdayCell>
@@ -108,14 +126,44 @@ function ButtonCalendar() {
       ) : (
         <>
           <BackNav />
-          <CalendarScrollContainer>
-            {months.map((month) => renderCalendar(month))}
-          </CalendarScrollContainer>
+          <CalendarAndModalContainer>
+            <AnalysisContainer>
+              <ExerciseAnalysis
+                isOpen={true}
+                username={userInfo.username}
+                accountId={userInfo.account}
+                token={token}
+              />
+            </AnalysisContainer>
+
+            <CalendarScrollContainer>
+              {months.map((month) => renderCalendar(month))}
+            </CalendarScrollContainer>
+          </CalendarAndModalContainer>
         </>
       )}
     </>
   );
 }
+// 스타일 컴포넌트
+
+const AnalysisContainer = styled.div``;
+const CalendarAndModalContainer = styled.div`
+  display: flex;
+  flex-direction: column; //컨텐츠 세로 정렬
+  /* justify-content: center;
+  align-items: start;
+  padding: 20px; */
+  align-items: flex-start; // 컴포넌트들을 상단에 정렬
+  //padding: 20px;
+  height: 90vh; // 전체 화면 높이
+  overflow-y: auto; // 세로 스크롤 허용
+  &::-webkit-scrollbar {
+    // 스크롤 바 숨기기
+    display: none;
+  }
+  margin-top: 20px;
+`;
 
 const CalendarScrollContainer = styled.div`
   max-height: calc(100vh - 108px);
@@ -159,7 +207,7 @@ const RightBtn = styled.button`
   width: 20px;
   height: 20px;
   margin-right: 5px;
-`
+`;
 
 const DayCell = styled.div`
   width: 40px;
@@ -170,16 +218,27 @@ const DayCell = styled.div`
   font-size: 16px;
   font-weight: 500;
   border-radius: 50%;
-  background-color: ${(props) => 
-    props.$isToday && !props.$isUploadDay ? "#D9D9D9" : props.$isUploadDay ? "#1294F2" : "transparent"};
-  color: ${(props) => (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#FFFFFF" : "#000000"};
+  background-color: ${(props) =>
+    props.$isToday && !props.$isUploadDay
+      ? "#D9D9D9"
+      : props.$isUploadDay
+      ? "#1294F2"
+      : "transparent"};
+  color: ${(props) =>
+    props.$isUploadDay || (props.$isToday && props.$isUploadDay)
+      ? "#FFFFFF"
+      : "#000000"};
   cursor: ${(props) => (props.$isUploadDay ? "pointer" : "default")};
   &:hover {
-    background-color: ${(props) => 
-      (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#006cd8" : undefined};
-    color: ${(props) => 
-      (props.$isUploadDay || (props.$isToday && props.$isUploadDay)) ? "#FFFFFF" : undefined};
-      transition: 0.3s;
+    background-color: ${(props) =>
+      props.$isUploadDay || (props.$isToday && props.$isUploadDay)
+        ? "#006cd8"
+        : undefined};
+    color: ${(props) =>
+      props.$isUploadDay || (props.$isToday && props.$isUploadDay)
+        ? "#FFFFFF"
+        : undefined};
+    transition: 0.3s;
   }
 `;
 
