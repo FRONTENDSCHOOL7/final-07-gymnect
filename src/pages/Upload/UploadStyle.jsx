@@ -28,6 +28,10 @@ export const DropDown = styled.div`
   padding: 12px;
   font-size: 14px;
   cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #006CD8;
+  }
 `;
 
 export const ArrowIcon = styled.span`
