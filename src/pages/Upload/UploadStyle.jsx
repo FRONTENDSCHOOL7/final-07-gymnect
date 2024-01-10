@@ -66,6 +66,11 @@ export const Option = styled.div`
   padding: 8px 35px;
   cursor: pointer;
   font-size: 14px;
+
+  transition: color 0.3s ease;
+  &:hover {
+    color: #006CD8;
+  }
 `;
 
 export const BtnWrapper = styled.div`
