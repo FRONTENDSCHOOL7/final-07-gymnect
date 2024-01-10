@@ -82,7 +82,7 @@ function Upload() {
       exerciseData = `${selectedValue}`;
     }
 
-    let timeData = `${hour}시간 ${minute}분`;
+    let timeData = `${hour || '0'}시간 ${minute}분`;
 
     contentData = `${selectedValue}&&&&${exerciseData}&&&&${contentData}&&&&${timeData}`;
 
@@ -105,14 +105,14 @@ function Upload() {
       return;
     }
 
-    if (!timeisNumeric(hour) || !timeisNumeric(minute)) {
-      alert("시간 입력 창을 올바르게 입력해주세요!");
+    if (!timeisNumeric(minute)) {
+      alert("분 입력 창을 올바르게 입력해주세요!");
       return;
     }
 
     if (
       ["걷기", "달리기", "등산", "자전거 타기"].includes(selectedValue) &&
-      (!distanceInput || !timeisNumeric(distanceInput))
+      (!distanceInput || isNaN(parseFloat(distanceInput)))
     ) {
       alert("km 입력 창을 올바르게 입력해주세요!");
       return;
@@ -260,8 +260,8 @@ function Upload() {
   };
 
   const handleDistanceChange = (value) => {
-    const numericValue = value.replace(/^0+|[^0-9]/g, "");
-    if (numericValue.length <= 2) {
+    const numericValue = value.replace(/[^0-9.]/g, "").replace(/^0+/, "");
+    if (numericValue.length <= 5) {
       setDistanceInput(numericValue);
     }
   };
