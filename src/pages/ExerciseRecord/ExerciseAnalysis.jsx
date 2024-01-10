@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getUserPosts } from "../../api/post";
 import {
-  CloseButton,
+  AnalysisWrapper,
+  TitleWithButtons,
+  LeftBtn,
+  RightBtn,
   P,
-  PrimaryText,
   SecondaryText,
   ChartWrapper,
   Chart,
@@ -15,7 +17,6 @@ import {
   DataValue,
   DataUnit
 } from "./ExerciseAnalysisStyle";
-import { ReactComponent as IconExit } from "../../assets/images/icon-exit.svg";
 import moment from "moment"; // moment 라이브러리 추가
 //운동분석 차트 라이브러리 추가
 import { Bar } from "react-chartjs-2";
@@ -28,7 +29,6 @@ import {
   Tooltip,
   Legend
 } from "chart.js";
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -57,7 +57,7 @@ export default function ExerciseAnalysis({
 }) {
   const [postData, setPostData] = useState([]); //게시물 데이터 상태
   const [weeklyData, setWeeklyData] = useState([]);
-
+  const [currentWeek, setCurrentWeek] = useState(0); // 0:이번주 -1:지난주 (이번주인지 지난주인지를 관리하는 상태변수)
   const aggregateDataByDay = (posts) => {
     //요일별 초기화
     const days = {
@@ -113,6 +113,14 @@ export default function ExerciseAnalysis({
     return <Bar data={chartData} options={chartOptions} />;
   };
 
+  //주 변경 버튼 핸들러
+  const handleWeekChange = (direction) => {
+    //미래로 가는것 방지
+    if (direction === 1 && currentWeek >= 0) return;
+
+    setCurrentWeek(currentWeek + direction);
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -120,8 +128,10 @@ export default function ExerciseAnalysis({
         const data = await getUserPosts(token, accountId, Infinity, 0);
         if (Array.isArray(data.post)) {
           // 현재 주의 시작일과 종료일 계산
-          const startOfWeek = moment().startOf("week");
-          const endOfWeek = moment().endOf("week");
+          const startOfWeek = moment()
+            .startOf("week")
+            .add(currentWeek, "weeks");
+          const endOfWeek = moment().endOf("week").add(currentWeek, "weeks");
 
           // 이번 주에 해당하는 게시물만 필터링
           const thisWeekPosts = data.post.filter((post) => {
@@ -147,7 +157,17 @@ export default function ExerciseAnalysis({
       }
     };
     fetchPosts();
-  }, [accountId, token]);
+  }, [accountId, token, currentWeek]);
+
+  //이번주의 시작일과 종료일 계산 (UI업데이트)
+  const startOfWeek = moment()
+    .startOf("week")
+    .add(currentWeek, "weeks")
+    .format("YYYY년 MM월 DD일");
+  const endOfWeek = moment()
+    .endOf("week")
+    .add(currentWeek, "weeks")
+    .format("MM월 DD일");
 
   //운동데이터 추출 함수
   const extractExerciseData = (postData) => {
@@ -231,21 +251,19 @@ export default function ExerciseAnalysis({
   const hours = Math.floor(totalTime / 60); //
   const minutes = totalTime % 60;
 
-  // 이번 주의 시작일(일요일)과 종료일(토요일) 계산
-  const startOfWeek = moment().startOf("week").format("YYYY년 MM월 DD일");
-  const endOfWeek = moment().endOf("week").format("MM월 DD일");
-
   return isOpen ? (
     <>
-      <>
-        <CloseButton>
-          <IconExit />
-        </CloseButton>
+      <AnalysisWrapper>
+        <P>주 단위 운동분석</P>
 
-        <P>이번 주 운동분석</P>
-        <SecondaryText>
-          {startOfWeek} ~ {endOfWeek}
-        </SecondaryText>
+        <TitleWithButtons>
+          <LeftBtn onClick={() => handleWeekChange(-1)} />
+          <SecondaryText>
+            {startOfWeek} ~ {endOfWeek}
+          </SecondaryText>
+          <RightBtn onClick={() => handleWeekChange(1)} />
+        </TitleWithButtons>
+
         <StatsContainer>
           <AnalysisData title="볼륨" value={totalVolume} unit="kg" />
           <AnalysisData
@@ -253,22 +271,29 @@ export default function ExerciseAnalysis({
             value={totalDistance.toFixed(2)}
             unit="km"
           />
-          <AnalysisData title="시간" value={hours + ":" + minutes} unit="" />
+          <AnalysisData
+            title="운동 시간"
+            value={hours + "시간 " + minutes + "분"}
+            unit=""
+          />
           <AnalysisData
             title="예상 소비 칼로리"
             value={Math.floor(totalKcal)}
             unit="kcal"
           />
         </StatsContainer>
+        {/* <Description>
+          {username} 님의 주당 총 운동시간은 {hours}시간 {minutes}분 입니다!
+        </Description> */}
         <ChartWrapper>
           <Chart>
             <ExerciseChart data={weeklyData} />
           </Chart>
         </ChartWrapper>
         <Description>
-          {username} 님의 이번 주 총 운동시간은 {hours}시간 {minutes}분 입니다!
+          {username} 님의 주당 총 운동시간은 {hours}시간 {minutes}분 입니다!
         </Description>
-      </>
+      </AnalysisWrapper>
     </>
   ) : null;
 }

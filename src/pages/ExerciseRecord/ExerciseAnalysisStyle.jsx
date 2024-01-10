@@ -1,4 +1,40 @@
 import styled from "styled-components";
+import rightArrow from "../../assets/images/right-arrow.svg";
+import leftArrow from "../../assets/images/left-arrow.svg";
+
+export const AnalysisWrapper = styled.div`
+  max-width: 94%; // 최대 너비를 90%로 설정
+  width: 100%; // 전체 너비를 부모 컨테이너에 맞춤
+  margin: 0 auto; // 상하 마진은 0, 좌우 마진은 자동으로 설정하여 가운데 정렬
+  padding: 15px 5px 15px 5px; // 안쪽 여백 추가
+`;
+export const TitleWithButtons = styled.div`
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const LeftBtn = styled.button`
+  background-image: url(${leftArrow});
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 25px;
+`;
+
+export const RightBtn = styled.button`
+  background-image: url(${rightArrow});
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: 25px;
+`;
 
 export const CloseButton = styled.button`
   position: absolute;
@@ -18,21 +54,14 @@ export const P = styled.p`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -1.5px;
-  padding: 11px 0 0 34px;
-`;
-
-export const PrimaryText = styled.div`
-  color: #828282;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: -0.6px;
-  margin: 39px 0 0 34px;
+  //padding: 11px 0 0 0;
+  text-align: center;
 `;
 
 export const SecondaryText = styled.div`
-  padding: 17px 0px 7px 34px;
+  padding: 14px 0px 10px 0;
+  font-size: 12px;
+  text-align: center;
 `;
 
 export const ChartWrapper = styled.div`
@@ -42,13 +71,14 @@ export const ChartWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid #d9d9d9;
+  //border-top: 1px solid #d9d9d9;
+  //border-bottom: 1px solid #d9d9d9;
 `;
 
 export const Chart = styled.div`
   padding-top: 12px;
   width: 90%;
-  height: 29vh;
+  height: 26vh;
 `;
 
 export const Description = styled.div`
@@ -56,21 +86,21 @@ export const Description = styled.div`
   font-size: 14px;
   font-weight: 400;
   text-align: center;
-  margin-bottom: 20px;
+  margin: 10px 0 5px 0;
   line-height: normal;
   //position: absolute;
-  bottom: 0;
+  //bottom: 0;
   left: 50%;
   //transform: translateX(-50%);
 `;
 // 운동 데이터의 부모 컨테이너 스타일링
 export const StatsContainer = styled.div`
   display: flex;
-  justify-content: space-between; // 컨테이너들 사이에 공간을 균등하게 분배
+  justify-content: center; // 컨테이너들 사이에 공간을 균등하게 분배
   flex-wrap: wrap; // 추가 컨테이너들은 새로운 줄로 감싸짐
   align-items: center;
   max-width: 600px; // 부모 컨테이너의 최대 너비를 설정하여 가운데 정렬하기 쉽게 함
-  margin: auto; // 가운데 정렬
+  margin: 0 auto; // 가운데 정렬
 `;
 // 데이터 컨테이너 스타일링
 export const DataContainer = styled.div`
@@ -78,12 +108,12 @@ export const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 70px;
+  height: 60px;
   align-items: center;
   background: #f5f5f5;
   border-radius: 10px;
   padding: 20px;
-  margin: 10px; // 컨테이너 간의 간격
+  margin: 3px; // 컨테이너 간의 간격
   box-sizing: border-box;
 `;
 

@@ -61,7 +61,6 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/chatroom1/:username"
           element={
