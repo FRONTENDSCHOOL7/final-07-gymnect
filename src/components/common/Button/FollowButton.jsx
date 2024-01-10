@@ -35,7 +35,6 @@ export default function FollowButton({
   };
 
   if (userInfo?.account === accountname) {
-    // 같다면 아무것도 렌더링하지 않습니다.
     return null;
   }
 

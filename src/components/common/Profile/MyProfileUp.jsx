@@ -8,7 +8,6 @@ import FollowButton from "../Button/FollowButton";
 import profileImage from "../../../assets/images/signup-profile.svg";
 import commentIcon from "../../../assets/images/icon-reply.svg";
 import shareIcon from "../../../assets/images/icon-share.svg";
-import AnalysisModal from "../../common/Modal/AnalysisModal";
 import {
   MyProfileUpContainer,
   Wrap,
@@ -32,16 +31,7 @@ export default function MyProfileUp({ accountId }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [profileInfo, setProfileInfo] = useState("");
   const token = localStorage.getItem("token");
-  const [showModal, setShowModal] = useState(false);
   const account = userInfo.account;
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   const goToProfileEdit = () => {
     navigate(`/profile/${userInfo.account}/edit`);
@@ -114,43 +104,30 @@ export default function MyProfileUp({ accountId }) {
         </AccountSpan>
         <IntroSpan>{profileInfo && profileInfo.profile.intro}</IntroSpan>
         <ButtonWrap>
+          <CommentButton>
+            <CommentImg src={commentIcon} />
+          </CommentButton>
           {account === accountId ? (
             <>
               <Button height="34px" onClick={goToProfileEdit}>
                 프로필 수정
               </Button>
-              <Button height="34px" onClick={handleOpenModal}>
-                운동 분석
-              </Button>
             </>
           ) : (
             <>
-              <CommentButton>
-                <CommentImg src={commentIcon} />
-              </CommentButton>
               <FollowButton
                 data={profileInfo && profileInfo.profile.isfollow}
                 accountname={profileInfo && profileInfo.profile.accountname}
                 type="A"
                 onFollowStatusChange={handleFollowStatusChange}
               />
-              <ShareButton>
-                <ShareImg src={shareIcon} />
-              </ShareButton>
             </>
           )}
+          <ShareButton>
+            <ShareImg src={shareIcon} />
+          </ShareButton>
         </ButtonWrap>
       </MyProfileUpContainer>
-      {showModal && (
-        <AnalysisModal
-          isOpen={handleOpenModal}
-          onClose={handleCloseModal}
-          username={profileInfo.profile.username}
-          //exerciseData={postData} //가공된 데이터 전달
-          accountId={accountId}
-          token={token}
-        />
-      )}
     </>
   );
 }
