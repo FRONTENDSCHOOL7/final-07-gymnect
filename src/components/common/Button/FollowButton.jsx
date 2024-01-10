@@ -4,12 +4,16 @@ import { userInfoAtom } from "../../../atoms/UserAtom";
 import styled from "styled-components";
 import { postFollow, deleteFollow } from "../../../api/follow";
 
-export default function FollowButton({ data, accountname, type, setRender }) {
+export default function FollowButton({
+  data,
+  accountname,
+  type,
+  onFollowStatusChange
+}) {
   const [isfollow, setIsfollow] = useState(data);
   const userInfo = useRecoilValue(userInfoAtom);
 
   useEffect(() => {
-    console.log(accountname, data);
     setIsfollow(data);
   }, [data]);
 
@@ -21,7 +25,10 @@ export default function FollowButton({ data, accountname, type, setRender }) {
         await postFollow(accountname); // accountname을 매개변수로 전달
       }
       setIsfollow(!isfollow);
-      setRender((pre) => !pre);
+
+      if (onFollowStatusChange) {
+        onFollowStatusChange(!isfollow);
+      }
     } catch (error) {
       console.error("Error while trying to follow/unfollow:", error);
     }
