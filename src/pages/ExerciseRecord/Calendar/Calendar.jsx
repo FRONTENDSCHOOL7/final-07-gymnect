@@ -4,7 +4,6 @@ import moment from "moment";
 import styled from "styled-components";
 import BackNav from "../../../components/Header/BackspaceHeader";
 import { getUserPosts } from "../../../api/post";
-import { getMyPost } from "../../../api/post";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import Loading from "../../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
@@ -151,18 +150,17 @@ const AnalysisContainer = styled.div``;
 const CalendarAndModalContainer = styled.div`
   display: flex;
   flex-direction: column; //컨텐츠 세로 정렬
-  /* justify-content: center;
-  align-items: start;
-  padding: 20px; */
-  align-items: flex-start; // 컴포넌트들을 상단에 정렬
+  //justify-content: center;
   //padding: 20px;
+  //align-items: flex-start; // 컴포넌트들을 상단에 정렬
+  //padding: 0 10px 10px 10px;
   height: 90vh; // 전체 화면 높이
   overflow-y: auto; // 세로 스크롤 허용
   &::-webkit-scrollbar {
     // 스크롤 바 숨기기
     display: none;
   }
-  margin-top: 20px;
+  //margin-top: 12px;
 `;
 
 const CalendarScrollContainer = styled.div`
@@ -173,10 +171,10 @@ const MonthContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
-  padding: 10px;
+  padding: 20px;
   justify-content: center;
   align-items: center;
-  margin: 33px;
+  margin: 0 auto;
 `;
 
 const MonthTitleWithButtons = styled.div`
@@ -195,7 +193,7 @@ const LeftBtn = styled.button`
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-left: 10px;
+  margin-left: 25px;
 `;
 
 const RightBtn = styled.button`
@@ -206,7 +204,7 @@ const RightBtn = styled.button`
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: 5px;
+  margin-right: 25px;
 `;
 
 const DayCell = styled.div`
