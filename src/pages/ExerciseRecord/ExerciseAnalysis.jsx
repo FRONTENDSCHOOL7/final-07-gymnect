@@ -3,6 +3,7 @@ import { getUserPosts } from "../../api/post";
 import {
   AnalysisWrapper,
   TitleWithButtons,
+  TextGroup,
   LeftBtn,
   RightBtn,
   P,
@@ -91,12 +92,19 @@ export default function ExerciseAnalysis({
     },
     plugins: {
       legend: {
-        display: true
+        display: true,
+        position: 'bottom',
+        align: 'end',
+        labels: {
+          boxWidth: 20,
+          // padding: 20
+        }
       }
     },
     maintainAspectRatio: false,
     aspectRatio: 15 // 너비 대비 높이 비율
   };
+  
   const ExerciseChart = ({ data }) => {
     const chartData = {
       labels: ["일", "월", "화", "수", "목", "금", "토"],
@@ -254,13 +262,15 @@ export default function ExerciseAnalysis({
   return isOpen ? (
     <>
       <AnalysisWrapper>
-        <P>주 단위 운동분석</P>
 
         <TitleWithButtons>
           <LeftBtn onClick={() => handleWeekChange(-1)} />
-          <SecondaryText>
-            {startOfWeek} ~ {endOfWeek}
-          </SecondaryText>
+        <TextGroup>
+          <P>주 단위 운동분석</P>
+            <SecondaryText>
+              {startOfWeek} ~ {endOfWeek}
+            </SecondaryText>
+        </TextGroup>
           <RightBtn onClick={() => handleWeekChange(1)} />
         </TitleWithButtons>
 
@@ -282,17 +292,14 @@ export default function ExerciseAnalysis({
             unit="kcal"
           />
         </StatsContainer>
-        {/* <Description>
-          {username} 님의 주당 총 운동시간은 {hours}시간 {minutes}분 입니다!
-        </Description> */}
         <ChartWrapper>
           <Chart>
             <ExerciseChart data={weeklyData} />
           </Chart>
         </ChartWrapper>
-        <Description>
+        {/* <Description>
           {username} 님의 주당 총 운동시간은 {hours}시간 {minutes}분 입니다!
-        </Description>
+        </Description> */}
       </AnalysisWrapper>
     </>
   ) : null;

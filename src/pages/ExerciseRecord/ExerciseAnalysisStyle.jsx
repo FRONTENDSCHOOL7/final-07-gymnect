@@ -6,14 +6,25 @@ export const AnalysisWrapper = styled.div`
   max-width: 94%; // 최대 너비를 90%로 설정
   width: 100%; // 전체 너비를 부모 컨테이너에 맞춤
   margin: 0 auto; // 상하 마진은 0, 좌우 마진은 자동으로 설정하여 가운데 정렬
-  padding: 15px 5px 15px 5px; // 안쪽 여백 추가
+  padding: 15px 0px; // 안쪽 여백 추가
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 export const TitleWithButtons = styled.div`
-  grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 0 25px;
 `;
+
+export const TextGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const LeftBtn = styled.button`
   background-image: url(${leftArrow});
   background-repeat: no-repeat;
@@ -22,7 +33,8 @@ export const LeftBtn = styled.button`
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-left: 25px;
+  margin-left: 10px;
+  margin-top: 11px;
 `;
 
 export const RightBtn = styled.button`
@@ -33,35 +45,39 @@ export const RightBtn = styled.button`
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: 25px;
+  margin-right: 8px;
+  margin-top: 11px;
 `;
 
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 8px;
-  height: 8px;
-  background: none;
-  border: 2.05px;
-  padding: 0;
-  outline: none;
-  cursor: pointer;
-`;
+// export const CloseButton = styled.button`
+//   position: absolute;
+//   top: 16px;
+//   right: 16px;
+//   width: 8px;
+//   height: 8px;
+//   background: none;
+//   border: 2.05px;
+//   padding: 0;
+//   outline: none;
+//   cursor: pointer;
+// `;
 
-export const P = styled.p`
-  color: #000;
-  font-size: 20px;
+export const P = styled.h2`
+  color: #3D3D3D;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: -1.5px;
+  /* letter-spacing: -1.5px; */
   //padding: 11px 0 0 0;
   text-align: center;
+  font-weight: bold;
+  margin: 0;
 `;
 
 export const SecondaryText = styled.div`
-  padding: 14px 0px 10px 0;
-  font-size: 12px;
+  padding: 8px 0px 10px 0;
+  font-size: 11px;
   text-align: center;
+  margin: 0;
 `;
 
 export const ChartWrapper = styled.div`
@@ -76,9 +92,9 @@ export const ChartWrapper = styled.div`
 `;
 
 export const Chart = styled.div`
-  padding-top: 12px;
+  padding-top: 9px;
   width: 90%;
-  height: 26vh;
+  height: 25vh;
 `;
 
 export const Description = styled.div`
@@ -97,10 +113,12 @@ export const Description = styled.div`
 export const StatsContainer = styled.div`
   display: flex;
   justify-content: center; // 컨테이너들 사이에 공간을 균등하게 분배
-  flex-wrap: wrap; // 추가 컨테이너들은 새로운 줄로 감싸짐
   align-items: center;
+  flex-wrap: wrap; // 추가 컨테이너들은 새로운 줄로 감싸짐
   max-width: 600px; // 부모 컨테이너의 최대 너비를 설정하여 가운데 정렬하기 쉽게 함
+  width: 100%;
   margin: 0 auto; // 가운데 정렬
+  padding: 0;
 `;
 // 데이터 컨테이너 스타일링
 export const DataContainer = styled.div`
@@ -108,7 +126,7 @@ export const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 60px;
+  height: 50px;
   align-items: center;
   background: #f5f5f5;
   border-radius: 10px;
@@ -127,7 +145,7 @@ export const DataTop = styled.div`
 
 // 데이터 타이틀 스타일링 (거리, 시간 등)
 export const DataTitle = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #333;
   margin-bottom: 5px;
   margin-top: 6px;
@@ -135,9 +153,8 @@ export const DataTitle = styled.div`
 
 // 데이터 값 스타일링
 export const DataValue = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  //color: #000;
   color: #006cd8;
   padding-top: 7px;
 `;

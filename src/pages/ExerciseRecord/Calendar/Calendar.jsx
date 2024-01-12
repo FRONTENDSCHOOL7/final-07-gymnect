@@ -204,7 +204,7 @@ const RightBtn = styled.button`
   cursor: pointer;
   width: 20px;
   height: 20px;
-  margin-right: 25px;
+  margin-right: 23px;
 `;
 
 const DayCell = styled.div`
@@ -248,9 +248,9 @@ const WeekdayCell = styled(DayCell)`
 const MonthTitle = styled.h2`
   grid-column: span 7;
   text-align: center;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
-  color: #767676;
+  color: #3D3D3D;
 `;
 
 export default ButtonCalendar;

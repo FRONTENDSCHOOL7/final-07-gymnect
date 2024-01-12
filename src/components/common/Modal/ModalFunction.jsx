@@ -31,6 +31,7 @@ export const deletePostData = async (userToken, pickedPost, setIsDelete) => {
   try {
     await deletePost(userToken, pickedPost);
     setIsDelete(true);
+    alert("게시글이 삭제되었습니다!");
   } catch (error) {
     console.error("Error delete user posts:", error);
   }
