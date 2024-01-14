@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
@@ -25,8 +25,13 @@ import {
 } from "./LoginFormStyle";
 
 const checkTokenExpiry = (setLogin) => {
-  const expiryTime = new Date(localStorage.getItem("expiry"));
-  if (expiryTime < new Date()) {
+  const storedExpiryTime = localStorage.getItem("expiry");
+  const expiryTime = new Date(storedExpiryTime);
+  const currentTime = new Date();
+  console.log("만료 시간:", expiryTime, "현재 시간:", currentTime);
+
+  if (expiryTime < currentTime) {
+    console.log("토큰 만료됨, 로그아웃 처리 중...");
     localStorage.removeItem("token");
     localStorage.removeItem("expiry");
     setLogin(false);
@@ -49,10 +54,14 @@ export default function Login() {
   const [redirectNowCheck, setRedirectNowCheck] = useState(true);
   const [isOn, setIsOn] = useState(false);
 
-    // 페이지 로드 시 토큰 만료 확인
-    useEffect(() => {
-      checkTokenExpiry(setLogin);
-    }, [setLogin]);
+  // 페이지 로드 시 토큰 만료 확인
+  useEffect(() => {
+    checkTokenExpiry(setLogin);
+  }, [setLogin]);
+
+  useEffect(() => {
+    console.log("isUserAuthenticated 상태:", isUserAuthenticated);
+  }, [isUserAuthenticated]);
 
   if (isUserAuthenticated) {
     setTimeout(() => setRedirectNow(true), 500);
@@ -121,9 +130,9 @@ export default function Login() {
   const loginSuccess = (loginData) => {
     const token = loginData.user.token;
     // 토큰 만료 시간 설정
-    const expiryTime = new Date(new Date().getTime() + (24 * 60 * 60 * 1000)); // 현재 시간에서 24시간 더함
+    const expiryTime = new Date(Date.now() + 60 * 1000);
     localStorage.setItem("token", token);
-    localStorage.setItem("expiry", expiryTime);
+    localStorage.setItem("expiry", expiryTime.toString());
 
     setUserInfo({
       ...userInfo,
