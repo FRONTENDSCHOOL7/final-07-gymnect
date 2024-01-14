@@ -130,7 +130,7 @@ export default function Login() {
   const loginSuccess = (loginData) => {
     const token = loginData.user.token;
     // 토큰 만료 시간 설정
-    const expiryTime = new Date(Date.now() + 60 * 1000);
+    const expiryTime = new Date(Date.now() + 60 * 60 * 1000);
     localStorage.setItem("token", token);
     localStorage.setItem("expiry", expiryTime.toString());
 
