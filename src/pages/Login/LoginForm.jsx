@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
@@ -24,6 +24,15 @@ import {
   ToggleText
 } from "./LoginFormStyle";
 
+const checkTokenExpiry = (setLogin) => {
+  const expiryTime = new Date(localStorage.getItem("expiry"));
+  if (expiryTime < new Date()) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiry");
+    setLogin(false);
+  }
+};
+
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -39,6 +48,11 @@ export default function Login() {
   const [redirectNow, setRedirectNow] = useState(false);
   const [redirectNowCheck, setRedirectNowCheck] = useState(true);
   const [isOn, setIsOn] = useState(false);
+
+    // 페이지 로드 시 토큰 만료 확인
+    useEffect(() => {
+      checkTokenExpiry(setLogin);
+    }, [setLogin]);
 
   if (isUserAuthenticated) {
     setTimeout(() => setRedirectNow(true), 500);
@@ -100,21 +114,31 @@ export default function Login() {
     if (loginData.status === 422) {
       setErrorMsg("*이메일 또는 비밀번호가 일치하지 않습니다");
     } else {
-      setUserInfo({
-        ...userInfo,
-        account: loginData.user.accountname,
-        profileImg: loginData.user.image,
-        username: loginData.user.username,
-        intro: loginData.user.intro
-      });
-      setLogin(true);
-      localStorage.setItem("token", loginData.user.token);
-      navigate("/home", {
-        state: {
-          token: loginData.user.token
-        }
-      });
+      loginSuccess(loginData);
     }
+  };
+
+  const loginSuccess = (loginData) => {
+    const token = loginData.user.token;
+    // 토큰 만료 시간 설정
+    const expiryTime = new Date(new Date().getTime() + (24 * 60 * 60 * 1000)); // 현재 시간에서 24시간 더함
+    localStorage.setItem("token", token);
+    localStorage.setItem("expiry", expiryTime);
+
+    setUserInfo({
+      ...userInfo,
+      account: loginData.user.accountname,
+      profileImg: loginData.user.image,
+      username: loginData.user.username,
+      intro: loginData.user.intro
+    });
+    setLogin(true);
+
+    navigate("/home", {
+      state: {
+        token: loginData.user.token
+      }
+    });
   };
 
   /* 버튼 활성화 */
