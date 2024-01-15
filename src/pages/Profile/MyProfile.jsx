@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { getUserPosts } from "../../api/post";
@@ -30,7 +30,6 @@ export default function MyProfile() {
   const [myPosts, setMyPosts] = useState([]);
   const setLogin = useSetRecoilState(loginAtom);
   const navigate = useNavigate();
-  const userInfo = useRecoilValue(userInfoAtom);
   const resetUserInfo = useResetRecoilState(userInfoAtom);
   const token = localStorage.getItem("token");
   const { id } = useParams();
@@ -38,6 +37,7 @@ export default function MyProfile() {
   const [skip, setSkip] = useState(0);
   const [loadingMorePosts, setLoadingMorePosts] = useState(false);
   const observer = useRef();
+  const [hasMorePosts, setHasMorePosts] = useState(true);
 
   const handleIconClick = (viewType) => {
     if (viewType === "grid") {
@@ -64,6 +64,7 @@ export default function MyProfile() {
     try {
       const data = await getUserPosts(token, id, 7, skip);
       if (Array.isArray(data.post)) {
+        if (data.post.length < 7) setHasMorePosts(false);
         setMyPosts((prevPosts) => [...prevPosts, ...data.post]);
         setSkip((prevSkip) => prevSkip + data.post.length);
       } else {
@@ -80,7 +81,7 @@ export default function MyProfile() {
     if (!loadingMorePosts) {
       const onIntersect = async (entries) => {
         const target = entries[0];
-        if (target.isIntersecting && !isLoading) {
+        if (target.isIntersecting && !isLoading && hasMorePosts) {
           await fetchMyPosts();
         }
       };
@@ -95,8 +96,15 @@ export default function MyProfile() {
   }, [observer, isLoading, loadingMorePosts]);
 
   useEffect(() => {
-    fetchMyPosts(); // 컴포넌트 마운트 시 초기 데이터 로딩
-  }, []);
+    setSkip(0);
+    setMyPosts([]);
+  }, [id]);
+
+  useEffect(() => {
+    if (skip === 0) {
+      fetchMyPosts();
+    }
+  }, [skip]);
 
   if (isLoading) {
     return (
@@ -105,8 +113,6 @@ export default function MyProfile() {
       </>
     );
   }
-
-  console.log(myPosts);
 
   return (
     <>
