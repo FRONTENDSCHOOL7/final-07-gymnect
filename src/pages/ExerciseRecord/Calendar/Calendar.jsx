@@ -7,12 +7,22 @@ import { getUserPosts } from "../../../api/post";
 import { userInfoAtom } from "../../../atoms/UserAtom";
 import Loading from "../../../components/common/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import rightArrow from "../../../assets/images/right-arrow.svg";
-import leftArrow from "../../../assets/images/left-arrow.svg";
-//import AnalysisModal from "../../../components/common/Modal/AnalysisModal";
 import ExerciseAnalysis from "../ExerciseAnalysis";
+import {
+  AnalysisContainer,
+  CalendarAndModalContainer,
+  CalendarScrollContainer,
+  MonthContainer,
+  MonthTitleWithButtons,
+  LeftBtn,
+  RightBtn,
+  DayCell,
+  WeekdayCell,
+  MonthTitle
+} from "./CalendarStyle";
+const MemoizedExerciseAnalysis = React.memo(ExerciseAnalysis);
 
-function ButtonCalendar() {
+export default function ButtonCalendar() {
   const [months, setMonths] = useState([moment().format("YYYY-MM")]);
   const [myPosts, setMyPosts] = useState([]);
   const token = localStorage.getItem("token");
@@ -127,7 +137,7 @@ function ButtonCalendar() {
           <BackNav />
           <CalendarAndModalContainer>
             <AnalysisContainer>
-              <ExerciseAnalysis
+              <MemoizedExerciseAnalysis
                 isOpen={true}
                 username={userInfo.username}
                 accountId={userInfo.account}
@@ -144,113 +154,3 @@ function ButtonCalendar() {
     </>
   );
 }
-// 스타일 컴포넌트
-
-const AnalysisContainer = styled.div``;
-const CalendarAndModalContainer = styled.div`
-  display: flex;
-  flex-direction: column; //컨텐츠 세로 정렬
-  //justify-content: center;
-  //padding: 20px;
-  //align-items: flex-start; // 컴포넌트들을 상단에 정렬
-  //padding: 0 10px 10px 10px;
-  height: 90vh; // 전체 화면 높이
-  overflow-y: auto; // 세로 스크롤 허용
-  &::-webkit-scrollbar {
-    // 스크롤 바 숨기기
-    display: none;
-  }
-  //margin-top: 12px;
-`;
-
-const CalendarScrollContainer = styled.div`
-  max-height: calc(100vh - 108px);
-`;
-
-const MonthContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-`;
-
-const MonthTitleWithButtons = styled.div`
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const LeftBtn = styled.button`
-  background-image: url(${leftArrow});
-  background-repeat: no-repeat;
-  background-size: contain;
-  border: none;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-left: 25px;
-`;
-
-const RightBtn = styled.button`
-  background-image: url(${rightArrow});
-  background-repeat: no-repeat;
-  background-size: contain;
-  border: none;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-right: 23px;
-`;
-
-const DayCell = styled.div`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 50%;
-  background-color: ${(props) =>
-    props.$isToday && !props.$isUploadDay
-      ? "#D9D9D9"
-      : props.$isUploadDay
-      ? "#1294F2"
-      : "transparent"};
-  color: ${(props) =>
-    props.$isUploadDay || (props.$isToday && props.$isUploadDay)
-      ? "#FFFFFF"
-      : "#000000"};
-  cursor: ${(props) => (props.$isUploadDay ? "pointer" : "default")};
-  &:hover {
-    background-color: ${(props) =>
-      props.$isUploadDay || (props.$isToday && props.$isUploadDay)
-        ? "#006cd8"
-        : undefined};
-    color: ${(props) =>
-      props.$isUploadDay || (props.$isToday && props.$isUploadDay)
-        ? "#FFFFFF"
-        : undefined};
-    transition: 0.3s;
-  }
-`;
-
-const WeekdayCell = styled(DayCell)`
-  font-size: 10px;
-  font-weight: 500;
-`;
-
-const MonthTitle = styled.h2`
-  grid-column: span 7;
-  text-align: center;
-  font-size: 17px;
-  font-weight: bold;
-  color: #3D3D3D;
-`;
-
-export default ButtonCalendar;
