@@ -62,7 +62,7 @@ const ChatRoom = () => {
     <>
       <ChatHeader toggleModal={toggleModal} />
       <Container>
-        <Main message={message} ref={mainRef}>
+        <Main ref={mainRef}>
           <Chat className="chat-yours">
             <Image src={profileImage} alt="유저의 프로필 사진" width="50" />
             <From>필라테스 학원 정보 알고싶어요~</From>

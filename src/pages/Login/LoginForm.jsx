@@ -60,17 +60,27 @@ export default function Login() {
   }, [setLogin]);
 
   useEffect(() => {
-    console.log("isUserAuthenticated 상태:", isUserAuthenticated);
-  }, [isUserAuthenticated]);
+    let timeoutId;
+    if (isUserAuthenticated) {
+      timeoutId = setTimeout(() => {
+        setRedirectNow(true);
+      }, 500);
+    }
 
-  if (isUserAuthenticated) {
-    setTimeout(() => setRedirectNow(true), 500);
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isUserAuthenticated, setRedirectNow]);
+
+  useEffect(() => {
     if (redirectNow && redirectNowCheck) {
       window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
       setRedirectNowCheck(false);
       navigate("/home");
     }
-  }
+  }, [redirectNow, redirectNowCheck, navigate]);
 
   /*이메일 유효성 검사*/
   const handleEmail = (e) => {
@@ -206,7 +216,7 @@ export default function Login() {
             <ToggleSwitch>
               <CheckBox
                 type="checkbox"
-                checked={isOn}
+                $checked={isOn}
                 onClick={toggleHandler}
               />
               <ToggleSlider />

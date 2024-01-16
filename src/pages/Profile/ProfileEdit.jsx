@@ -62,11 +62,9 @@ export default function ProfileEdit() {
 
     if (usernameInp === "") {
       setUsernameErrorMsg("*입력해주세요");
-      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else if (usernameInp.length < 2 || usernameInp.length > 8) {
       setUsernameErrorMsg("*2~8자 이내여야 합니다.");
-      console.log(usernameErrorMsg);
       setUsernameValid(false);
     } else {
       setUsernameErrorMsg("");
@@ -132,7 +130,6 @@ export default function ProfileEdit() {
 
   /* 프로필 수정 */
   const handleProfileEdit = async (e) => {
-    console.log("Profile edit button clicked!");
     e.preventDefault();
     try {
       if (usernameValid && accountnameValid) {

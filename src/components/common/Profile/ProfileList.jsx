@@ -9,10 +9,8 @@ export default function ProfileList({ image, name, intro, children }) {
       image.includes("api.mandarin.weniv.co.kr") &&
       !image.includes("undefined")
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };

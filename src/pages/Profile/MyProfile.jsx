@@ -140,18 +140,15 @@ export default function MyProfile() {
                     return post && post.image;
                   })
                   .map((post) => {
-                    console.log(post);
                     return (
-                      <>
-                        <GridItem key={post.id}>
-                          <Link
-                            to={{
-                              pathname: `/post/${id}/${post.id}`
-                            }}>
-                            <img src={post.image} alt="Post Thumbnail" />
-                          </Link>
-                        </GridItem>
-                      </>
+                      <GridItem key={post.id}>
+                        <Link
+                          to={{
+                            pathname: `/post/${id}/${post.id}`
+                          }}>
+                          <img src={post.image} alt="Post Thumbnail" />
+                        </Link>
+                      </GridItem>
                     );
                   })}
             </GridContainer>
