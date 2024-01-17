@@ -28,10 +28,8 @@ const checkTokenExpiry = (setLogin) => {
   const storedExpiryTime = localStorage.getItem("expiry");
   const expiryTime = new Date(storedExpiryTime);
   const currentTime = new Date();
-  console.log("만료 시간:", expiryTime, "현재 시간:", currentTime);
 
   if (expiryTime < currentTime) {
-    console.log("토큰 만료됨, 로그아웃 처리 중...");
     localStorage.removeItem("token");
     localStorage.removeItem("expiry");
     setLogin(false);
@@ -60,17 +58,27 @@ export default function Login() {
   }, [setLogin]);
 
   useEffect(() => {
-    console.log("isUserAuthenticated 상태:", isUserAuthenticated);
-  }, [isUserAuthenticated]);
+    let timeoutId;
+    if (isUserAuthenticated) {
+      timeoutId = setTimeout(() => {
+        setRedirectNow(true);
+      }, 500);
+    }
 
-  if (isUserAuthenticated) {
-    setTimeout(() => setRedirectNow(true), 500);
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isUserAuthenticated, setRedirectNow]);
+
+  useEffect(() => {
     if (redirectNow && redirectNowCheck) {
       window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
       setRedirectNowCheck(false);
       navigate("/home");
     }
-  }
+  }, [redirectNow, redirectNowCheck, navigate]);
 
   /*이메일 유효성 검사*/
   const handleEmail = (e) => {
@@ -119,7 +127,6 @@ export default function Login() {
     }
 
     const loginData = await postUserLogin(email, pw);
-    console.log(loginData);
     if (loginData.status === 422) {
       setErrorMsg("*이메일 또는 비밀번호가 일치하지 않습니다");
     } else {
@@ -206,7 +213,7 @@ export default function Login() {
             <ToggleSwitch>
               <CheckBox
                 type="checkbox"
-                checked={isOn}
+                $checked={isOn}
                 onClick={toggleHandler}
               />
               <ToggleSlider />

@@ -43,7 +43,7 @@ export default function MyProfileUp({ accountId }) {
         const profileData = await getUserProfile(token, accountId);
         setProfileInfo(profileData);
       } catch (error) {
-        console.log("프로필 정보를 가져오는데 실패했습니다:", error);
+        console.error("프로필 정보를 가져오는데 실패했습니다:", error);
       }
     };
     fetchMyProfile();
@@ -55,10 +55,8 @@ export default function MyProfileUp({ accountId }) {
       image.includes("api.mandarin.weniv.co.kr") &&
       !image.includes("undefined")
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };

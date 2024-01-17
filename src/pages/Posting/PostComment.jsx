@@ -70,7 +70,6 @@ export default function PostComment() {
       try {
         const data = await getPostDetail(postId);
         setDetailPost(data);
-        console.log("hi", data.post);
       } catch (error) {
         console.log("상세게시글을 가져오는데 실패했습니다:", error);
       }
@@ -103,7 +102,6 @@ export default function PostComment() {
     } else {
       setIsSubmitting(true);
       const response = await postComment(token, postId, inputComment);
-      console.log("Post Comment Response:", response);
       setInputComment("");
       fetchCommentList();
       setIsSubmitting(false);

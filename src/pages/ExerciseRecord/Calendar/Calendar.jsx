@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import moment from "moment";
-import styled from "styled-components";
 import BackNav from "../../../components/Header/BackspaceHeader";
 import { getUserPosts } from "../../../api/post";
 import { userInfoAtom } from "../../../atoms/UserAtom";
@@ -71,7 +70,7 @@ export default function ButtonCalendar() {
 
     let days = [];
     for (let i = 0; i < startDay; i++) {
-      days.push(<DayCell key={`empty-start-${i}`} empty />);
+      days.push(<DayCell key={`empty-${month}-${i}`} />);
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
@@ -87,7 +86,7 @@ export default function ButtonCalendar() {
 
       days.push(
         <DayCell
-          key={i}
+          key={`day-${month}-${i}`}
           $isToday={isToday}
           $isUploadDay={isUploadDay}
           onClick={() => handleDayClick(dayDate)}

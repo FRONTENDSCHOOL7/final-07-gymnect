@@ -1,16 +1,15 @@
-import React from 'react';
-import { Container, ButtonContainer, Button } from './IconPostModalStyle';
+import React from "react";
+import { Container, ButtonContainer, Button } from "./IconPostModalStyle";
 
 const IconPostModal = ({
   text,
   onButtonClick,
   setShowAlert,
   setTempFunc,
-  setMessage,
+  setMessage
 }) => {
   const handleClick = () => {
     setShowAlert(true);
-    console.log(onButtonClick);
     setTempFunc(() => onButtonClick);
     setMessage(text);
   };

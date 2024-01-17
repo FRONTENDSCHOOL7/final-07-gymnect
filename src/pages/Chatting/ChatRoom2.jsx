@@ -62,7 +62,7 @@ const ChatRoom = () => {
     <>
       <ChatHeader toggleModal={toggleModal} />
       <Container>
-        <Main message={message} ref={mainRef}>
+        <Main ref={mainRef}>
           <Chat className="chat-mine">
             <Time>오후12:41</Time>
             <To>내일 혹시 시간되시면 한강 러닝 하실래요?</To>
