@@ -7,7 +7,10 @@ import ChatRoom2 from "../pages/Chatting/ChatRoom2";
 import ChatRoom3 from "../pages/Chatting/ChatRoom3";
 import ChatRoom4 from "../pages/Chatting/ChatRoom4";
 import Upload from "../pages//Upload/Upload";
-import Calendar from "../pages/Calendar/Calendar";
+//import Calendar from "../pages/Calendar/Calendar";
+import Calendar from "../pages/ExerciseRecord/Calendar/Calendar";
+//import PostList from "../pages/Calendar/PostList";
+import PostList from "../pages/ExerciseRecord/Calendar/PostList";
 import Profile from "../pages/Profile/MyProfile";
 import Login from "../pages/Login/Login";
 import Splash from "../pages/Splash/Splash";
@@ -18,6 +21,7 @@ import Search from "../pages/Home/Search/Search";
 import Follower from "../pages/FollowList/FollowerPage";
 import Following from "../pages/FollowList/FollowingPage";
 import ProfileEdit from "../pages/Profile/ProfileEdit";
+import PostEdit from "../pages/Upload/PostEdit";
 import PostComment from "../pages/Posting/PostComment";
 import ProtectedRoute from "./ProtectedRoute";
 import Error from "../pages/Error/Error";
@@ -57,7 +61,6 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/chatroom1/:username"
           element={
@@ -107,11 +110,28 @@ export default function AppRouter() {
           }
         />
         <Route
+          path="/post/postedit/:postId"
+          element={
+            <ProtectedRoute>
+              <PostEdit />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/calendar"
           element={
             <ProtectedRoute>
               <Navbar />
               <Calendar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/postlist"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <PostList />
             </ProtectedRoute>
           }
         />

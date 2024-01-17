@@ -68,10 +68,10 @@ export const ChartWrapper = styled.div`
   border-top: 1px solid #d9d9d9;
 `;
 
-export const Chart = styled.img`
+export const Chart = styled.div`
   padding-top: 12px;
-  width: 80%;
-  //height: 80%;
+  width: 90%;
+  height: 29vh;
 `;
 
 export const Description = styled.div`

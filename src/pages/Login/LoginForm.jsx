@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
@@ -16,8 +16,25 @@ import {
   LinkContainer,
   ErrorMessage,
   LoginSection,
-  SnsButton
+  SnsButton,
+  ToggleSwitch,
+  ToggleSlider,
+  CheckBox,
+  ToggleFlex,
+  ToggleText
 } from "./LoginFormStyle";
+
+const checkTokenExpiry = (setLogin) => {
+  const storedExpiryTime = localStorage.getItem("expiry");
+  const expiryTime = new Date(storedExpiryTime);
+  const currentTime = new Date();
+
+  if (expiryTime < currentTime) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiry");
+    setLogin(false);
+  }
+};
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,15 +50,35 @@ export default function Login() {
   const isUserAuthenticated = useRecoilValue(loginAtom); //로그인상태 저장
   const [redirectNow, setRedirectNow] = useState(false);
   const [redirectNowCheck, setRedirectNowCheck] = useState(true);
+  const [isOn, setIsOn] = useState(false);
 
-  if (isUserAuthenticated) {
-    setTimeout(() => setRedirectNow(true), 500);
+  // 페이지 로드 시 토큰 만료 확인
+  useEffect(() => {
+    checkTokenExpiry(setLogin);
+  }, [setLogin]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isUserAuthenticated) {
+      timeoutId = setTimeout(() => {
+        setRedirectNow(true);
+      }, 500);
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isUserAuthenticated, setRedirectNow]);
+
+  useEffect(() => {
     if (redirectNow && redirectNowCheck) {
       window.alert("이미 로그인 되어 있습니다. 홈으로 이동합니다.");
       setRedirectNowCheck(false);
       navigate("/home");
     }
-  }
+  }, [redirectNow, redirectNowCheck, navigate]);
 
   /*이메일 유효성 검사*/
   const handleEmail = (e) => {
@@ -90,30 +127,54 @@ export default function Login() {
     }
 
     const loginData = await postUserLogin(email, pw);
-    console.log(loginData);
     if (loginData.status === 422) {
       setErrorMsg("*이메일 또는 비밀번호가 일치하지 않습니다");
     } else {
-      setUserInfo({
-        ...userInfo,
-        account: loginData.user.accountname,
-        profileImg: loginData.user.image,
-        username: loginData.user.username,
-        intro: loginData.user.intro
-      });
-      setLogin(true);
-      localStorage.setItem("token", loginData.user.token);
-      navigate("/home", {
-        state: {
-          token: loginData.user.token
-        }
-      });
+      loginSuccess(loginData);
     }
+  };
+
+  const loginSuccess = (loginData) => {
+    const token = loginData.user.token;
+    // 토큰 만료 시간 설정
+    const expiryTime = new Date(Date.now() + 60 * 60 * 1000);
+    localStorage.setItem("token", token);
+    localStorage.setItem("expiry", expiryTime.toString());
+
+    setUserInfo({
+      ...userInfo,
+      account: loginData.user.accountname,
+      profileImg: loginData.user.image,
+      username: loginData.user.username,
+      intro: loginData.user.intro
+    });
+    setLogin(true);
+
+    navigate("/home", {
+      state: {
+        token: loginData.user.token
+      }
+    });
   };
 
   /* 버튼 활성화 */
   const handleActivateButton = () => {
     return emailValid && pwValid;
+  };
+
+  const toggleHandler = () => {
+    setIsOn(!isOn);
+    if (!isOn) {
+      setEmail("gym@nect.com");
+      setPw("!123123a");
+      setEmailValid(true);
+      setPwValid(true);
+    } else {
+      setEmail("");
+      setPw("");
+      setEmailValid(false);
+      setPwValid(false);
+    }
   };
 
   return (
@@ -130,7 +191,7 @@ export default function Login() {
             value={email}
             onChange={handleEmail}
             required
-            shake={errorMsg !== ""} //
+            $shake={errorMsg !== ""} //
           />
           {emailErrorMsg && <ErrorMessage>{emailErrorMsg}</ErrorMessage>}
           <Input
@@ -142,13 +203,23 @@ export default function Login() {
             value={pw}
             onChange={handlePw}
             required
-            shake={errorMsg !== ""}
+            $shake={errorMsg !== ""}
           />
           {pwErrorMsg && <ErrorMessage>{pwErrorMsg}</ErrorMessage>}
           {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         </Section>
-
         <LoginSection>
+          <ToggleFlex>
+            <ToggleSwitch>
+              <CheckBox
+                type="checkbox"
+                $checked={isOn}
+                onClick={toggleHandler}
+              />
+              <ToggleSlider />
+            </ToggleSwitch>
+            <ToggleText>테스트 계정으로 로그인하기</ToggleText>
+          </ToggleFlex>
           <Button
             width="322px"
             type="submit"

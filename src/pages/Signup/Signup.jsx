@@ -114,7 +114,6 @@ const Signup = () => {
   /* 아이디와 비밀번호 모두 유효 시, 프로필 설정 페이지로 이동 */
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log(userEmail, userPassword);
     if (emailValid && passwordValid && passwordCheckValid) {
       setIsComplete(true);
       navigate("/signup/setProfile", {

@@ -22,8 +22,6 @@ export default function FollowerPage() {
     fetchMyFollowerList();
   }, [id]);
 
-  console.log(followers);
-
   return (
     <>
       <BackNav />

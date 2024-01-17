@@ -48,7 +48,6 @@ export default function Post({ data, commentCount }) {
   const arr = data?.content.split("&&&&");
   const token = localStorage.getItem("token");
   const account = userInfo.account;
-  const [liked, setLiked] = useState(false);
   const [postLikeState, setPostLikeState] = useState(data && data.hearted);
   const [postLikeCount, setPostLikeCount] = useState(data && data.heartCount);
   const [isDelete, setIsDelete] = useState(false);
@@ -93,6 +92,7 @@ export default function Post({ data, commentCount }) {
     : {};
 
   const postId = data?.id;
+
   /* 좋아요 기능 */
   const fetchLike = async () => {
     const response = await postLike(token, postId);
@@ -109,12 +109,12 @@ export default function Post({ data, commentCount }) {
 
   /* 좋아요 토글 */
   const handleToggleLike = async (e) => {
-    if (liked) {
+    if (postLikeState) {
       await fetchDisLike();
-      setLiked(false);
+      setPostLikeState(false);
     } else {
       await fetchLike();
-      setLiked(true);
+      setPostLikeState(true);
     }
   };
 
@@ -128,7 +128,6 @@ export default function Post({ data, commentCount }) {
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  // 모달
   useEffect(() => {
     if (isDelete) {
       navigate(`/profile/${data?.author.accountname}`);
@@ -140,18 +139,17 @@ export default function Post({ data, commentCount }) {
     if (!isModalOpen) {
       setIsModalOpen(true);
       if (data.author.accountname === account) {
-        setModalText(["삭제"]);
+        setModalText(["수정", "삭제"]);
         setModalFunc([
+          () => {
+            navigate(`/post/postedit/${postId}`, {
+              state: { editingPost: data }
+            });
+          }, // '수정'을 클릭했을 때 handleEditClick 호출
           () => {
             deletePostData(token, postId, setIsDelete);
             setIsVisible(false);
-          },
-          () =>
-            navigate(`uploadedit`, {
-              state: {
-                data: post
-              }
-            })
+          }
         ]);
       } else {
         setModalText(["신고"]);
@@ -166,10 +164,8 @@ export default function Post({ data, commentCount }) {
       //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
       image.includes("api.mandarin.weniv.co.kr")
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };

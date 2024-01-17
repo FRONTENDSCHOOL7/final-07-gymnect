@@ -35,7 +35,6 @@ export const editProfile = async (user) => {
   console.log("user", { user });
   try {
     const response = await authInstance.put(`/user`, { user });
-    console.log("response", response);
     return response.data;
   } catch (error) {
     console.log(error);

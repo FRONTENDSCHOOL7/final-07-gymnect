@@ -8,7 +8,6 @@ import FollowButton from "../Button/FollowButton";
 import profileImage from "../../../assets/images/signup-profile.svg";
 import commentIcon from "../../../assets/images/icon-reply.svg";
 import shareIcon from "../../../assets/images/icon-share.svg";
-import AnalysisModal from "../../common/Modal/AnalysisModal";
 import {
   MyProfileUpContainer,
   Wrap,
@@ -32,16 +31,7 @@ export default function MyProfileUp({ accountId }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [profileInfo, setProfileInfo] = useState("");
   const token = localStorage.getItem("token");
-  const [showModal, setShowModal] = useState(false);
   const account = userInfo.account;
-  const [lender, setLender] = useState(true);
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   const goToProfileEdit = () => {
     navigate(`/profile/${userInfo.account}/edit`);
@@ -53,11 +43,11 @@ export default function MyProfileUp({ accountId }) {
         const profileData = await getUserProfile(token, accountId);
         setProfileInfo(profileData);
       } catch (error) {
-        console.log("프로필 정보를 가져오는데 실패했습니다:", error);
+        console.error("프로필 정보를 가져오는데 실패했습니다:", error);
       }
     };
     fetchMyProfile();
-  }, [accountId, token, lender]);
+  }, [accountId, token]);
 
   const getImageSrc = (image) => {
     if (
@@ -65,11 +55,18 @@ export default function MyProfileUp({ accountId }) {
       image.includes("api.mandarin.weniv.co.kr") &&
       !image.includes("undefined")
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
+    }
+  };
+
+  const handleFollowStatusChange = async () => {
+    try {
+      const updatedProfile = await getUserProfile(token, accountId);
+      setProfileInfo(updatedProfile); // 프로필 정보 상태 업데이트
+    } catch (error) {
+      console.error("프로필 정보 업데이트에 실패했습니다:", error);
     }
   };
 
@@ -105,40 +102,30 @@ export default function MyProfileUp({ accountId }) {
         </AccountSpan>
         <IntroSpan>{profileInfo && profileInfo.profile.intro}</IntroSpan>
         <ButtonWrap>
+          <CommentButton>
+            <CommentImg src={commentIcon} />
+          </CommentButton>
           {account === accountId ? (
             <>
               <Button height="34px" onClick={goToProfileEdit}>
                 프로필 수정
               </Button>
-              <Button height="34px" onClick={handleOpenModal}>
-                운동 분석
-              </Button>
             </>
           ) : (
             <>
-              <CommentButton>
-                <CommentImg src={commentIcon} />
-              </CommentButton>
               <FollowButton
                 data={profileInfo && profileInfo.profile.isfollow}
                 accountname={profileInfo && profileInfo.profile.accountname}
                 type="A"
-                setLender={setLender}
+                onFollowStatusChange={handleFollowStatusChange}
               />
-              <ShareButton>
-                <ShareImg src={shareIcon} />
-              </ShareButton>
             </>
           )}
+          <ShareButton>
+            <ShareImg src={shareIcon} />
+          </ShareButton>
         </ButtonWrap>
       </MyProfileUpContainer>
-      {showModal && (
-        <AnalysisModal
-          isOpen={handleOpenModal}
-          onClose={handleCloseModal}
-          username={profileInfo.profile.username}
-        />
-      )}
     </>
   );
 }

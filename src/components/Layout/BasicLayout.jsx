@@ -31,12 +31,12 @@ const Background = styled.div`
   }
 `;
 const ParentContainer = styled.div`
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   overflow: hidden;
-`
+`;
 
 const LayoutContainer = styled.div`
   position: relative;

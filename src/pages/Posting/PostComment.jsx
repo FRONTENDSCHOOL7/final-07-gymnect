@@ -38,6 +38,7 @@ export default function PostComment() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isDeleteComment, setIsDeleteComment] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [modalText, setModalText] = useState([]);
   const [modalFunc, setModalFunc] = useState([]);
@@ -69,7 +70,6 @@ export default function PostComment() {
       try {
         const data = await getPostDetail(postId);
         setDetailPost(data);
-        console.log("hi", data.post);
       } catch (error) {
         console.log("상세게시글을 가져오는데 실패했습니다:", error);
       }
@@ -97,10 +97,15 @@ export default function PostComment() {
       return;
     }
 
-    const response = await postComment(token, postId, inputComment);
-    console.log("Post Comment Response:", response);
-    setInputComment("");
-    fetchCommentList();
+    if (isSubmitting) {
+      return;
+    } else {
+      setIsSubmitting(true);
+      const response = await postComment(token, postId, inputComment);
+      setInputComment("");
+      fetchCommentList();
+      setIsSubmitting(false);
+    }
   };
 
   /* 사진 검사 */

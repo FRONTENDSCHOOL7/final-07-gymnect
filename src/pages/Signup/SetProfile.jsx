@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   postAccountnameDuplicate,
@@ -28,6 +28,7 @@ const ProfileSettingPage = () => {
   const location = useLocation();
   const userEmail = location.state.email;
   const userPassword = location.state.password;
+
   const [username, setUsername] = useState("");
   const [accountname, setAccountname] = useState("");
   const [intro, setIntro] = useState("");
@@ -58,9 +59,7 @@ const ProfileSettingPage = () => {
       formData.append("image", compressedFile);
 
       const imgData = await postUploadProfile(formData);
-      console.log(imgData);
       setImage(URL + imgData.filename);
-      console.log(image);
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +89,6 @@ const ProfileSettingPage = () => {
   // accountname 유효성 검사
   const handleInputAccountname = async (e) => {
     const accountnameInp = e.target.value;
-    console.log(accountnameInp.length);
     const accountnameRegex = /^[a-zA-Z0-9._]+$/;
     const checkAccountname = await postAccountnameDuplicate(accountnameInp);
     if (accountnameInp === "") {
@@ -102,7 +100,7 @@ const ProfileSettingPage = () => {
     } else if (checkAccountname.message === "이미 가입된 계정ID 입니다.") {
       setAccountnameErrorMsg("*이미 존재하는 계정ID 입니다.");
       setAccountnameValid(false);
-    } else if (accountnameInp.length < 2 || accountnameInp.length > 8) {
+    } else if (accountnameInp.length < 4 || accountnameInp.length > 16) {
       setAccountnameErrorMsg("*4~16자 이내여야 합니다.");
       setAccountnameValid(false);
     } else {
@@ -111,15 +109,6 @@ const ProfileSettingPage = () => {
       setAccountname(accountnameInp);
     }
   };
-
-  /* 에러 메시지 초기화 */
-  useEffect(() => {
-    setUsernameErrorMsg("");
-  }, [username]);
-
-  useEffect(() => {
-    setAccountnameErrorMsg("");
-  }, [accountname]);
 
   const handleProfileSignup = async (e) => {
     e.preventDefault();
@@ -133,7 +122,6 @@ const ProfileSettingPage = () => {
         intro,
         finalImage
       );
-      console.log(signupData);
       navigate("/login");
     }
   };
@@ -166,7 +154,7 @@ const ProfileSettingPage = () => {
         <Section>
           <Input
             label="사용자 이름"
-            placeholder="2~10자 이내여야 합니다."
+            placeholder="2~8자 이내여야 합니다."
             id="username"
             type="text"
             name="username"
@@ -197,12 +185,7 @@ const ProfileSettingPage = () => {
             required
           />
         </Section>
-        <Button
-          width="322px"
-          type="submit"
-          disabled={!handleActivateButton()}
-          // handleClick={handleProfileSignup}
-        >
+        <Button width="322px" type="submit" disabled={!handleActivateButton()}>
           짐넥 시작하기
         </Button>
       </form>

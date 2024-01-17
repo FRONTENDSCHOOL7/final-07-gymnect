@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { loginAtom } from "../../atoms/LoginAtom";
 import { userInfoAtom } from "../../atoms/UserAtom";
 import { getUserPosts } from "../../api/post";
@@ -30,11 +30,14 @@ export default function MyProfile() {
   const [myPosts, setMyPosts] = useState([]);
   const setLogin = useSetRecoilState(loginAtom);
   const navigate = useNavigate();
-  const userInfo = useRecoilValue(userInfoAtom);
   const resetUserInfo = useResetRecoilState(userInfoAtom);
   const token = localStorage.getItem("token");
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true); //데이터가 로딩중인지 나타냄
+  const [isLoading, setIsLoading] = useState(true);
+  const [skip, setSkip] = useState(0);
+  const [loadingMorePosts, setLoadingMorePosts] = useState(false);
+  const observer = useRef();
+  const [hasMorePosts, setHasMorePosts] = useState(true);
 
   const handleIconClick = (viewType) => {
     if (viewType === "grid") {
@@ -56,23 +59,52 @@ export default function MyProfile() {
     navigate("/login"); // 로그인 페이지로 리다이렉트
   };
 
-  useEffect(() => {
-    const fetchMyPosts = async () => {
-      try {
-        const data = await getUserPosts(token, id, Infinity, 0);
-        if (Array.isArray(data.post)) {
-          setMyPosts(data.post);
-        } else {
-          console.error("API response is not an array:", data);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.log("게시글을 가져오는데 실패했습니다:", error);
-        setIsLoading(false);
+  const fetchMyPosts = async () => {
+    setLoadingMorePosts(true);
+    try {
+      const data = await getUserPosts(token, id, 7, skip);
+      if (Array.isArray(data.post)) {
+        if (data.post.length < 7) setHasMorePosts(false);
+        setMyPosts((prevPosts) => [...prevPosts, ...data.post]);
+        setSkip((prevSkip) => prevSkip + data.post.length);
+      } else {
+        console.error("API response is not an array:", data);
       }
-    };
-    fetchMyPosts();
-  }, [userInfo, id, token]);
+    } catch (error) {
+      console.log("게시글을 가져오는데 실패했습니다:", error);
+    }
+    setIsLoading(false);
+    setLoadingMorePosts(false);
+  };
+
+  useEffect(() => {
+    if (!loadingMorePosts) {
+      const onIntersect = async (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading && hasMorePosts) {
+          await fetchMyPosts();
+        }
+      };
+
+      const io = new IntersectionObserver(onIntersect, { threshold: 0.1 });
+      if (observer.current) {
+        io.observe(observer.current);
+      }
+
+      return () => io && io.disconnect();
+    }
+  }, [observer, isLoading, loadingMorePosts]);
+
+  useEffect(() => {
+    setSkip(0);
+    setMyPosts([]);
+  }, [id]);
+
+  useEffect(() => {
+    if (skip === 0) {
+      fetchMyPosts();
+    }
+  }, [skip]);
 
   if (isLoading) {
     return (
@@ -108,18 +140,15 @@ export default function MyProfile() {
                     return post && post.image;
                   })
                   .map((post) => {
-                    console.log(post);
                     return (
-                      <>
-                        <GridItem key={post.id}>
-                          <Link
-                            to={{
-                              pathname: `/post/${id}/${post.id}`
-                            }}>
-                            <img src={post.image} alt="Post Thumbnail" />
-                          </Link>
-                        </GridItem>
-                      </>
+                      <GridItem key={post.id}>
+                        <Link
+                          to={{
+                            pathname: `/post/${id}/${post.id}`
+                          }}>
+                          <img src={post.image} alt="Post Thumbnail" />
+                        </Link>
+                      </GridItem>
                     );
                   })}
             </GridContainer>
@@ -135,6 +164,7 @@ export default function MyProfile() {
             </PostContainer>
           )}
         </MainWrap>
+        <div ref={observer} style={{ height: "50px", width: "100%" }} />
       </Container>
       {isModalVisible && (
         <Modal handleLogout={handleLogout} toggleModal={toggleModal} />
