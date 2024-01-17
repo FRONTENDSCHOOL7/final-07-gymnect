@@ -149,14 +149,11 @@ export default function ExerciseAnalysis({
               postDate.isSameOrBefore(endOfWeek)
             );
           });
-          console.log("thisWeekPosts", thisWeekPosts);
           const exerciseData = extractExerciseData(thisWeekPosts); //데이터 가공
           setPostData(exerciseData); // 가공된 데이터 저장
-          console.log("exerciseData : ", exerciseData);
 
           const weeklyData = aggregateDataByDay(exerciseData);
           setWeeklyData(weeklyData);
-          console.log("weeklyData : ", weeklyData);
         } else {
           console.error("API response is not an array:", data);
         }
@@ -190,7 +187,6 @@ export default function ExerciseAnalysis({
       const hours = parseInt(timeMatch[1]);
       const minutes = parseInt(timeMatch[2]);
       timeInMinutes = hours * 60 + minutes; // 시간을 분으로 변환
-      console.log("timeInMinutes = ", timeInMinutes);
 
       //운동별 칼로리 계산 함수
       const calculateCalories = (exerciseType, timeInMinutes) => {
@@ -253,8 +249,6 @@ export default function ExerciseAnalysis({
       totalKcal += data.kcal;
     }
   });
-  console.log("totalVolume = ", totalVolume); //60으로 나눈 몫
-  console.log("totalTime = ", totalTime); //60으로 나눈나머지
 
   const hours = Math.floor(totalTime / 60); //
   const minutes = totalTime % 60;

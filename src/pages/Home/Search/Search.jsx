@@ -71,10 +71,8 @@ const Search = () => {
       searchResults[index].image.includes("api.mandarin.weniv.co.kr") &&
       !searchResults[index].image.includes("undefined")
     ) {
-      console.log("이미지가 존재합니다.");
       return searchResults[index].image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };

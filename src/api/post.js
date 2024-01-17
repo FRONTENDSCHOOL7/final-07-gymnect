@@ -21,7 +21,6 @@ export const postContentUpload = async (content, imageString, token) => {
       headers: headers
     });
     if (response.status === 200 || response.status === 201) {
-      console.log("게시물이 성공적으로 업로드 되었습니다.");
       return response.data;
     } else {
       console.error("게시물 업로드에 실패하였습니다.");

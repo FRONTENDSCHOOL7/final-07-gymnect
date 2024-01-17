@@ -164,10 +164,8 @@ export default function Post({ data, commentCount }) {
       //만약 이미지가 존재하면서 특정 키워드를 포함하는 경우
       image.includes("api.mandarin.weniv.co.kr")
     ) {
-      console.log("이미지가 존재합니다.");
       return image;
     } else {
-      console.log("!!이미지가 존재하지 않습니다.");
       return profileImage;
     }
   };
