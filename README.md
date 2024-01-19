@@ -794,7 +794,7 @@ const emptyExerciseNames = exerciseEntries.some(
 - 게시물 수정 기능 추가
 - 로그인 토큰 유효기간 수정
   - 로그인 토큰의 유효기간을 조정하여 보안을 강화하고 사용자 경험을 개선하는 데 도움
- - <!-- Top Button -->
+  <!-- Top Button -->
   <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
 
 <br />
