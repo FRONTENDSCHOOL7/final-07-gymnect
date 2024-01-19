@@ -70,7 +70,7 @@ export default function ButtonCalendar() {
 
     let days = [];
     for (let i = 0; i < startDay; i++) {
-      days.push(<DayCell key={`empty-${month}-${i}`} />);
+      days.push(<DayCell key={`empty-${i}-${month}`} />);
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
@@ -86,7 +86,7 @@ export default function ButtonCalendar() {
 
       days.push(
         <DayCell
-          key={`day-${month}-${i}`}
+          key={`day-${dayDate}`}
           $isToday={isToday}
           $isUploadDay={isUploadDay}
           onClick={() => handleDayClick(dayDate)}
@@ -145,7 +145,9 @@ export default function ButtonCalendar() {
             </AnalysisContainer>
 
             <CalendarScrollContainer>
-              {months.map((month) => renderCalendar(month))}
+              {months.map((month) => (
+                <div key={month}>{renderCalendar(month)}</div>
+              ))}
             </CalendarScrollContainer>
           </CalendarAndModalContainer>
         </>
